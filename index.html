@@ -2,448 +2,465 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Eunyeong Kim | 김은영</title>
-<meta name="description" content="Eunyeong Kim — atmospheric scientist working on climate variability, weather & climate extremes, and climate impact drivers.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Eunyeong Kim · 김은영</title>
+<meta name="description" content="Eunyeong Kim — atmospheric scientist studying climate variability, weather & climate extremes, and climate impact drivers.">
 <link rel="icon" href="assets/profile.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#fbfaf8; --surface:#ffffff; --text:#1f2328; --muted:#5f6670; --line:#e7e3dd;
-  --accent:#b4532a; --accent-soft:#f6e9e2; --chip:#f1eee9;
+  --paper:#f4f6f5; --panel:#ffffff; --ink:#15202b; --muted:#5a6772; --faint:#8b97a1;
+  --rule:#dde3e4; --accent:#2c5f8d; --accent-2:#b86a3c; --accent-wash:#e4edf5; --iso:#2c5f8d;
+  --side:#e9eef0;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#15171a; --surface:#1c1f23; --text:#e8e6e3; --muted:#a0a6ad; --line:#2d3136;
-    --accent:#e08a5f; --accent-soft:#3a2a22; --chip:#262a2f;
+    --paper:#0f151b; --panel:#151d25; --ink:#e4e9ec; --muted:#9aa7b2; --faint:#6b7883;
+    --rule:#243039; --accent:#7fb2e0; --accent-2:#e39a6c; --accent-wash:#1b2b3a; --iso:#7fb2e0;
+    --side:#121a21; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#15171a; --surface:#1c1f23; --text:#e8e6e3; --muted:#a0a6ad; --line:#2d3136;
-  --accent:#e08a5f; --accent-soft:#3a2a22; --chip:#262a2f;
+  --paper:#0f151b; --panel:#151d25; --ink:#e4e9ec; --muted:#9aa7b2; --faint:#6b7883;
+  --rule:#243039; --accent:#7fb2e0; --accent-2:#e39a6c; --accent-wash:#1b2b3a; --iso:#7fb2e0;
+  --side:#121a21; color-scheme:dark;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);
-  font-family:Inter,"Noto Sans KR",system-ui,-apple-system,sans-serif;line-height:1.65;font-size:16px}
-html[lang="ko"] body{font-family:"Noto Sans KR",Inter,system-ui,sans-serif;word-break:keep-all}
-a{color:var(--accent);text-decoration:none}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:16px/1.65 "IBM Plex Sans","IBM Plex Sans KR",system-ui,sans-serif}
+html[lang="ko"] body{font-family:"IBM Plex Sans KR","IBM Plex Sans",system-ui,sans-serif;word-break:keep-all}
+a{color:var(--accent);text-decoration:none;text-underline-offset:3px}
 a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+html[lang="en"] [lang="ko"], html[lang="ko"] [lang="en"]{display:none!important}
 
-/* language switching */
-html[lang="en"] [lang="ko"]{display:none!important}
-html[lang="ko"] [lang="en"]{display:none!important}
+/* ---------- layout ---------- */
+.shell{display:grid;grid-template-columns:340px 1fr;min-height:100%}
+.side{position:sticky;top:0;height:100vh;background:var(--side);border-right:1px solid var(--rule);
+  overflow:hidden;display:flex;flex-direction:column;padding:40px 32px 28px}
+.side svg.iso{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.side > *:not(svg){position:relative}
+.photo{width:132px;height:132px;border-radius:50%;object-fit:cover;display:block;
+  border:3px solid var(--paper);box-shadow:0 0 0 1px var(--rule)}
+.name{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:44px;line-height:1;margin:22px 0 4px;letter-spacing:-.01em}
+.hangul{font-size:17px;color:var(--muted);letter-spacing:.2em}
+.role{margin:16px 0 0;font-size:14.5px;color:var(--muted);line-height:1.55}
+.role b{color:var(--ink);font-weight:500}
+.contact{margin-top:22px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.contact a,.contact button{display:flex;align-items:center;gap:10px;color:var(--ink);background:none;border:0;padding:0;font:inherit;cursor:pointer;text-align:left}
+.contact a:hover,.contact button:hover{color:var(--accent);text-decoration:none}
+.contact svg{width:16px;height:16px;flex-shrink:0;color:var(--muted)}
+.copied{font-size:12px;color:var(--accent-2);margin-left:4px}
+.side-foot{margin-top:auto;display:flex;gap:8px;align-items:center}
+.toggle{border:1px solid var(--rule);background:var(--panel);color:var(--ink);border-radius:999px;
+  padding:5px 12px;font:500 13px/1 "IBM Plex Sans","IBM Plex Sans KR",sans-serif;cursor:pointer}
+.toggle:hover{border-color:var(--accent)}
+.coords{font-size:11px;color:var(--faint);margin-left:auto;letter-spacing:.04em}
 
-/* top bar */
-.topbar{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);
-  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.topbar .inner{max-width:960px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:16px}
-.brand{font-weight:700;color:var(--text);white-space:nowrap}
-.nav{display:flex;gap:14px;overflow-x:auto;flex:1;scrollbar-width:none}
-.nav::-webkit-scrollbar{display:none}
-.nav a{color:var(--muted);font-size:14px;white-space:nowrap}
-.nav a:hover{color:var(--accent);text-decoration:none}
-.tools{display:flex;gap:6px}
-.btn{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:8px;
-  padding:5px 10px;font:inherit;font-size:13px;cursor:pointer}
-.btn:hover{border-color:var(--accent)}
+main{min-width:0;padding:40px clamp(16px,5vw,64px) 80px;max-width:900px;width:100%}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--rule);margin-bottom:36px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;
+  padding:10px 14px;font:500 15px/1 "IBM Plex Sans","IBM Plex Sans KR",sans-serif;color:var(--muted);cursor:pointer;white-space:nowrap}
+.tabs button:hover{color:var(--ink)}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.panel{animation:rise .35s ease both}
+@keyframes rise{from{opacity:.001;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.panel{animation:none}}
 
-/* hero */
-.hero{position:relative;height:260px;background:url(assets/banner.jpg) center 40%/cover no-repeat}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,var(--bg))}
-.profile{max-width:960px;margin:-90px auto 0;padding:0 16px;position:relative;z-index:1;
-  display:flex;gap:28px;align-items:flex-end;flex-wrap:wrap}
-.avatar{width:168px;height:168px;border-radius:50%;object-fit:cover;border:5px solid var(--bg);
-  box-shadow:0 6px 24px rgba(0,0,0,.15);flex-shrink:0}
-.who h1{font-family:"Source Serif 4",Georgia,serif;font-size:40px;line-height:1.1;margin:0 0 6px}
-.who h1 small{font-family:"Noto Sans KR",sans-serif;font-size:20px;color:var(--muted);font-weight:500;margin-left:8px}
-.who .role{margin:0;color:var(--muted)}
-.links{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.links a{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;
-  background:var(--chip);color:var(--text);font-size:14px}
-.links a:hover{background:var(--accent-soft);color:var(--accent);text-decoration:none}
-.links svg{width:15px;height:15px}
+h2{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:30px;line-height:1.15;margin:0 0 18px;text-wrap:balance}
+html[lang="ko"] h2{font-family:"IBM Plex Sans KR",sans-serif;font-weight:600;font-size:24px}
+h3.label{font:500 12px/1 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:44px 0 14px;display:flex;align-items:center;gap:12px}
+h3.label::after{content:"";flex:1;height:1px;background:var(--rule)}
+.lede{font-size:18px;max-width:62ch;margin:0 0 14px}
+.lede em{font-family:"Instrument Serif",Georgia,serif;font-size:1.25em;font-style:italic;color:var(--accent)}
+html[lang="ko"] .lede em{font-family:inherit;font-style:normal;font-size:1em;font-weight:600}
+p.body{max-width:65ch;color:var(--ink);margin:0 0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--rule);background:var(--panel);border-radius:999px;padding:4px 12px;font-size:14px}
 
-/* sections */
-main{max-width:960px;margin:0 auto;padding:24px 16px 64px}
-section{padding:28px 0;border-bottom:1px solid var(--line);scroll-margin-top:60px}
-section:last-child{border-bottom:none}
-h2{font-family:"Source Serif 4",Georgia,serif;font-size:24px;margin:0 0 18px;display:flex;align-items:center;gap:10px}
-h2::before{content:"";width:6px;height:22px;background:var(--accent);border-radius:3px}
-html[lang="ko"] h2{font-family:"Noto Sans KR",sans-serif;font-weight:700}
-.about p{margin:0 0 10px;max-width:760px}
-.interests{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.tag{background:var(--accent-soft);color:var(--accent);padding:5px 12px;border-radius:999px;font-size:14px;font-weight:500}
+/* timeline rows */
+.rows{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:108px 1fr;gap:4px 20px;padding:12px 0;border-top:1px solid var(--rule)}
+.row:first-child{border-top:0}
+.when{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--muted);padding-top:3px;font-variant-numeric:tabular-nums}
+.what{min-width:0}
+.what .t{font-weight:500}
+.what .s{color:var(--muted);font-size:14.5px}
+.what ul{margin:6px 0 0;padding-left:18px;font-size:15px}
+.tag{display:inline-block;font:500 11px/1.6 "IBM Plex Mono",monospace;letter-spacing:.04em;text-transform:uppercase;
+  padding:0 7px;border-radius:4px;border:1px solid var(--rule);color:var(--muted);margin-left:6px;vertical-align:2px}
+.tag.oral{color:var(--accent);border-color:var(--accent)}
+.tag.award{color:var(--accent-2);border-color:var(--accent-2)}
+.star{color:var(--accent-2)}
 
-.item{display:grid;grid-template-columns:170px 1fr;gap:4px 20px;padding:10px 0}
-.item .when{color:var(--muted);font-size:14px;padding-top:2px;font-variant-numeric:tabular-nums}
-.item h3{font-size:16px;margin:0;font-weight:600}
-.item .where{color:var(--muted);font-size:14.5px;margin:2px 0 0}
-.item ul{margin:6px 0 0;padding-left:18px}
-.item li{margin:2px 0}
-.badge{display:inline-block;font-size:12px;padding:1px 8px;border-radius:6px;background:var(--chip);color:var(--muted);margin-left:6px;vertical-align:1px;font-weight:500}
+/* research themes */
+.themes{display:grid;gap:18px}
+.theme{display:grid;grid-template-columns:88px 1fr;gap:20px;background:var(--panel);border:1px solid var(--rule);border-radius:14px;padding:22px}
+.theme svg{width:88px;height:88px}
+.theme h4{margin:0 0 6px;font-size:17px;font-weight:600}
+.theme p{margin:0 0 10px;color:var(--muted);font-size:15px}
+.theme .kw{display:flex;flex-wrap:wrap;gap:6px}
+.theme .kw span{font:12px/1.7 "IBM Plex Mono",monospace;background:var(--accent-wash);color:var(--accent);padding:0 8px;border-radius:4px}
 
-.highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
-.card h3{margin:0 0 6px;font-size:16px}
-.card p{margin:0;color:var(--muted);font-size:14.5px}
+/* publications */
+.paper{padding:16px 0;border-top:1px solid var(--rule)}
+.paper:first-child{border-top:0}
+.paper .t{font-weight:600;font-size:16.5px;line-height:1.45}
+.paper .a{color:var(--muted);font-size:14.5px;margin-top:4px}
+.paper .a b{color:var(--ink);font-weight:600}
+.paper .v{font-size:14.5px;margin-top:4px}
+.paper .v i{font-family:"Instrument Serif",Georgia,serif;font-size:1.15em}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.filters button{border:1px solid var(--rule);background:var(--panel);color:var(--muted);border-radius:999px;padding:4px 12px;font:500 13px/1.4 "IBM Plex Sans","IBM Plex Sans KR",sans-serif;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.count{font:12px "IBM Plex Mono",monospace;color:var(--faint);margin-left:4px}
 
-.pub{padding:12px 0;border-bottom:1px dashed var(--line)}
-.pub:last-child{border-bottom:none}
-.pub .title{font-weight:600}
-.pub .authors{font-size:14.5px;color:var(--muted)}
-.pub .authors b{color:var(--text);text-decoration:underline;text-underline-offset:3px}
-.pub .venue{font-size:14.5px;font-style:italic}
+/* beyond */
+.figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--rule);background:var(--panel)}
+.figure img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;object-position:center 55%}
+.figure figcaption{padding:10px 16px;font-size:13.5px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.places{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.place{border:1px solid var(--rule);border-radius:12px;padding:14px 16px;background:var(--panel)}
+.place .c{font:12px "IBM Plex Mono",monospace;color:var(--accent);letter-spacing:.03em}
+.place .n{font-weight:600;margin:2px 0}
+.place .d{font-size:14px;color:var(--muted)}
 
-.projects li{margin:6px 0}
-.key{color:var(--accent);font-weight:700}
+footer{margin-top:64px;font-size:13px;color:var(--faint)}
 
-.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-
-footer{text-align:center;color:var(--muted);font-size:13px;padding:24px 16px 40px}
-
-@media (max-width:640px){
-  .hero{height:180px}
-  .profile{margin-top:-70px;gap:14px}
-  .avatar{width:120px;height:120px}
-  .who h1{font-size:30px}
-  .item{grid-template-columns:1fr;gap:0}
-  .item .when{order:-1}
-  .brand{display:none}
-}
-@media print{
-  .topbar,.hero{display:none}
-  .profile{margin-top:0}
-  section{break-inside:avoid-page}
+/* ---------- mobile ---------- */
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .side{position:relative;height:auto;padding:28px 16px 20px;border-right:0;border-bottom:1px solid var(--rule)}
+  .photo{width:96px;height:96px}
+  .name{font-size:36px;margin-top:14px}
+  .side-foot{margin-top:18px}
+  main{padding-top:20px}
+  .tabs{position:sticky;top:0;background:var(--paper);z-index:5;margin-inline:-16px;padding-inline:8px}
+  .row{grid-template-columns:1fr;gap:0}
+  .theme{grid-template-columns:1fr}
+  .theme svg{width:64px;height:64px}
 }
 </style>
 </head>
 <body>
+<div class="shell">
 
-<header class="topbar">
-  <div class="inner">
-    <a class="brand" href="#top">Eunyeong Kim</a>
-    <nav class="nav">
-      <a href="#about"><span lang="en">About</span><span lang="ko">소개</span></a>
-      <a href="#education"><span lang="en">Education</span><span lang="ko">학력</span></a>
-      <a href="#research"><span lang="en">Research</span><span lang="ko">연구 경력</span></a>
-      <a href="#publications"><span lang="en">Publications</span><span lang="ko">논문</span></a>
-      <a href="#presentations"><span lang="en">Presentations</span><span lang="ko">학회 발표</span></a>
-      <a href="#awards"><span lang="en">Awards</span><span lang="ko">수상</span></a>
-      <a href="#skills"><span lang="en">Skills</span><span lang="ko">기술</span></a>
-    </nav>
-    <div class="tools">
-      <button class="btn" id="langBtn" aria-label="Switch language">한국어</button>
-      <button class="btn" id="themeBtn" aria-label="Toggle dark mode">◐</button>
-    </div>
+<aside class="side">
+  <svg class="iso" id="iso" aria-hidden="true"></svg>
+  <img class="photo" src="assets/profile.jpg" alt="Eunyeong Kim">
+  <h1 class="name">Eunyeong Kim</h1>
+  <div class="hangul">김 은 영</div>
+  <p class="role">
+    <span lang="en"><b>Atmospheric scientist</b><br>Research Intern, Climate Policy Division<br>Korea Meteorological Administration</span>
+    <span lang="ko"><b>대기과학 연구자</b><br>기상청 기후과학국 기후정책과<br>연구 인턴</span>
+  </p>
+  <div class="contact">
+    <button type="button" id="copyMail" title="Copy email">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+      <span>eykim129@gmail.com</span><span class="copied" id="copied" hidden></span>
+    </button>
+    <a href="https://github.com/eykim129" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg>
+      github.com/eykim129
+    </a>
+    <a href="#" data-go="cv">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>
+      <span lang="en">Curriculum Vitae</span><span lang="ko">이력 (CV)</span>
+    </a>
+    <!-- Add later:
+    <a href="https://scholar.google.com/citations?user=XXXX" target="_blank" rel="noopener">Google Scholar</a>
+    <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener">ORCID</a>
+    -->
   </div>
-</header>
-
-<div class="hero" id="top" role="img" aria-label="Grand Canyon"></div>
-
-<div class="profile">
-  <img class="avatar" src="assets/profile.jpg" alt="Eunyeong Kim">
-  <div class="who">
-    <h1>Eunyeong Kim<small>김은영</small></h1>
-    <p class="role">
-      <span lang="en">M.S. in Atmospheric Sciences · Research Intern, Korea Meteorological Administration</span>
-      <span lang="ko">대기과학 석사 · 기상청 기후정책과 연구 인턴</span>
-    </p>
-    <div class="links">
-      <a href="mailto:eykim129@gmail.com">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-        eykim129@gmail.com
-      </a>
-      <a href="https://github.com/eykim129" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg>
-        GitHub
-      </a>
-      <!-- Add more links here, e.g. Google Scholar / ORCID / LinkedIn:
-      <a href="https://scholar.google.com/citations?user=XXXX" target="_blank" rel="noopener">Google Scholar</a>
-      <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener">ORCID</a>
-      <a href="assets/cv.pdf" target="_blank">CV (PDF)</a>
-      -->
-    </div>
+  <div class="side-foot">
+    <button class="toggle" id="langBtn" type="button">한국어</button>
+    <button class="toggle" id="themeBtn" type="button" aria-label="Toggle dark mode"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="display:block"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
+    <span class="coords mono">36.35°N 127.38°E</span>
   </div>
-</div>
+</aside>
 
 <main>
+  <nav class="tabs" role="tablist" id="tabs">
+    <button role="tab" data-tab="about"><span lang="en">About</span><span lang="ko">소개</span></button>
+    <button role="tab" data-tab="research"><span lang="en">Research</span><span lang="ko">연구</span></button>
+    <button role="tab" data-tab="publications"><span lang="en">Publications &amp; Talks</span><span lang="ko">논문·발표</span></button>
+    <button role="tab" data-tab="cv"><span lang="en">CV</span><span lang="ko">이력</span></button>
+    <button role="tab" data-tab="beyond"><span lang="en">Beyond the Lab</span><span lang="ko">연구실 밖</span></button>
+  </nav>
 
-<!-- ABOUT -->
-<section id="about" class="about">
-  <h2><span lang="en">About</span><span lang="ko">소개</span></h2>
-  <p lang="en">I am an atmospheric scientist interested in how climate variability and change shape weather and climate extremes, and what that means for society and energy systems. My work combines seasonal forecast verification (GloSea6), CMIP6 climate projections, satellite remote sensing, and statistical / deep-learning models of surface solar radiation.</p>
-  <p lang="ko">기후변동과 기후변화가 극한 기상·기후 현상에 어떤 영향을 미치는지, 그리고 그것이 사회와 에너지 시스템에 어떤 의미를 갖는지에 관심을 두고 연구하고 있습니다. 계절예측(GloSea6) 검증, CMIP6 기후 전망, 위성 원격탐사, 지표 태양복사에 대한 통계·딥러닝 모델을 결합해 연구합니다.</p>
-  <div class="interests">
-    <span class="tag"><span lang="en">Climate Variability &amp; Climate Change</span><span lang="ko">기후변동과 기후변화</span></span>
-    <span class="tag"><span lang="en">Mechanisms &amp; Predictability of Weather/Climate Extremes</span><span lang="ko">극한 기상·기후의 물리 기작과 예측성</span></span>
-    <span class="tag"><span lang="en">Climate Impact Drivers (CIDs) &amp; Climate Risk</span><span lang="ko">기후영향인자(CIDs)와 기후 위험</span></span>
-  </div>
-</section>
+  <!-- ABOUT -->
+  <section class="panel" id="p-about" role="tabpanel">
+    <p class="lede" lang="en">Hi, I'm Eunyeong. I study how a changing climate reshapes <em>weather and climate extremes</em> — and how well we can see them coming.</p>
+    <p class="lede" lang="ko">안녕하세요, 김은영입니다. 변화하는 기후가 <em>극한 기상·기후 현상</em>을 어떻게 바꾸는지, 그리고 우리가 그것을 얼마나 미리 예측할 수 있는지 연구합니다.</p>
+    <p class="body" lang="en">I hold an M.S. in Atmospheric Sciences from Chungnam National University, where I built sunshine-duration and solar-radiation models for solar power assessment. I am currently a research intern at the Korea Meteorological Administration, verifying GloSea6 subseasonal forecasts of surface solar radiation and analyzing Climate Impact Drivers under CMIP6 projections. Before atmospheric science I trained in physics, and I have worked in the field calibrating satellite sensors on the Mongolian steppe.</p>
+    <p class="body" lang="ko">충남대학교에서 대기과학 석사 학위를 받았으며, 태양광 발전 잠재량 평가를 위한 일조시간·일사량 추정 모델을 개발했습니다. 현재는 기상청 기후정책과에서 연구 인턴으로 GloSea6 계절내 예측의 지표 태양복사 예측성을 검증하고, CMIP6 전망자료로 기후영향인자(CIDs)를 분석하고 있습니다. 학부에서는 물리학을 전공했고, 몽골 초원에서 위성 센서 검·보정 현장관측에도 참여했습니다.</p>
 
-<!-- HIGHLIGHTS -->
-<section id="highlights">
-  <h2><span lang="en">Research Highlights</span><span lang="ko">주요 연구</span></h2>
-  <div class="highlights">
-    <div class="card">
-      <h3><span lang="en">Subseasonal forecast skill of solar radiation</span><span lang="ko">태양복사의 계절내 예측성</span></h3>
-      <p lang="en">Evaluating subseasonal forecast skill and seasonal variability of surface downward shortwave radiation using GloSea6 hindcasts, reanalysis, and observation-based datasets.</p>
-      <p lang="ko">GloSea6 과거재현자료, 재분석자료, 관측 기반 자료를 이용해 지표 하향단파복사의 계절내 예측성과 계절 변동성을 평가하고 있습니다.</p>
+    <h3 class="label"><span lang="en">Research interests</span><span lang="ko">연구 관심사</span></h3>
+    <div class="chips">
+      <span class="chip"><span lang="en">Climate variability &amp; change</span><span lang="ko">기후변동과 기후변화</span></span>
+      <span class="chip"><span lang="en">Mechanisms &amp; predictability of extremes</span><span lang="ko">극한 현상의 물리 기작과 예측성</span></span>
+      <span class="chip"><span lang="en">Climate Impact Drivers &amp; climate risk</span><span lang="ko">기후영향인자와 기후 위험</span></span>
+      <span class="chip"><span lang="en">Surface solar radiation</span><span lang="ko">지표 태양복사</span></span>
     </div>
-    <div class="card">
-      <h3><span lang="en">Extreme heat under future climate</span><span lang="ko">미래 기후의 극한 고온</span></h3>
-      <p lang="en">Investigating future changes in extreme-heat-related Climate Impact Drivers (CIDs) and cooling degree days (CDDs) using CMIP6 climate projections.</p>
-      <p lang="ko">CMIP6 기후 전망자료를 이용해 극한 고온 관련 기후영향인자(CIDs)와 냉방도일(CDDs)의 미래 변화를 분석하고 있습니다.</p>
-    </div>
-    <div class="card">
-      <h3><span lang="en">Solar radiation &amp; sunshine duration models</span><span lang="ko">일사·일조시간 추정 모델</span></h3>
-      <p lang="en">Analyzed spatiotemporal variability of surface solar radiation and sunshine duration from long-term observations, and developed statistical and deep-learning estimation models.</p>
-      <p lang="ko">장기 기상관측자료로 지표 일사량과 일조시간의 시공간 변동성을 분석하고, 통계 및 딥러닝 기반 추정 모델을 개발했습니다.</p>
-    </div>
-  </div>
-</section>
 
-<!-- EDUCATION -->
-<section id="education">
-  <h2><span lang="en">Education</span><span lang="ko">학력</span></h2>
-  <div class="item">
-    <div class="when">Mar. 2024 – Feb. 2026</div>
-    <div>
-      <h3><span lang="en">M.S. in Atmospheric Sciences</span><span lang="ko">대기과학 석사</span></h3>
-      <p class="where"><span lang="en">Dept. of Earth, Environmental &amp; Space Sciences, Chungnam National University</span><span lang="ko">충남대학교 지구환경우주과학과</span> · GPA 4.22/4.5</p>
-      <p class="where"><span lang="en">Advisor: Prof. Yun Gon Lee</span><span lang="ko">지도교수: 이윤곤 교수</span></p>
-    </div>
-  </div>
-  <div class="item">
-    <div class="when">Mar. 2021 – Feb. 2024</div>
-    <div>
-      <h3><span lang="en">B.S. in Physics</span><span lang="ko">물리학 학사</span></h3>
-      <p class="where"><span lang="en">Dept. of Physics, Chungnam National University</span><span lang="ko">충남대학교 물리학과</span></p>
-    </div>
-  </div>
-  <div class="item">
-    <div class="when">Mar. 2019 – Feb. 2021</div>
-    <div>
-      <h3><span lang="en">Undergraduate coursework in Physics</span><span lang="ko">물리학과 재학 (편입 전)</span></h3>
-      <p class="where"><span lang="en">Dept. of Physics, Jeonbuk National University (prior to transfer to Chungnam National University)</span><span lang="ko">전북대학교 물리학과 (충남대학교 편입 전 학부 과정 이수)</span></p>
-    </div>
-  </div>
-</section>
+    <h3 class="label"><span lang="en">Recently</span><span lang="ko">최근 소식</span></h3>
+    <div class="rows" id="news"></div>
+  </section>
 
-<!-- RESEARCH EXPERIENCE -->
-<section id="research">
-  <h2><span lang="en">Research Experience</span><span lang="ko">연구 경력</span></h2>
-  <div class="item">
-    <div class="when">Jun. 2026 – <span lang="en">Present</span><span lang="ko">현재</span></div>
-    <div>
-      <h3><span lang="en">Research Intern, Korea Meteorological Administration (KMA)</span><span lang="ko">기상청 연구 인턴</span></h3>
-      <p class="where"><span lang="en">Climate Policy Division, Climate Science Bureau · Government Complex Daejeon</span><span lang="ko">기후과학국 기후정책과 · 정부대전청사</span></p>
-      <ul>
-        <li lang="en">Evaluating lead-time-dependent forecast skill of surface downward shortwave radiation using GloSea6 hindcasts, and analyzing Climate Impact Drivers (CIDs).</li>
-        <li lang="ko">GloSea6 과거재현자료를 이용한 선행시간별 지표 하향단파복사 예측성 평가 및 기후영향인자(CIDs) 분석</li>
-      </ul>
+  <!-- RESEARCH -->
+  <section class="panel" id="p-research" role="tabpanel" hidden>
+    <h2><span lang="en">Three threads I'm pulling on</span><span lang="ko">지금 붙잡고 있는 세 가지 질문</span></h2>
+    <div class="themes">
+      <article class="theme">
+        <svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="16" fill="none" stroke="var(--accent-2)" stroke-width="2"/><g stroke="var(--accent-2)" stroke-width="2" stroke-linecap="round"><path d="M44 12v10M44 66v10M12 44h10M66 44h10M21 21l7 7M60 60l7 7M21 67l7-7M60 28l7-7"/></g><path d="M8 80h72" stroke="var(--rule)" stroke-width="2"/></svg>
+        <div>
+          <h4><span lang="en">How far ahead can we forecast sunlight?</span><span lang="ko">햇빛은 얼마나 앞서 예측할 수 있을까?</span></h4>
+          <p lang="en">Evaluating lead-time-dependent subseasonal forecast skill and seasonal variability of surface downward shortwave radiation using GloSea6 hindcasts, reanalysis, and observation-based datasets.</p>
+          <p lang="ko">GloSea6 과거재현자료, 재분석자료, 관측 기반 자료로 지표 하향단파복사의 선행시간별 계절내 예측성과 계절 변동성을 평가합니다.</p>
+          <div class="kw"><span>GloSea6</span><span>hindcast</span><span>SW↓</span><span>S2S</span></div>
+        </div>
+      </article>
+      <article class="theme">
+        <svg viewBox="0 0 88 88" aria-hidden="true"><path d="M44 10a8 8 0 0 0-8 8v34a14 14 0 1 0 16 0V18a8 8 0 0 0-8-8z" fill="none" stroke="var(--accent)" stroke-width="2"/><circle cx="44" cy="64" r="8" fill="var(--accent-2)"/><path d="M44 58V30" stroke="var(--accent-2)" stroke-width="4" stroke-linecap="round"/><path d="M58 24h10M58 34h7M58 44h10" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg>
+        <div>
+          <h4><span lang="en">What does extreme heat look like in a warmer future?</span><span lang="ko">더 더워진 미래의 극한 고온은 어떤 모습일까?</span></h4>
+          <p lang="en">Investigating future changes in extreme-heat-related Climate Impact Drivers (CIDs) and cooling degree days (CDDs) using CMIP6 climate projections.</p>
+          <p lang="ko">CMIP6 기후 전망자료로 극한 고온 관련 기후영향인자(CIDs)와 냉방도일(CDDs)의 미래 변화를 분석합니다.</p>
+          <div class="kw"><span>CMIP6</span><span>CIDs</span><span>CDD</span><span>SSP</span></div>
+        </div>
+      </article>
+      <article class="theme">
+        <svg viewBox="0 0 88 88" aria-hidden="true"><path d="M10 70 Q26 20 44 44 T78 24" fill="none" stroke="var(--accent)" stroke-width="2"/><g fill="var(--accent-2)"><circle cx="16" cy="60" r="3"/><circle cx="28" cy="40" r="3"/><circle cx="40" cy="44" r="3"/><circle cx="52" cy="46" r="3"/><circle cx="64" cy="32" r="3"/><circle cx="74" cy="28" r="3"/></g><path d="M8 80h72M8 80V8" stroke="var(--rule)" stroke-width="2"/></svg>
+        <div>
+          <h4><span lang="en">Estimating sunshine where it isn't measured</span><span lang="ko">관측되지 않는 곳의 일조를 추정하기</span></h4>
+          <p lang="en">Analyzed the spatiotemporal variability of surface solar radiation and sunshine duration from long-term observations, and developed clearness-index-based empirical and deep-learning (DNN) estimation models for solar power potential assessment.</p>
+          <p lang="ko">장기 기상관측자료로 지표 일사량과 일조시간의 시공간 변동성을 분석하고, 태양광 발전 잠재량 평가를 위해 청명지수 기반 경험식 및 딥러닝(DNN) 추정 모델을 개발했습니다.</p>
+          <div class="kw"><span>clearness index</span><span>DNN</span><span>GK-2A</span><span>PV</span></div>
+        </div>
+      </article>
     </div>
-  </div>
-  <div class="item">
-    <div class="when">Jan. 2025 – Feb. 2025</div>
-    <div>
-      <h3><span lang="en">International Training</span><span lang="ko">국제 연수</span></h3>
-      <p class="where"><span lang="en">Deep Learning &amp; Applications Workshop, Institute of Earth, Computing, Human and Observing (ECHO), Chapman University, Orange, CA, USA</span><span lang="ko">미국 채프먼대학교 ECHO 연구소 딥러닝 및 응용 워크숍 (캘리포니아 오렌지)</span></p>
-      <ul>
-        <li lang="en">Seminars on atmospheric science and deep learning; international research exchange.</li>
-        <li lang="ko">대기과학 및 딥러닝 세미나 참여, 국제 연구 교류</li>
-      </ul>
+
+    <h3 class="label"><span lang="en">Also: satellite calibration</span><span lang="ko">위성 검·보정</span></h3>
+    <p class="body" lang="en">Field measurements of surface reflectance and radiometric cross-calibration of Korean high-resolution optical satellites (KOMPSAT-3, CAS500-1) against Sentinel-2/MSI — see Publications.</p>
+    <p class="body" lang="ko">지표 반사도 현장관측과 Sentinel-2/MSI를 기준으로 한 국내 고해상도 광학위성(KOMPSAT-3, CAS500-1)의 복사 교차검보정 연구에 참여했습니다. 논문 탭을 참고해 주세요.</p>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section class="panel" id="p-publications" role="tabpanel" hidden>
+    <h3 class="label" style="margin-top:0"><span lang="en">Journal &amp; proceedings</span><span lang="ko">학술지·학술대회 논문</span></h3>
+    <div id="papers"></div>
+
+    <h3 class="label"><span lang="en">Conference presentations</span><span lang="ko">학회 발표</span></h3>
+    <div class="filters" id="talkFilters">
+      <button type="button" data-f="all" aria-pressed="true"><span lang="en">All</span><span lang="ko">전체</span></button>
+      <button type="button" data-f="oral" aria-pressed="false"><span lang="en">Oral</span><span lang="ko">구두</span></button>
+      <button type="button" data-f="poster" aria-pressed="false"><span lang="en">Poster</span><span lang="ko">포스터</span></button>
+      <button type="button" data-f="intl" aria-pressed="false"><span lang="en">International</span><span lang="ko">국제</span></button>
     </div>
-  </div>
-  <div class="item">
-    <div class="when">Jun. 2024</div>
-    <div>
-      <h3><span lang="en">International Field Measurement Campaign</span><span lang="ko">국제 현장관측 캠페인</span></h3>
-      <p class="where"><span lang="en">Zuunmod, Mongolia · with KARI (Korea) and IRIMHE (Mongolia)</span><span lang="ko">몽골 준모드 · 한국항공우주연구원(KARI), 몽골 기상수문환경연구소(IRIMHE) 공동</span></p>
-      <ul>
-        <li lang="en">Performed surface reflectance measurements and radiometric calibration/validation analyses for satellite remote sensing.</li>
-        <li lang="ko">위성 원격탐사를 위한 지표 반사도 측정 및 복사 검·보정 분석 수행</li>
-      </ul>
-    </div>
-  </div>
-  <div class="item">
-    <div class="when"><span lang="en">Summer &amp; Winter, 2020 – 2022</span><span lang="ko">2020 – 2022 (하계·동계)</span></div>
-    <div>
-      <h3><span lang="en">Student Assistant, KISTI</span><span lang="ko">한국과학기술정보연구원(KISTI) 학생연구원</span></h3>
-      <p class="where"><span lang="en">Data Curation Center, Division of AI·Data, Korea Institute of Science and Technology Information, Daejeon</span><span lang="ko">AI·데이터본부 데이터큐레이션센터, 대전</span></p>
-      <ul>
-        <li lang="en">Machine-learning dataset construction; public-service research project on stream water-level measurement in Daejeon, including measurement and networking equipment development.</li>
-        <li lang="ko">머신러닝 데이터셋 구축 및 대전 하천 수위 측정 공공연구 과제 참여 (측정·네트워크 장비 개발 포함)</li>
-      </ul>
-    </div>
-  </div>
-</section>
+    <div class="rows" id="talks"></div>
+  </section>
 
-<!-- PUBLICATIONS -->
-<section id="publications">
-  <h2><span lang="en">Publications</span><span lang="ko">논문</span></h2>
-  <div class="pub">
-    <div class="title">Absolute Radiometric Calibration of CAS500-1/AEISS-C: Reflectance-Based Vicarious Calibration and Cross-Calibration with Sentinel-2/MSI</div>
-    <div class="authors">Kyung-Bae Choi, Kyoung-Wook Jin, Dong-Hwan Cha, Jin-Hyeok Choi, Yong-Han Jo, Kwang-Nyun Kim, Gwui-Bong Kang, Ho-Yeon Shin, Ji-Yun Lee, <b>Eunyeong Kim</b>, Yun Gon Lee</div>
-    <div class="venue"><em>Remote Sensing</em>, 18(1), 177 (2026) <span class="badge">SCI</span> · <a href="https://doi.org/10.3390/rs18010177" target="_blank" rel="noopener">doi:10.3390/rs18010177</a></div>
-  </div>
-  <div class="pub">
-    <div class="title">Radiometric Cross-Calibration and Validation of KOMPSAT-3/AEISS Using Sentinel-2A/MSI</div>
-    <div class="authors">Jin-Hyeok Choi, Kyoung-Wook Jin, Dong-Hwan Cha, Kyung-Bae Choi, Yong-Han Jo, Kwang-Nyun Kim, Gwui-Bong Kang, Ho-Yeon Shin, Ji-Yun Lee, <b>Eunyeong Kim</b>, Hojong Chang, Yun Gon Lee</div>
-    <div class="venue"><em>Remote Sensing</em>, 17, 3280 (2025) <span class="badge">SCI</span> · <a href="https://doi.org/10.3390/rs17193280" target="_blank" rel="noopener">doi:10.3390/rs17193280</a></div>
-  </div>
-  <div class="pub">
-    <div class="title">Automatic Classification of Questions on Constructing Machine Learning Data Sets with Bi-LSTM</div>
-    <div class="authors">Jinseop Shin, <b>Eunyeong Kim</b>, Sujung Seol, Jueun Kwon, Yeongmin Kim, Ju-Yeon Gang</div>
-    <div class="venue">Korea Computer Congress (KCC) 2021, Korean Institute of Information Scientists and Engineers <span class="badge"><span lang="en">Best Presentation Award</span><span lang="ko">우수발표상</span></span></div>
-  </div>
-</section>
+  <!-- CV -->
+  <section class="panel" id="p-cv" role="tabpanel" hidden>
+    <h3 class="label" style="margin-top:0"><span lang="en">Education</span><span lang="ko">학력</span></h3>
+    <div class="rows" id="edu"></div>
+    <h3 class="label"><span lang="en">Research experience</span><span lang="ko">연구 경력</span></h3>
+    <div class="rows" id="exp"></div>
+    <h3 class="label"><span lang="en">Awards</span><span lang="ko">수상</span></h3>
+    <div class="rows" id="awards"></div>
+    <h3 class="label"><span lang="en">Research projects</span><span lang="ko">참여 과제</span></h3>
+    <p class="body" style="font-size:14px;color:var(--muted)"><span class="star">★</span> <span lang="en">key contribution</span><span lang="ko">주요 기여</span></p>
+    <div class="rows" id="projects"></div>
+    <h3 class="label"><span lang="en">Skills</span><span lang="ko">기술</span></h3>
+    <div class="rows" id="skills"></div>
+    <h3 class="label"><span lang="en">Other experience</span><span lang="ko">기타 경력</span></h3>
+    <div class="rows" id="other"></div>
+  </section>
 
-<!-- PRESENTATIONS -->
-<section id="presentations">
-  <h2><span lang="en">Presentations</span><span lang="ko">학회 발표</span></h2>
-  <div class="item">
-    <div class="when">Dec. 2025</div>
-    <div><h3>Accuracy Evaluation of Sunshine Duration Estimation Using the Clearness Index</h3>
-    <p class="where">AGU Annual Meeting 2025, New Orleans, LA, USA <span class="badge"><span lang="en">Poster · English</span><span lang="ko">포스터 · 영어</span></span></p></div>
-  </div>
-  <div class="item">
-    <div class="when">Nov. 2025</div>
-    <div><h3>Development and Evaluation of Sunshine Duration Estimation Model for Solar Power Potential Assessment in South Korea</h3>
-    <p class="where">Asia-Pacific Forum on Renewable Energy (AFORE) 2025, Jeju <span class="badge"><span lang="en">Oral · English</span><span lang="ko">구두 · 영어</span></span></p></div>
-  </div>
-  <div class="item">
-    <div class="when">Aug. 2025</div>
-    <div><h3>Development of Sunshine Duration Estimation Model Using the Clearness Index for Solar Power Generation</h3>
-    <p class="where">BK21 Graduate Research Day, Education and Research Group for Earth Environment and Space Convergence Science, Konjiam <span class="badge"><span lang="en">Oral · English</span><span lang="ko">구두 · 영어</span></span></p></div>
-  </div>
-  <div class="item">
-    <div class="when">May 2025</div>
-    <div><h3>Evaluating the Prediction of Solar Power Generation from Global, Diffuse, Direct Radiation and Meteorological Factors</h3>
-    <p class="where">Spring Annual Conference, The Korean Society for New and Renewable Energy, Busan <span class="badge"><span lang="en">Poster · Korean</span><span lang="ko">포스터 · 한국어</span></span></p></div>
-  </div>
-  <div class="item">
-    <div class="when">Apr. 2025</div>
-    <div><h3>Development and Evaluation of Empirical and DNN Models for Estimating Sunshine Hours Based on the Clearness Index in South Korea</h3>
-    <p class="where">Spring Annual Conference, Korean Solar Energy Society, Boryeong <span class="badge"><span lang="en">Poster · Korean</span><span lang="ko">포스터 · 한국어</span></span></p></div>
-  </div>
-  <div class="item">
-    <div class="when">Nov. 2024</div>
-    <div><h3>The Estimation of Surface Solar Irradiance Based on GK-2A Satellite Data and the Analysis of the Relationship between Solar Photovoltaic Power Generation and Meteorological Factors</h3>
-    <p class="where">Asia-Pacific Forum on Renewable Energy (AFORE) 2024, Jeju <span class="badge"><span lang="en">Poster · Korean</span><span lang="ko">포스터 · 한국어</span></span></p></div>
-  </div>
-  <div class="item">
-    <div class="when">Oct. 2024</div>
-    <div><h3>Quantitative Analysis of the Relationship between Solar Power Generation, Solar Irradiance, and Meteorological Factors</h3>
-    <p class="where">Autumn Annual Conference, Korean Meteorological Society, Daegu <span class="badge"><span lang="en">Poster · Korean</span><span lang="ko">포스터 · 한국어</span></span></p></div>
-  </div>
-</section>
+  <!-- BEYOND -->
+  <section class="panel" id="p-beyond" role="tabpanel" hidden>
+    <figure class="figure">
+      <img src="assets/banner.jpg" alt="Grand Canyon from the South Rim">
+      <figcaption><span lang="en">Grand Canyon, Arizona — a good place to think about deep time and clear skies.</span><span lang="ko">그랜드캐니언, 애리조나 — 깊은 시간과 맑은 하늘을 생각하기 좋은 곳.</span><span class="mono">36.06°N 112.14°W</span></figcaption>
+    </figure>
+    <h3 class="label"><span lang="en">Places research has taken me</span><span lang="ko">연구로 가 본 곳들</span></h3>
+    <div class="places" id="places"></div>
+  </section>
 
-<!-- PROJECTS -->
-<section id="projects">
-  <h2><span lang="en">Research Projects</span><span lang="ko">참여 과제</span></h2>
-  <p class="where" style="color:var(--muted);margin-top:-8px"><span class="key">★</span> <span lang="en">Key contribution</span><span lang="ko">주요 기여</span></p>
-  <ul class="projects">
-    <li><span class="key">★</span> <span lang="en">KMA — Improving tailored weather-information production technology for the energy sector (2025)</span><span lang="ko">기상청 — 에너지기상 맞춤형 기상정보 생산기술 개선 (2025)</span></li>
-    <li><span class="key">★</span> <span lang="en">KMITI — Development of energy-tailored weather-information production technology (2024)</span><span lang="ko">한국기상산업기술원 — 에너지 맞춤형 기상정보 생산 기술개발 (2024)</span></li>
-    <li><span class="key">★</span> <span lang="en">KARI — Field campaign for advancing quality-validation of optical medium-resolution satellite imagery</span><span lang="ko">한국항공우주연구원 — 광학 중해상도 위성영상 품질검증 체계 수립 고도화를 위한 필드캠페인</span></li>
-    <li><span class="key">★</span> <span lang="en">KASI — System integration and effect-analysis technology development</span><span lang="ko">한국천문연구원 — 대우주 시스템 통합 및 효과 분석 기술 개발</span></li>
-    <li><span lang="en">NIER — Development of environmental-satellite-based application products and data production (II)</span><span lang="ko">한국환경과학원 — 환경위성 기반 활용산출물 개발 및 자료 생산(II)</span></li>
-    <li><span lang="en">KMITI — Meteorological satellite convergence application technology development</span><span lang="ko">한국기상산업기술원 — 기상위성 융합 활용 기술개발 사업</span></li>
-  </ul>
-</section>
-
-<!-- AWARDS -->
-<section id="awards">
-  <h2><span lang="en">Awards</span><span lang="ko">수상</span></h2>
-  <div class="item">
-    <div class="when">Aug. 2025</div>
-    <div><h3><span lang="en">Best Presentation Award</span><span lang="ko">우수발표상</span></h3>
-    <p class="where">BK21 Graduate Research Day, Chungnam National University</p></div>
-  </div>
-  <div class="item">
-    <div class="when">Apr. 2025</div>
-    <div><h3><span lang="en">Best Poster Presentation Award — Renewable Energy Resources Session</span><span lang="ko">우수포스터상 — 재생에너지 자원 세션</span></h3>
-    <p class="where"><span lang="en">Spring Annual Conference, Korean Solar Energy Society</span><span lang="ko">한국태양에너지학회 춘계학술대회</span></p></div>
-  </div>
-  <div class="item">
-    <div class="when">Oct. 2024</div>
-    <div><h3><span lang="en">Best Poster Presentation Award — Atmospheric Physics Session</span><span lang="ko">우수포스터상 — 대기물리 세션</span></h3>
-    <p class="where"><span lang="en">Autumn Annual Conference, Korean Meteorological Society</span><span lang="ko">한국기상학회 가을학술대회</span></p></div>
-  </div>
-  <div class="item">
-    <div class="when">Jul. 2021</div>
-    <div><h3><span lang="en">Best Presentation Award</span><span lang="ko">우수발표상</span></h3>
-    <p class="where"><span lang="en">Korea Computer Congress 2021 (KCC2021), KIISE</span><span lang="ko">한국정보과학회 한국컴퓨터종합학술대회 2021 (KCC2021)</span></p></div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-  <h2><span lang="en">Skills</span><span lang="ko">기술</span></h2>
-  <div class="skills">
-    <div class="card">
-      <h3><span lang="en">Programming</span><span lang="ko">프로그래밍</span></h3>
-      <p>Python <span lang="en">(Intermediate)</span><span lang="ko">(중급)</span> · NCL <span lang="en">(Basic)</span><span lang="ko">(기초)</span> · Linux <span lang="en">(Basic)</span><span lang="ko">(기초)</span></p>
-    </div>
-    <div class="card">
-      <h3><span lang="en">Software &amp; Instruments</span><span lang="ko">소프트웨어·장비</span></h3>
-      <p>LabVIEW · Origin · FieldSpec III · Microtops</p>
-    </div>
-    <div class="card">
-      <h3><span lang="en">Language</span><span lang="ko">어학</span></h3>
-      <p>TOEIC Speaking (IM2) · New TEPS (291)</p>
-    </div>
-  </div>
-</section>
-
-<!-- OTHER -->
-<section id="other">
-  <h2><span lang="en">Other Experience</span><span lang="ko">기타 경력</span></h2>
-  <div class="item">
-    <div class="when">Aug. 2023 – Feb. 2024</div>
-    <div><h3><span lang="en">Undergraduate Intern, Atmospheric Sciences Laboratory</span><span lang="ko">대기과학 연구실 학부연구생</span></h3>
-    <p class="where"><span lang="en">Chungnam National University · Advisor: Prof. Yun Gon Lee</span><span lang="ko">충남대학교 · 지도교수: 이윤곤 교수</span></p>
-    <ul><li lang="en">NCL training; study of atmospheric impacts of wildfires and volcanic eruptions.</li><li lang="ko">NCL 기초 훈련, 산불 및 화산 폭발의 대기 영향 연구</li></ul></div>
-  </div>
-  <div class="item">
-    <div class="when">Feb. 2023 – Jul. 2023</div>
-    <div><h3><span lang="en">Undergraduate Intern, Quantum Functional Material and Devices Laboratory</span><span lang="ko">양자기능소재 및 소자 연구실 학부연구생</span></h3>
-    <p class="where"><span lang="en">Dept. of Physics, Chungnam National University · Advisor: Prof. Moon Deock Kim</span><span lang="ko">충남대학교 물리학과 · 지도교수: 김문덕 교수</span></p>
-    <ul><li lang="en">Development of a semiconductor sensor for detecting toxic gases.</li><li lang="ko">유해가스 검출용 반도체 센서 개발 연구</li></ul></div>
-  </div>
-  <div class="item">
-    <div class="when">May 2022 – Oct. 2022</div>
-    <div><h3><span lang="en">Research Intern, KIGAM</span><span lang="ko">한국지질자원연구원(KIGAM) 연구 인턴</span></h3>
-    <p class="where"><span lang="en">Mineral Exploration and Mining Research Center, Resource Exploration and Development Research Division, Daejeon</span><span lang="ko">자원탐사개발연구본부 광물자원탐사개발연구센터, 대전</span></p>
-    <ul><li lang="en">Developed an underground resource exploration device using Arduino and Raspberry Pi.</li><li lang="ko">아두이노·라즈베리파이 기반 지하자원 탐사 장치 개발</li></ul></div>
-  </div>
-</section>
-
+  <footer>© <span id="yr">2026</span> Eunyeong Kim · <span lang="en">Last updated September 2026</span><span lang="ko">최종 업데이트 2026년 9월</span></footer>
 </main>
+</div>
 
-<footer>
-  © <span id="yr">2026</span> Eunyeong Kim ·
-  <span lang="en">Last updated September 2026</span><span lang="ko">최종 업데이트 2026년 9월</span>
-</footer>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script>
+const bi = (en, ko) => `<span lang="en">${en}</span><span lang="ko">${ko}</span>`;
+/* ================= CONTENT — edit here ================= */
+const NEWS = [
+  ["2026.06", "Started a research internship at the Korea Meteorological Administration (Climate Policy Division).", "기상청 기후정책과에서 연구 인턴을 시작했습니다."],
+  ["2026.02", "Completed my M.S. in Atmospheric Sciences at Chungnam National University.", "충남대학교 대기과학 석사 학위를 받았습니다."],
+  ["2025.12", "Presented a poster on sunshine-duration estimation at AGU25 in New Orleans.", "미국 뉴올리언스 AGU25에서 일조시간 추정 연구를 포스터로 발표했습니다."],
+  ["2025.11", "Gave an oral talk at AFORE 2025, Jeju.", "AFORE 2025(제주)에서 구두 발표를 했습니다."],
+  ["2025.10", "KOMPSAT-3 cross-calibration paper published in <i>Remote Sensing</i>.", "KOMPSAT-3 교차검보정 논문이 <i>Remote Sensing</i>에 게재되었습니다."],
+  ["2025.08", "Received the Best Presentation Award at BK21 Graduate Research Day.", "BK21 대학원 연구의 날에서 우수발표상을 받았습니다."],
+];
+
+const PAPERS = [
+  {t:"Absolute Radiometric Calibration of CAS500-1/AEISS-C: Reflectance-Based Vicarious Calibration and Cross-Calibration with Sentinel-2/MSI",
+   a:"Kyung-Bae Choi, Kyoung-Wook Jin, Dong-Hwan Cha, Jin-Hyeok Choi, Yong-Han Jo, Kwang-Nyun Kim, Gwui-Bong Kang, Ho-Yeon Shin, Ji-Yun Lee, <b>Eunyeong Kim</b>, Yun Gon Lee",
+   v:"<i>Remote Sensing</i>, 18(1), 177 · 2026", tag:"SCI", doi:"10.3390/rs18010177"},
+  {t:"Radiometric Cross-Calibration and Validation of KOMPSAT-3/AEISS Using Sentinel-2A/MSI",
+   a:"Jin-Hyeok Choi, Kyoung-Wook Jin, Dong-Hwan Cha, Kyung-Bae Choi, Yong-Han Jo, Kwang-Nyun Kim, Gwui-Bong Kang, Ho-Yeon Shin, Ji-Yun Lee, <b>Eunyeong Kim</b>, Hojong Chang, Yun Gon Lee",
+   v:"<i>Remote Sensing</i>, 17, 3280 · 2025", tag:"SCI", doi:"10.3390/rs17193280"},
+  {t:"Automatic Classification of Questions on Constructing Machine Learning Data Sets with Bi-LSTM",
+   a:"Jinseop Shin, <b>Eunyeong Kim</b>, Sujung Seol, Jueun Kwon, Yeongmin Kim, Ju-Yeon Gang",
+   v:"Korea Computer Congress (KCC) 2021, KIISE", tag:bi("Best Presentation","우수발표상"), award:true},
+];
+
+// type: oral|poster, intl: international venue, lang: EN|KO
+const TALKS = [
+  ["2025.12","Accuracy Evaluation of Sunshine Duration Estimation Using the Clearness Index","AGU Annual Meeting 2025 · New Orleans, USA","poster",true,"EN"],
+  ["2025.11","Development and Evaluation of Sunshine Duration Estimation Model for Solar Power Potential Assessment in South Korea","Asia-Pacific Forum on Renewable Energy (AFORE) 2025 · Jeju","oral",true,"EN"],
+  ["2025.08","Development of Sunshine Duration Estimation Model Using the Clearness Index for Solar Power Generation","BK21 Graduate Research Day · Konjiam","oral",false,"EN",true],
+  ["2025.05","Evaluating the Prediction of Solar Power Generation from Global, Diffuse, Direct Radiation and Meteorological Factors","The Korean Society for New and Renewable Energy, Spring Conference · Busan","poster",false,"KO"],
+  ["2025.04","Development and Evaluation of Empirical and DNN Models for Estimating Sunshine Hours Based on the Clearness Index in South Korea","Korean Solar Energy Society, Spring Conference · Boryeong","poster",false,"KO",true],
+  ["2024.11","The Estimation of Surface Solar Irradiance Based on GK-2A Satellite Data and the Analysis of the Relationship between Solar PV Power Generation and Meteorological Factors","Asia-Pacific Forum on Renewable Energy (AFORE) 2024 · Jeju","poster",true,"KO"],
+  ["2024.10","Quantitative Analysis of the Relationship between Solar Power Generation, Solar Irradiance, and Meteorological Factors","Korean Meteorological Society, Autumn Conference · Daegu","poster",false,"KO",true],
+];
+
+// [when, title_en, title_ko, sub_en, sub_ko, bullets_en[], bullets_ko[]]
+const EDU = [
+  ["2024.03 – 2026.02","M.S. in Atmospheric Sciences","대기과학 석사","Dept. of Earth, Environmental & Space Sciences, Chungnam National University · GPA 4.22/4.5 · Advisor: Prof. Yun Gon Lee","충남대학교 지구환경우주과학과 · 평점 4.22/4.5 · 지도교수 이윤곤"],
+  ["2021.03 – 2024.02","B.S. in Physics","물리학 학사","Dept. of Physics, Chungnam National University","충남대학교 물리학과"],
+  ["2019.03 – 2021.02","Undergraduate coursework in Physics","물리학과 재학 (편입 전)","Jeonbuk National University — prior to transfer","전북대학교 물리학과 — 충남대학교 편입 전 과정 이수"],
+];
+const EXP = [
+  ["2026.06 – now","Research Intern, Korea Meteorological Administration","기상청 연구 인턴","Climate Policy Division, Climate Science Bureau · Daejeon","기후과학국 기후정책과 · 정부대전청사",
+    ["Lead-time-dependent forecast skill of surface downward shortwave radiation from GloSea6 hindcasts; Climate Impact Driver analysis."],
+    ["GloSea6 과거재현자료 기반 선행시간별 지표 하향단파복사 예측성 평가, 기후영향인자(CIDs) 분석"]],
+  ["2025.01 – 2025.02","International Training — Deep Learning & Applications Workshop","국제 연수 — 딥러닝 및 응용 워크숍","ECHO Institute, Chapman University · Orange, CA, USA","미국 채프먼대학교 ECHO 연구소 · 캘리포니아 오렌지",
+    ["Atmospheric science and deep learning seminars; international research exchange."],["대기과학·딥러닝 세미나 및 국제 연구 교류"]],
+  ["2024.06","International Field Measurement Campaign","국제 현장관측 캠페인","Zuunmod, Mongolia · with KARI (Korea) and IRIMHE (Mongolia)","몽골 준모드 · 한국항공우주연구원(KARI)·몽골 기상수문환경연구소(IRIMHE)",
+    ["Surface reflectance measurements and radiometric calibration/validation for satellite remote sensing."],["위성 원격탐사를 위한 지표 반사도 측정 및 복사 검·보정 분석"]],
+  ["2020 – 2022","Student Assistant, KISTI","한국과학기술정보연구원(KISTI) 학생연구원","Data Curation Center, Division of AI·Data · Daejeon (summer & winter terms)","AI·데이터본부 데이터큐레이션센터 · 대전 (하계·동계)",
+    ["Machine-learning dataset construction; public-service project on stream water-level measurement in Daejeon, incl. measurement & networking equipment."],["머신러닝 데이터셋 구축, 대전 하천 수위 측정 공공연구 과제 참여 (측정·네트워크 장비 개발 포함)"]],
+];
+const AWARDS = [
+  ["2025.08","Best Presentation Award","우수발표상","BK21 Graduate Research Day, Chungnam National University","BK21 대학원 연구의 날, 충남대학교"],
+  ["2025.04","Best Poster Presentation Award — Renewable Energy Resources","우수포스터상 — 재생에너지 자원 세션","Korean Solar Energy Society, Spring Conference","한국태양에너지학회 춘계학술대회"],
+  ["2024.10","Best Poster Presentation Award — Atmospheric Physics","우수포스터상 — 대기물리 세션","Korean Meteorological Society, Autumn Conference","한국기상학회 가을학술대회"],
+  ["2021.07","Best Presentation Award","우수발표상","Korea Computer Congress 2021 (KCC2021), KIISE","한국정보과학회 KCC2021"],
+];
+const PROJECTS = [
+  ["2025","★ Improving tailored weather-information production for the energy sector","★ 에너지기상 맞춤형 기상정보 생산기술 개선","Korea Meteorological Administration","기상청"],
+  ["2024","★ Development of energy-tailored weather-information production technology","★ 에너지 맞춤형 기상정보 생산 기술개발","Korea Meteorological Institute of Technology & Industry","한국기상산업기술원"],
+  ["—","★ Field campaign for advancing quality validation of optical medium-resolution satellite imagery","★ 광학 중해상도 위성영상 품질검증 체계 수립 고도화를 위한 필드캠페인","Korea Aerospace Research Institute","한국항공우주연구원"],
+  ["—","★ Space system integration and effect-analysis technology development","★ 대우주 시스템 통합 및 효과 분석 기술 개발","Korea Astronomy and Space Science Institute","한국천문연구원"],
+  ["—","Environmental-satellite-based application products and data production (II)","환경위성 기반 활용산출물 개발 및 자료 생산(II)","National Institute of Environmental Research","한국환경과학원"],
+  ["—","Meteorological satellite convergence application technology","기상위성 융합 활용 기술개발 사업","Korea Meteorological Institute of Technology & Industry","한국기상산업기술원"],
+];
+const SKILLS = [
+  ["Code","Python (intermediate) · NCL (basic) · Linux (basic)","Python (중급) · NCL (기초) · Linux (기초)"],
+  ["Tools","LabVIEW · Origin · FieldSpec III · Microtops","LabVIEW · Origin · FieldSpec III · Microtops"],
+  ["English","TOEIC Speaking IM2 · New TEPS 291","TOEIC Speaking IM2 · New TEPS 291"],
+];
+const OTHER = [
+  ["2023.08 – 2024.02","Undergraduate Intern, Atmospheric Sciences Lab","대기과학 연구실 학부연구생","Chungnam National University · Prof. Yun Gon Lee","충남대학교 · 이윤곤 교수",["NCL training; atmospheric impacts of wildfires and volcanic eruptions."],["NCL 기초 훈련, 산불·화산 폭발의 대기 영향 연구"]],
+  ["2023.02 – 2023.07","Undergraduate Intern, Quantum Functional Material & Devices Lab","양자기능소재 및 소자 연구실 학부연구생","Dept. of Physics, Chungnam National University · Prof. Moon Deock Kim","충남대학교 물리학과 · 김문덕 교수",["Semiconductor sensor for detecting toxic gases."],["유해가스 검출용 반도체 센서 개발"]],
+  ["2022.05 – 2022.10","Research Intern, KIGAM","한국지질자원연구원 연구 인턴","Mineral Exploration and Mining Research Center · Daejeon","광물자원탐사개발연구센터 · 대전",["Underground resource exploration device using Arduino and Raspberry Pi."],["아두이노·라즈베리파이 기반 지하자원 탐사 장치 개발"]],
+];
+const PLACES = [
+  ["47.71°N 106.95°E","Zuunmod, Mongolia","몽골 준모드","Satellite cal/val field campaign · 2024","위성 검·보정 현장관측 · 2024"],
+  ["33.79°N 117.85°W","Orange, California","미국 캘리포니아 오렌지","Deep-learning workshop, Chapman Univ. · 2025","채프먼대학교 딥러닝 워크숍 · 2025"],
+  ["29.95°N 90.07°W","New Orleans, Louisiana","미국 루이지애나 뉴올리언스","AGU Annual Meeting · 2025","AGU 연례학회 · 2025"],
+  ["33.50°N 126.53°E","Jeju, Korea","제주","AFORE · 2024, 2025","AFORE · 2024, 2025"],
+  ["36.35°N 127.38°E","Daejeon, Korea","대전","Home base — CNU, KISTI, KIGAM, KMA","주 무대 — 충남대, KISTI, 지질자원연구원, 기상청"],
+];
+/* ======================================================= */
+
+const $ = s => document.querySelector(s);
+const row = (when, inner) => `<div class="row"><div class="when">${when}</div><div class="what">${inner}</div></div>`;
+const cvRow = r => row(r[0], `<div class="t">${bi(r[1].replace('★','<span class="star">★</span>'), r[2].replace('★','<span class="star">★</span>'))}</div><div class="s">${bi(r[3], r[4])}</div>` +
+  (r[5] ? `<ul lang="en">${r[5].map(x=>`<li>${x}</li>`).join('')}</ul><ul lang="ko">${r[6].map(x=>`<li>${x}</li>`).join('')}</ul>` : ''));
+
+$('#news').innerHTML = NEWS.map(n => row(n[0], bi(n[1], n[2]))).join('');
+$('#papers').innerHTML = PAPERS.map(p => `<div class="paper"><div class="t">${p.t}</div><div class="a">${p.a}</div>
+  <div class="v">${p.v}<span class="tag ${p.award?'award':''}">${p.tag}</span>${p.doi?` · <a href="https://doi.org/${p.doi}" target="_blank" rel="noopener">doi:${p.doi}</a>`:''}</div></div>`).join('');
+$('#edu').innerHTML = EDU.map(cvRow).join('');
+$('#exp').innerHTML = EXP.map(cvRow).join('');
+$('#awards').innerHTML = AWARDS.map(cvRow).join('');
+$('#projects').innerHTML = PROJECTS.map(cvRow).join('');
+$('#other').innerHTML = OTHER.map(cvRow).join('');
+$('#skills').innerHTML = SKILLS.map(s => row(s[0], bi(s[1], s[2]))).join('');
+$('#places').innerHTML = PLACES.map(p => `<div class="place"><div class="c">${p[0]}</div><div class="n">${bi(p[1],p[2])}</div><div class="d">${bi(p[3],p[4])}</div></div>`).join('');
+
+function renderTalks(f){
+  const list = TALKS.filter(t => f==='all' || (f==='intl' ? t[4] : t[3]===f));
+  $('#talks').innerHTML = list.map(t => row(t[0], `<div class="t">${t[1]}</div><div class="s">${t[2]}
+    <span class="tag ${t[3]==='oral'?'oral':''}">${t[3]==='oral'?bi('Oral','구두'):bi('Poster','포스터')}</span><span class="tag">${t[5]}</span>${t[6]?`<span class="tag award">${bi('Award','수상')}</span>`:''}</div>`)).join('');
+}
+renderTalks('all');
+document.querySelectorAll('#talkFilters button').forEach(b => {
+  const f=b.dataset.f, n=TALKS.filter(t => f==='all' || (f==='intl'?t[4]:t[3]===f)).length;
+  b.insertAdjacentHTML('beforeend', `<span class="count">${n}</span>`);
+  b.onclick = () => { document.querySelectorAll('#talkFilters button').forEach(x=>x.setAttribute('aria-pressed', x===b)); renderTalks(f); };
+});
+
+/* tabs */
+const TABS = ['about','research','publications','cv','beyond'];
+function show(tab, push){
+  if(!TABS.includes(tab)) tab='about';
+  document.querySelectorAll('#tabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.tab===tab));
+  TABS.forEach(t => $('#p-'+t).hidden = t!==tab);
+  if(push){ try{ history.replaceState(null,'','#'+tab); }catch(e){} }
+}
+document.querySelectorAll('#tabs button').forEach(b => b.onclick = () => { show(b.dataset.tab, true); if(innerWidth<=860) $('#tabs').scrollIntoView({behavior:'smooth'}); });
+document.querySelectorAll('[data-go]').forEach(a => a.onclick = e => { e.preventDefault(); show(a.dataset.go, true); $('#tabs').scrollIntoView({behavior:'smooth'}); });
+show(location.hash.slice(1));
+
+/* language + theme */
+const root=document.documentElement;
+const store={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}}, set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+function setLang(l){ root.lang=l; $('#langBtn').textContent = l==='en'?'한국어':'English'; store.set('lang',l); }
+setLang(store.get('lang') || ((navigator.language||'').toLowerCase().startsWith('ko') ? 'ko' : 'en'));
+$('#langBtn').onclick = () => setLang(root.lang==='en'?'ko':'en');
+const savedTheme=store.get('theme'); if(savedTheme) root.dataset.theme=savedTheme;
+$('#themeBtn').onclick = () => {
+  const dark = root.dataset.theme ? root.dataset.theme==='dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = dark?'light':'dark'; store.set('theme', root.dataset.theme);
+};
+$('#copyMail').onclick = () => {
+  const done = m => { const c=$('#copied'); c.textContent=m; c.hidden=false; setTimeout(()=>c.hidden=true,1600); };
+  (navigator.clipboard ? navigator.clipboard.writeText('eykim129@gmail.com') : Promise.reject())
+    .then(()=>done(root.lang==='ko'?'복사됨':'copied'))
+    .catch(()=>{ location.href='mailto:eykim129@gmail.com'; });
+};
+$('#yr').textContent = new Date().getFullYear();
+
+/* isobars: a synthetic pressure field drawn as contours (decorative) */
 (function(){
-  var root=document.documentElement, langBtn=document.getElementById('langBtn'), themeBtn=document.getElementById('themeBtn');
-  function get(k){try{return localStorage.getItem(k)}catch(e){return null}}
-  function set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
-  function setLang(l){root.lang=l;langBtn.textContent=l==='en'?'한국어':'English';set('lang',l);}
-  var saved=get('lang');
-  setLang(saved || ((navigator.language||'').toLowerCase().indexOf('ko')===0 && location.hash!=='#en' ? 'ko' : 'en'));
-  langBtn.onclick=function(){setLang(root.lang==='en'?'ko':'en')};
-  var t=get('theme'); if(t) root.setAttribute('data-theme',t);
-  themeBtn.onclick=function(){
-    var dark = root.getAttribute('data-theme') ? root.getAttribute('data-theme')==='dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-    var nt = dark?'light':'dark'; root.setAttribute('data-theme',nt); set('theme',nt);
-  };
-  document.getElementById('yr').textContent=new Date().getFullYear();
+  if(!window.d3) return;
+  const svg=d3.select('#iso'), W=120, H=200;
+  const centers=[[20,40,14,22],[95,70,-12,26],[40,140,10,30],[105,165,-9,20],[70,110,5,18]];
+  const vals=new Float64Array(W*H);
+  for(let j=0;j<H;j++) for(let i=0;i<W;i++){
+    let v=1012 + (j/H)*3;
+    for(const [cx,cy,a,s] of centers) v += a*Math.exp(-((i-cx)**2+(j-cy)**2)/(2*s*s));
+    vals[j*W+i]=v;
+  }
+  const th=d3.range(996,1030,2);
+  const paths=d3.contours().size([W,H]).thresholds(th)(vals);
+  svg.attr('viewBox',`0 0 ${W} ${H}`).attr('preserveAspectRatio','xMidYMid slice');
+  svg.selectAll('path').data(paths).join('path').attr('d',d3.geoPath())
+    .attr('fill','none').attr('stroke','var(--iso)').attr('stroke-width',d=>d.value%8===0?1.1:.7)
+    .attr('stroke-opacity',d=>d.value%8===0?.32:.18).attr('vector-effect','non-scaling-stroke');
+  svg.selectAll('text').data(centers.filter(c=>c[0]>30&&c[0]<100)).join('text').attr('x',d=>d[0]).attr('y',d=>d[1]+2)
+    .attr('text-anchor','middle').attr('font-size',6).attr('font-family','IBM Plex Mono, monospace')
+    .attr('fill',d=>d[2]>0?'var(--accent)':'var(--accent-2)').attr('opacity',.35).text(d=>d[2]>0?'H':'L');
 })();
 </script>
 </body>
