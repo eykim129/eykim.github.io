@@ -193,8 +193,8 @@ footer{font-size:12px;color:var(--faint);padding-top:8px}
     <h3 class="sub" id="presentations">Presentations &amp; Awards</h3>
     <div class="filters" id="talkFilters">
       <button type="button" data-f="all" aria-pressed="true">All</button>
-      <button type="button" data-f="oral" aria-pressed="false">Oral</button>
-      <button type="button" data-f="poster" aria-pressed="false">Poster</button>
+      <button type="button" data-f="domestic" aria-pressed="false">Domestic</button>
+      <button type="button" data-f="international" aria-pressed="false">International</button>
     </div>
     <ol class="refs" id="talks"></ol>
     <h3>Awards</h3>
@@ -282,15 +282,15 @@ const PAPERS = [
    t:"Automatic classification of questions on constructing machine learning data sets with Bi-LSTM.", v:"<i>Korea Computer Congress (KCC) 2021</i>, KIISE.", note:"Best Presentation Award"},
 ];
 
-// Presentations   [date, title, "oral"/"poster", venue & place, language, award (or "")]
+// Presentations   [date, title, "oral"/"poster", venue & place, language, award (or ""), "domestic"/"international"]
 const TALKS = [
-  ["2025, December","Accuracy evaluation of sunshine duration estimation using the clearness index.","poster","AGU Annual Meeting 2025, New Orleans, LA, USA","English",""],
-  ["2025, November","Development and evaluation of sunshine duration estimation model for solar power potential assessment in South Korea.","oral","Asia-Pacific Forum on Renewable Energy (AFORE) 2025, Jeju, South Korea","English",""],
-  ["2025, August","Development of sunshine duration estimation model using the clearness index for solar power generation.","oral","BK21 Graduate Research Day, Chungnam National University, Konjiam, South Korea","English","Best Presentation Award"],
-  ["2025, May","Evaluating the prediction of solar power generation from global, diffuse, direct radiation and meteorological factors.","poster","Spring Conference, The Korean Society for New and Renewable Energy, Busan, South Korea","Korean",""],
-  ["2025, April","Development and evaluation of empirical and DNN models for estimating sunshine hours based on the clearness index in South Korea.","poster","Spring Conference, Korean Solar Energy Society, Boryeong, South Korea","Korean","Best Poster Presentation Award"],
-  ["2024, November","The estimation of surface solar irradiance based on GK-2A satellite data and the analysis of the relationship between solar photovoltaic power generation and meteorological factors.","poster","Asia-Pacific Forum on Renewable Energy (AFORE) 2024, Jeju, South Korea","Korean",""],
-  ["2024, October","Quantitative analysis of the relationship between solar power generation, solar irradiance, and meteorological factors.","poster","Autumn Conference, Korean Meteorological Society, Daegu, South Korea","Korean","Best Poster Presentation Award"],
+  ["2025, December","Accuracy evaluation of sunshine duration estimation using the clearness index.","poster","AGU Annual Meeting 2025, New Orleans, LA, USA","English","","international"],
+  ["2025, November","Development and evaluation of sunshine duration estimation model for solar power potential assessment in South Korea.","oral","Asia-Pacific Forum on Renewable Energy (AFORE) 2025, Jeju, South Korea","English","","international"],
+  ["2025, August","Development of sunshine duration estimation model using the clearness index for solar power generation.","oral","BK21 Graduate Research Day, Chungnam National University, Konjiam, South Korea","English","Best Presentation Award","domestic"],
+  ["2025, May","Evaluating the prediction of solar power generation from global, diffuse, direct radiation and meteorological factors.","poster","Spring Conference, The Korean Society for New and Renewable Energy, Busan, South Korea","Korean","","domestic"],
+  ["2025, April","Development and evaluation of empirical and DNN models for estimating sunshine hours based on the clearness index in South Korea.","poster","Spring Conference, Korean Solar Energy Society, Boryeong, South Korea","Korean","Best Poster Presentation Award","domestic"],
+  ["2024, November","The estimation of surface solar irradiance based on GK-2A satellite data and the analysis of the relationship between solar photovoltaic power generation and meteorological factors.","poster","Asia-Pacific Forum on Renewable Energy (AFORE) 2024, Jeju, South Korea","Korean","","international"],
+  ["2024, October","Quantitative analysis of the relationship between solar power generation, solar irradiance, and meteorological factors.","poster","Autumn Conference, Korean Meteorological Society, Daegu, South Korea","Korean","Best Poster Presentation Award","domestic"],
 ];
 
 // Awards   [award, date, where]
@@ -359,7 +359,7 @@ $('#other').innerHTML = OTHER.map(e=>item(e[0],e[1],e[2],e[3])).join('');
 $('#places').innerHTML = PLACES.map(p=>`<div class="place"><div class="n">${p[0]}</div><div class="x">${p[1]||''}</div></div>`).join('');
 
 function renderTalks(f){
-  const list = TALKS.filter(t=>f==='all'||t[2]===f);
+  const list = TALKS.filter(t=>f==='all'||t[6]===f);
   const ol=$("#talks");
   ol.innerHTML = list.map(t=>`<li>(${t[0]}). ${t[1]} <span class="kind">${t[2]==='oral'?'Oral':'Poster'} presentation.</span>
     ${t[5]?`<span class="award">${t[5]}</span>`:''}<span class="venue">${t[3]} · in ${t[4]}</span></li>`).join('');
