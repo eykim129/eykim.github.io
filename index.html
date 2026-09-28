@@ -113,9 +113,18 @@ ol.refs > li::marker{color:var(--muted);font-size:12.5px}
 .skills dd{margin:0;color:var(--ink)}
 
 .gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.year{display:flex;align-items:center;gap:12px;margin:30px 0 14px;font-size:15px;font-weight:800;color:var(--ink);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
-.year:first-child{margin-top:0}
-.year::after{content:"";flex:1;height:1px;background:var(--line)}
+.yr{margin-top:22px}
+.yr:first-child{margin-top:0}
+.yr > summary{list-style:none;display:flex;align-items:center;gap:10px;padding:6px 0;cursor:pointer;user-select:none;
+  font-size:15px;font-weight:800;color:var(--ink);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.yr > summary::-webkit-details-marker{display:none}
+.yr > summary::after{content:"";flex:1;height:1px;background:var(--line);order:2}
+.yr > summary .chev{order:3;width:16px;height:16px;color:var(--muted);transition:transform .25s ease}
+.yr:not([open]) > summary .chev{transform:rotate(-90deg)}
+.yr > summary .cnt{order:1;font-size:11.5px;font-weight:500;color:var(--faint)}
+.yr > summary:hover{color:var(--accent)}
+.yr > summary:hover .chev{color:var(--accent)}
+.yr > .gallery{padding-top:10px;animation:fadeIn .3s ease both}
 .shot{margin:0;min-width:0}
 .shot .frame{display:block;width:100%;aspect-ratio:4/3;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--accent-soft);padding:0;cursor:zoom-in}
 .shot img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
@@ -352,6 +361,8 @@ const OTHER = [
 // Put photos in the assets/gallery/ folder and write the file name here, e.g. "assets/gallery/agu2025.jpg".
 // Leave the file name as "" to show an empty "photo coming soon" box. Leave event/place "" to show no caption.
 // To add a slot, copy a line and change the year. Years are shown in the order of GALLERY_YEARS.
+// Click a year on the page to fold/unfold it. Years listed in GALLERY_CLOSED start folded, e.g. ["2024"].
+const GALLERY_CLOSED = [];
 const GALLERY_YEARS = ["2026", "2025", "2024"];
 const GALLERY = [
   // 2026
@@ -397,8 +408,10 @@ const shot = (g,i) => `<figure class="shot">
 const years = GALLERY_YEARS.concat([...new Set(GALLERY.map(g=>g[0]))].filter(y=>!GALLERY_YEARS.includes(y)));
 $('#gallery').innerHTML = years.map(y => {
   const items = GALLERY.map((g,i)=>[g,i]).filter(([g])=>g[0]===y);
-  return items.length ? `<div class="year">${y}</div><div class="gallery">${items.map(([g,i])=>shot(g,i)).join('')}</div>` : '';
+  const photos = items.filter(([g])=>g[1]).length;
+  return items.length ? `<details class="yr" open><summary><span>${y}</span><span class="cnt">${photos} photo${photos===1?'':'s'}</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><div class="gallery">${items.map(([g,i])=>shot(g,i)).join('')}</div></details>` : '';
 }).join('');
+$$('#gallery details.yr').forEach(d=>{ if(GALLERY_CLOSED.includes(d.querySelector('summary span').textContent)) d.open=false; });
 $$('#gallery img').forEach(img=>img.onerror=()=>{ const f=img.closest('.frame'); f.outerHTML=`<div class="frame" style="cursor:default;border:0;background:none">${EMPTY}</div>`; });
 const lb=$('#lightbox');
 $$('#gallery button.frame').forEach(b=>b.onclick=()=>{ const g=GALLERY[b.dataset.i]; lb.querySelector('img').src=g[1]; lb.querySelector('img').alt=g[2]; lb.querySelector('p').textContent=[g[2],g[3]].filter(Boolean).join(' — '); lb.hidden=false; });
