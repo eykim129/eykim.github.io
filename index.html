@@ -35,37 +35,49 @@ a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 
-/* ---------- left sidebar ---------- */
-.side{position:fixed;left:0;top:0;bottom:0;width:288px;background:var(--side);border-right:1px solid var(--line);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 14px;text-align:center;overflow:hidden}
+/* ---------- top profile header (fixed; shrinks to a slim bar on scroll) ---------- */
+.side{position:fixed;left:0;right:0;top:0;z-index:20;background:var(--side);border-bottom:1px solid var(--line);overflow:hidden;
+  transition:box-shadow .3s ease}
+.side.compact{box-shadow:0 4px 18px rgba(0,0,0,.06)}
 .side svg.iso{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.side > *:not(svg){position:relative}
-.switch{position:absolute!important;left:14px;top:14px;width:36px;height:20px;border-radius:999px;border:0;padding:0;cursor:pointer;background:var(--accent)}
+.side .inner{position:relative;max-width:640px;margin:0 auto;padding:30px 16px 24px;display:flex;align-items:center;gap:24px;
+  transition:padding .35s ease,gap .35s ease}
+.side.compact .inner{padding:10px 16px;gap:14px}
+.switch{position:absolute;left:14px;top:14px;z-index:2;width:36px;height:20px;border-radius:999px;border:0;padding:0;cursor:pointer;background:var(--accent);transition:top .35s ease}
+.side.compact .switch{top:50%;margin-top:-10px}
 .switch::after{content:"";position:absolute;top:2px;left:18px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .25s ease}
 :root[data-theme="dark"] .switch::after{left:2px}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .switch::after{left:2px} }
 .switch .sun{position:absolute;left:5px;top:5px;width:10px;height:10px;border-radius:50%;background:#f3c14b}
-.photo{width:148px;height:148px;border-radius:50%;object-fit:cover;border:1.5px solid var(--accent);padding:3px;background:var(--side)}
-.name{font-size:20px;font-weight:700;color:var(--ink);margin:14px 0 8px;letter-spacing:-.01em}
-.pills{display:flex;flex-direction:column;align-items:center;gap:5px;width:100%}
-.pills > div{display:flex;justify-content:center;gap:5px}
+.photo{width:120px;height:120px;flex-shrink:0;border-radius:50%;object-fit:cover;border:1.5px solid var(--accent);padding:3px;background:var(--side);
+  transition:width .35s ease,height .35s ease,padding .35s ease}
+.side.compact .photo{width:40px;height:40px;padding:1.5px}
+.who{flex:1;min-width:0}
+.who .top{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.name{font-size:24px;font-weight:800;color:var(--ink);margin:0;letter-spacing:-.02em;transition:font-size .35s ease}
+.side.compact .name{font-size:16px;font-weight:700}
+.more{max-height:220px;opacity:1;overflow:hidden;transition:max-height .4s ease,opacity .25s ease}
+.side.compact .more{max-height:0;opacity:0}
+.pills{display:flex;flex-direction:column;align-items:flex-start;gap:5px;margin-top:10px}
+.pills > div{display:flex;flex-wrap:wrap;gap:5px}
 .pills span{border:1px solid var(--accent-line);background:var(--accent-soft);color:var(--ink);border-radius:999px;padding:2px 9px;font-size:11.5px;white-space:nowrap}
-.aff{margin:14px 0 4px;font-size:12px;color:var(--text)}
-.tagline{margin:0;font-size:12px;color:var(--muted);max-width:230px;line-height:1.55}
-.icons{display:flex;gap:16px;margin-top:14px}
+.aff{margin:10px 0 2px;font-size:12px;color:var(--text)}
+.tagline{margin:0;font-size:12px;color:var(--muted);line-height:1.55}
+.icons{display:flex;gap:14px;margin-left:auto}
 .icons a,.icons button{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font:500 10.5px/1.2 Inter,sans-serif;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 .icons a:hover,.icons button:hover{color:var(--accent)}
 .icons svg{width:15px;height:15px}
-.toast{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--gold)}
+.toast{position:absolute;right:16px;bottom:6px;font-size:11px;color:var(--gold)}
+.spacer{height:var(--head,200px)}
 
 /* ---------- main column ---------- */
-main{margin-left:288px;padding:28px 72px 80px 56px;display:flex;flex-direction:column;align-items:center;gap:20px}
+main{padding:24px 56px 80px;display:flex;flex-direction:column;align-items:center;gap:20px}
 .card{width:100%;max-width:640px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
-  padding:30px 32px 26px;scroll-margin-top:20px}
+  padding:30px 32px 26px;scroll-margin-top:100px}
 .card h2{font-size:26px;font-weight:800;color:var(--ink);margin:0 0 20px;letter-spacing:-.02em}
 .card h3{font-size:13px;font-weight:700;color:var(--ink);margin:26px 0 10px;text-transform:uppercase;letter-spacing:.06em}
 .card p{margin:0 0 10px}
-.card h3.sub{font-size:19px;font-weight:700;text-transform:none;letter-spacing:-.01em;margin:34px 0 14px;padding-top:24px;border-top:1px solid var(--line);scroll-margin-top:20px}
+.card h3.sub{font-size:19px;font-weight:700;text-transform:none;letter-spacing:-.01em;margin:34px 0 14px;padding-top:24px;border-top:1px solid var(--line);scroll-margin-top:100px}
 .card h2 + h3.sub{margin-top:0;padding-top:0;border-top:0}
 .muted{color:var(--muted)}
 .reveal{transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
@@ -153,9 +165,15 @@ footer{font-size:12px;color:var(--faint);padding-top:8px}
 
 
 /* ---------- small screens ---------- */
+@media (max-width:560px){
+  .side .inner{padding:44px 16px 18px;gap:16px;align-items:flex-start}
+  .photo{width:84px;height:84px}
+  .name{font-size:21px}
+  .icons{margin-left:0}
+  .switch{left:auto;right:14px}
+}
 @media (max-width:900px){
-  .side{position:relative;width:auto;border-right:0;border-bottom:1px solid var(--line);padding:48px 16px 28px}
-  main{margin-left:0;padding:20px 16px 64px}
+  main{padding:20px 16px 64px}
   .card{padding:24px 18px 20px}
   .dots{right:6px}
   .dots a .lb{display:none}
@@ -164,11 +182,25 @@ footer{font-size:12px;color:var(--faint);padding-top:8px}
 </head>
 <body>
 
-<aside class="side">
+<header class="side" id="head">
   <svg class="iso" id="iso" aria-hidden="true"></svg>
   <button class="switch" id="themeBtn" type="button" aria-label="Toggle dark mode"><span class="sun"></span></button>
+  <div class="inner">
   <img class="photo" src="assets/profile.jpg" alt="Eunyeong Kim">
+  <div class="who">
+  <div class="top">
   <div class="name">Eunyeong Kim</div>
+  <div class="icons">
+    <button type="button" id="copyMail" title="Copy email address">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4 7v1.8l8 5.2 8-5.2V7z"/></svg>Email
+    </button>
+    <a href="https://scholar.google.com/citations?user=5iAaY5YAAAAJ" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9.5l4 2.4V17c0 .6.3 1.1.8 1.4C7.6 19.4 9.7 20 12 20s4.4-.6 6.2-1.6c.5-.3.8-.8.8-1.4v-5.1l2-1.2V16h2V9.5z"/></svg>Scholar
+    </a>
+    <!-- Add later: <a href="assets/cv.pdf" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 2h8l6 6v14H6z"/></svg>CV</a> -->
+  </div>
+  </div>
+  <div class="more">
   <div class="pills">
   <div>
     <span>Atmospheric Science</span>
@@ -181,17 +213,12 @@ footer{font-size:12px;color:var(--faint);padding-top:8px}
 </div>
   <p class="aff">Daejeon, South Korea</p>
   <p class="tagline">My research interests focus on understanding the impacts of climate change on human and natural systems.</p>
-  <div class="icons">
-    <button type="button" id="copyMail" title="Copy email address">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4 7v1.8l8 5.2 8-5.2V7z"/></svg>Email
-    </button>
-    <a href="https://scholar.google.com/citations?user=5iAaY5YAAAAJ" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9.5l4 2.4V17c0 .6.3 1.1.8 1.4C7.6 19.4 9.7 20 12 20s4.4-.6 6.2-1.6c.5-.3.8-.8.8-1.4v-5.1l2-1.2V16h2V9.5z"/></svg>Scholar
-    </a>
-    <!-- Add later: <a href="assets/cv.pdf" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 2h8l6 6v14H6z"/></svg>CV</a> -->
+  </div>
+  </div>
   </div>
   <span class="toast" id="toast" hidden>Email copied</span>
-</aside>
+</header>
+<div class="spacer" aria-hidden="true"></div>
 
 <main>
   <!-- ABOUT -->
@@ -462,11 +489,20 @@ $('#copyMail').onclick=()=>{
 };
 $('#yr').textContent=new Date().getFullYear();
 
-/* faint isobars behind the sidebar (decorative, synthetic field) */
+/* top header: reserve its full height, then shrink it to a slim bar once the page scrolls */
+(function(){
+  const head=$('#head');
+  function measure(){ const c=head.classList.contains('compact'); head.classList.remove('compact'); document.documentElement.style.setProperty('--head', head.offsetHeight+'px'); head.classList.toggle('compact',c); }
+  function onScroll(){ const y=scrollY; if(y>60) head.classList.add('compact'); else if(y<20) head.classList.remove('compact'); }
+  measure(); addEventListener('resize',measure); addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  if(document.fonts) document.fonts.ready.then(measure);
+})();
+
+/* faint isobars behind the header (decorative, synthetic field) */
 (function(){
   if(!window.d3) return;
-  const svg=d3.select('#iso'), W=100, H=200;
-  const C=[[15,30,12,20],[90,60,-10,22],[30,150,9,26],[95,175,-8,18]];
+  const svg=d3.select('#iso'), W=200, H=60;
+  const C=[[20,15,12,16],[80,50,-10,18],[140,10,9,20],[185,45,-8,14]];
   const v=new Float64Array(W*H);
   for(let j=0;j<H;j++) for(let i=0;i<W;i++){ let x=1012+(j/H)*2; for(const [cx,cy,a,s] of C) x+=a*Math.exp(-((i-cx)**2+(j-cy)**2)/(2*s*s)); v[j*W+i]=x; }
   svg.attr('viewBox',`0 0 ${W} ${H}`).attr('preserveAspectRatio','xMidYMid slice');
