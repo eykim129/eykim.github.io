@@ -111,14 +111,21 @@ ol.refs > li::marker{color:var(--muted);font-size:12.5px}
 .skills dt{color:var(--muted)}
 .skills dd{margin:0;color:var(--ink)}
 
-.figure{margin:0 0 16px;border-radius:10px;overflow:hidden}
-.figure img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;object-position:center 55%}
-.figure figcaption{font-size:12px;color:var(--muted);padding-top:8px}
-.places{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
-.place{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
-.place .c{font-size:11px;color:var(--accent);font-variant-numeric:tabular-nums}
-.place .n{font-weight:600;color:var(--ink)}
-.place .x{font-size:12px;color:var(--muted)}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.shot{margin:0;min-width:0}
+.shot .frame{display:block;width:100%;aspect-ratio:4/3;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--accent-soft);padding:0;cursor:zoom-in}
+.shot img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.shot .frame:hover img{transform:scale(1.04)}
+.shot .empty{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--faint);font-size:11px;border:1.5px dashed var(--accent-line);border-radius:10px;cursor:default}
+.shot .empty svg{width:22px;height:22px}
+.shot figcaption{padding-top:7px}
+.shot .n{font-weight:600;color:var(--ink);font-size:13px;line-height:1.4}
+.shot .x{font-size:11.5px;color:var(--muted);line-height:1.45}
+.lightbox{position:fixed;inset:0;z-index:50;background:rgba(10,12,14,.86);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;cursor:zoom-out}
+.lightbox[hidden]{display:none}
+.lightbox img{max-width:100%;max-height:82vh;border-radius:8px}
+.lightbox p{color:#e8eaec;font-size:13px;margin:0;text-align:center}
+@media (max-width:560px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 footer{font-size:12px;color:var(--faint);padding-top:8px}
 
@@ -179,8 +186,6 @@ footer{font-size:12px;color:var(--faint);padding-top:8px}
   <section class="card reveal" id="education">
     <h2>Education</h2>
     <div class="items" id="edu"></div>
-    <h3>Skills</h3>
-    <dl class="skills" id="skills"></dl>
   </section>
 
   <!-- RESEARCH: Publications + Presentations & Awards -->
@@ -209,6 +214,9 @@ footer{font-size:12px;color:var(--faint);padding-top:8px}
     <h3 class="sub" id="projects-sec">Projects <span class="muted" style="font-size:13px;font-weight:500">— <span class="star">★</span> key contribution</span></h3>
     <div class="items" id="projects"></div>
 
+    <h3 class="sub" id="skills-sec">Skills</h3>
+    <dl class="skills" id="skills"></dl>
+
     <h3 class="sub" id="other-sec">Other Experience</h3>
     <div class="items" id="other"></div>
   </section>
@@ -216,16 +224,13 @@ footer{font-size:12px;color:var(--faint);padding-top:8px}
   <!-- BEYOND -->
   <section class="card reveal" id="beyond">
     <h2>Beyond the Lab</h2>
-    <figure class="figure">
-      <img src="assets/banner.jpg" alt="Grand Canyon from the South Rim">
-      <figcaption>Grand Canyon, Arizona — a good place to think about deep time and clear skies.</figcaption>
-    </figure>
-    <h3>Places research has taken me</h3>
-    <div class="places" id="places"></div>
+    <div class="gallery" id="gallery"></div>
   </section>
 
   <footer>© <span id="yr">2026</span> Eunyeong Kim · Last updated September 2026</footer>
 </main>
+
+<div class="lightbox" id="lightbox" hidden><img alt=""><p></p></div>
 
 <nav class="dots" id="dots" aria-label="Sections">
   <a href="#about" data-sec="about"><span class="lb">About</span><span class="dt"></span></a>
@@ -265,7 +270,7 @@ const EDU = [
   ["Undergraduate coursework in Physics", "2019.03 – 2021.02", "Dept. of Physics, Jeonbuk National University", "Completed coursework prior to transferring to Chungnam National University"],
 ];
 
-// Education > Skills   [category, items]
+// Experience > Skills   [category, items]
 const SKILLS = [
   ["Programming", "Python (intermediate) · Linux (intermediate) · NCL (Basic)"],
   ["Tools", "LabVIEW · Origin · FieldSpec III · Microtops"],
@@ -330,13 +335,16 @@ const OTHER = [
   ["Research Intern, KIGAM","2022.05 – 10","Mineral Exploration and Mining Research Center · Daejeon",["Underground resource exploration device using Arduino and Raspberry Pi."]],
 ];
 
-// Beyond > Places   [place, why]
-const PLACES = [
-  ["Zuunmod, Mongolia","Satellite cal/val campaign · 2024"],
-  ["Orange, California","Deep-learning workshop · 2025"],
-  ["New Orleans, Louisiana","AGU Annual Meeting · 2025"],
-  ["Jeju, Korea","AFORE · 2024, 2025"],
-  ["Daejeon, Korea","Home base"],
+// Beyond the Lab > photo gallery (3 per row)   [photo file, event, place · date]
+// Put photos in the assets/gallery/ folder and write the file name here, e.g. "assets/gallery/agu2025.jpg".
+// Leave the file name as "" to show an empty "photo coming soon" box.
+const GALLERY = [
+  ["assets/banner.jpg", "Grand Canyon", "Arizona, USA"],
+  ["", "AGU Annual Meeting 2025", "New Orleans, LA, USA · 2025.12"],
+  ["", "AFORE 2025", "Jeju, South Korea · 2025.11"],
+  ["", "Deep Learning & Applications Workshop", "Chapman University, CA, USA · 2025.01"],
+  ["", "Field Measurement Campaign", "Zuunmod, Mongolia · 2024.06"],
+  ["", "AFORE 2024", "Jeju, South Korea · 2024.11"],
 ];
 /* ===================== end of content ===================== */
 
@@ -356,7 +364,15 @@ $('#awards').innerHTML = AWARDS.map(a=>item(a[0],a[1],a[2])).join('');
 $('#exp').innerHTML = EXP.map(e=>item(e[0],e[1],e[2],e[3])).join('');
 $('#projects').innerHTML = PROJECTS.map(p=>item(star(p[0]),p[1],p[2])).join('');
 $('#other').innerHTML = OTHER.map(e=>item(e[0],e[1],e[2],e[3])).join('');
-$('#places').innerHTML = PLACES.map(p=>`<div class="place"><div class="n">${p[0]}</div><div class="x">${p[1]||''}</div></div>`).join('');
+const EMPTY = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Photo coming soon</div>`;
+$('#gallery').innerHTML = GALLERY.map((g,i)=>`<figure class="shot">
+  ${g[0] ? `<button type="button" class="frame" data-i="${i}" aria-label="Enlarge photo: ${g[1]}"><img src="${g[0]}" alt="${g[1]}" loading="lazy"></button>` : `<div class="frame" style="cursor:default;border:0;background:none">${EMPTY}</div>`}
+  <figcaption><div class="n">${g[1]}</div><div class="x">${g[2]}</div></figcaption></figure>`).join('');
+$$('#gallery img').forEach(img=>img.onerror=()=>{ const f=img.closest('.frame'); f.outerHTML=`<div class="frame" style="cursor:default;border:0;background:none">${EMPTY}</div>`; });
+const lb=$('#lightbox');
+$$('#gallery button.frame').forEach(b=>b.onclick=()=>{ const g=GALLERY[b.dataset.i]; lb.querySelector('img').src=g[0]; lb.querySelector('img').alt=g[1]; lb.querySelector('p').textContent=`${g[1]} — ${g[2]}`; lb.hidden=false; });
+lb.onclick=()=>lb.hidden=true;
+addEventListener('keydown',e=>{ if(e.key==='Escape') lb.hidden=true; });
 
 function renderTalks(f){
   const list = TALKS.filter(t=>f==='all'||t[6]===f);
