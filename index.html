@@ -113,6 +113,9 @@ ol.refs > li::marker{color:var(--muted);font-size:12.5px}
 .skills dd{margin:0;color:var(--ink)}
 
 .gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.year{display:flex;align-items:center;gap:12px;margin:30px 0 14px;font-size:15px;font-weight:800;color:var(--ink);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.year:first-child{margin-top:0}
+.year::after{content:"";flex:1;height:1px;background:var(--line)}
 .shot{margin:0;min-width:0}
 .shot .frame{display:block;width:100%;aspect-ratio:4/3;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--accent-soft);padding:0;cursor:zoom-in}
 .shot img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
@@ -234,7 +237,7 @@ footer{font-size:12px;color:var(--faint);padding-top:8px}
   <!-- BEYOND -->
   <section class="card reveal" id="beyond">
     <h2>Beyond the Lab</h2>
-    <div class="gallery" id="gallery"></div>
+    <div id="gallery"></div>
   </section>
 
   <footer>© <span id="yr">2026</span> Eunyeong Kim · Last updated September 2026</footer>
@@ -345,16 +348,29 @@ const OTHER = [
   ["Research Intern, KIGAM","2022.05 – 10","Mineral Exploration and Mining Research Center · Daejeon",["Underground resource exploration device using Arduino and Raspberry Pi."]],
 ];
 
-// Beyond the Lab > photo gallery (3 per row)   [photo file, event, place · date]
+// Beyond the Lab > photo gallery, grouped by year (3 per row)   [year, photo file, event, place · date]
 // Put photos in the assets/gallery/ folder and write the file name here, e.g. "assets/gallery/agu2025.jpg".
-// Leave the file name as "" to show an empty "photo coming soon" box.
+// Leave the file name as "" to show an empty "photo coming soon" box. Leave event/place "" to show no caption.
+// To add a slot, copy a line and change the year. Years are shown in the order of GALLERY_YEARS.
+const GALLERY_YEARS = ["2026", "2025", "2024"];
 const GALLERY = [
-  ["assets/banner.jpg", "Grand Canyon", "Arizona, USA"],
-  ["", "AGU Annual Meeting 2025", "New Orleans, LA, USA · 2025.12"],
-  ["", "AFORE 2025", "Jeju, South Korea · 2025.11"],
-  ["", "Deep Learning & Applications Workshop", "Chapman University, CA, USA · 2025.01"],
-  ["", "Field Measurement Campaign", "Zuunmod, Mongolia · 2024.06"],
-  ["", "AFORE 2024", "Jeju, South Korea · 2024.11"],
+  // 2026
+  ["2026", "", "", ""],
+  ["2026", "", "", ""],
+  ["2026", "", "", ""],
+  // 2025
+  ["2025", "assets/banner.jpg", "Grand Canyon", "Arizona, USA"],
+  ["2025", "", "AGU Annual Meeting 2025", "New Orleans, LA, USA · 2025.12"],
+  ["2025", "", "AFORE 2025", "Jeju, South Korea · 2025.11"],
+  ["2025", "", "Deep Learning & Applications Workshop", "Chapman University, CA, USA · 2025.01"],
+  ["2025", "", "", ""],
+  ["2025", "", "", ""],
+  // 2024
+  ["2024", "", "Field Measurement Campaign", "Zuunmod, Mongolia · 2024.06"],
+  ["2024", "", "AFORE 2024", "Jeju, South Korea · 2024.11"],
+  ["2024", "", "", ""],
+  ["2024", "", "", ""],
+  ["2024", "", "", ""],
 ];
 /* ===================== end of content ===================== */
 
@@ -375,12 +391,17 @@ $('#exp').innerHTML = EXP.map(e=>item(e[0],e[1],e[2],e[3])).join('');
 $('#projects').innerHTML = PROJECTS.map(p=>item(star(p[0]),p[1],p[2])).join('');
 $('#other').innerHTML = OTHER.map(e=>item(e[0],e[1],e[2],e[3])).join('');
 const EMPTY = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Photo coming soon</div>`;
-$('#gallery').innerHTML = GALLERY.map((g,i)=>`<figure class="shot">
-  ${g[0] ? `<button type="button" class="frame" data-i="${i}" aria-label="Enlarge photo: ${g[1]}"><img src="${g[0]}" alt="${g[1]}" loading="lazy"></button>` : `<div class="frame" style="cursor:default;border:0;background:none">${EMPTY}</div>`}
-  <figcaption><div class="n">${g[1]}</div><div class="x">${g[2]}</div></figcaption></figure>`).join('');
+const shot = (g,i) => `<figure class="shot">
+  ${g[1] ? `<button type="button" class="frame" data-i="${i}" aria-label="Enlarge photo: ${g[2]}"><img src="${g[1]}" alt="${g[2]}" loading="lazy"></button>` : `<div class="frame" style="cursor:default;border:0;background:none">${EMPTY}</div>`}
+  ${g[2]||g[3] ? `<figcaption><div class="n">${g[2]}</div><div class="x">${g[3]}</div></figcaption>` : ''}</figure>`;
+const years = GALLERY_YEARS.concat([...new Set(GALLERY.map(g=>g[0]))].filter(y=>!GALLERY_YEARS.includes(y)));
+$('#gallery').innerHTML = years.map(y => {
+  const items = GALLERY.map((g,i)=>[g,i]).filter(([g])=>g[0]===y);
+  return items.length ? `<div class="year">${y}</div><div class="gallery">${items.map(([g,i])=>shot(g,i)).join('')}</div>` : '';
+}).join('');
 $$('#gallery img').forEach(img=>img.onerror=()=>{ const f=img.closest('.frame'); f.outerHTML=`<div class="frame" style="cursor:default;border:0;background:none">${EMPTY}</div>`; });
 const lb=$('#lightbox');
-$$('#gallery button.frame').forEach(b=>b.onclick=()=>{ const g=GALLERY[b.dataset.i]; lb.querySelector('img').src=g[0]; lb.querySelector('img').alt=g[1]; lb.querySelector('p').textContent=`${g[1]} — ${g[2]}`; lb.hidden=false; });
+$$('#gallery button.frame').forEach(b=>b.onclick=()=>{ const g=GALLERY[b.dataset.i]; lb.querySelector('img').src=g[1]; lb.querySelector('img').alt=g[2]; lb.querySelector('p').textContent=[g[2],g[3]].filter(Boolean).join(' — '); lb.hidden=false; });
 lb.onclick=()=>lb.hidden=true;
 addEventListener('keydown',e=>{ if(e.key==='Escape') lb.hidden=true; });
 
