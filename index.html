@@ -13,71 +13,72 @@
 :root{
   --paper:#f4f6f5; --panel:#ffffff; --ink:#15202b; --muted:#5a6772; --faint:#8b97a1;
   --rule:#dde3e4; --accent:#2c5f8d; --accent-2:#b86a3c; --accent-wash:#e4edf5; --iso:#2c5f8d;
-  --side:#e9eef0;
+  --band:#e9eef0; --glass:rgba(244,246,245,.96);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --paper:#0f151b; --panel:#151d25; --ink:#e4e9ec; --muted:#9aa7b2; --faint:#6b7883;
     --rule:#243039; --accent:#7fb2e0; --accent-2:#e39a6c; --accent-wash:#1b2b3a; --iso:#7fb2e0;
-    --side:#121a21; color-scheme:dark;
+    --band:#121a21; --glass:rgba(15,21,27,.96); color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --paper:#0f151b; --panel:#151d25; --ink:#e4e9ec; --muted:#9aa7b2; --faint:#6b7883;
   --rule:#243039; --accent:#7fb2e0; --accent-2:#e39a6c; --accent-wash:#1b2b3a; --iso:#7fb2e0;
-  --side:#121a21; color-scheme:dark;
+  --band:#121a21; --glass:rgba(15,21,27,.96); color-scheme:dark;
 }
 *{box-sizing:border-box}
-html,body{height:100%}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "IBM Plex Sans",system-ui,sans-serif}
 a{color:var(--accent);text-decoration:none;text-underline-offset:3px}
 a:hover{text-decoration:underline}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
 
-/* ---------- layout ---------- */
-.shell{display:grid;grid-template-columns:340px minmax(0,1fr);min-height:100%}
-.side{position:sticky;top:0;height:100vh;background:var(--side);border-right:1px solid var(--rule);
-  overflow:hidden;display:flex;flex-direction:column;padding:40px 32px 28px}
-.side svg.iso{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.side > *:not(svg){position:relative}
-.photo{width:132px;height:132px;border-radius:50%;object-fit:cover;display:block;border:3px solid var(--paper);box-shadow:0 0 0 1px var(--rule)}
-.name{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:44px;line-height:1;margin:22px 0 0;letter-spacing:-.01em}
-.role{margin:14px 0 0;font-size:14.5px;color:var(--muted);line-height:1.55}
+/* scroll progress */
+.progress{position:fixed;left:0;top:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--accent);z-index:30}
+
+/* ---------- hero ---------- */
+.hero{position:relative;background:var(--band);border-bottom:1px solid var(--rule);overflow:hidden}
+.hero svg.iso{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-inner{position:relative;max-width:860px;margin:0 auto;padding:88px 16px 64px;display:flex;gap:36px;align-items:center;flex-wrap:wrap}
+.photo{width:168px;height:168px;border-radius:50%;object-fit:cover;display:block;border:4px solid var(--paper);box-shadow:0 0 0 1px var(--rule),0 12px 30px rgba(21,32,43,.12);flex-shrink:0}
+.who{flex:1;min-width:260px}
+.name{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:clamp(44px,7vw,68px);line-height:1;margin:0;letter-spacing:-.015em}
+.role{margin:12px 0 0;font-size:16px;color:var(--muted)}
 .role b{color:var(--ink);font-weight:500}
-.contact{margin-top:22px;display:flex;flex-direction:column;gap:6px;font-size:14px}
-.contact a,.contact button{display:flex;align-items:center;gap:10px;color:var(--ink);background:none;border:0;padding:0;font:inherit;cursor:pointer;text-align:left}
-.contact a:hover,.contact button:hover{color:var(--accent);text-decoration:none}
-.contact svg{width:16px;height:16px;flex-shrink:0;color:var(--muted)}
-.copied{font-size:12px;color:var(--accent-2);margin-left:4px}
-.side-foot{margin-top:auto;display:flex;gap:8px;align-items:center}
-.toggle{border:1px solid var(--rule);background:var(--panel);color:var(--ink);border-radius:999px;padding:6px 10px;cursor:pointer;line-height:0}
-.toggle:hover{border-color:var(--accent)}
-.coords{font-size:11px;color:var(--faint);margin-left:auto;letter-spacing:.04em}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.links a,.links button{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;border:1px solid var(--rule);
+  background:var(--panel);color:var(--ink);font:500 14px/1.2 "IBM Plex Sans",sans-serif;cursor:pointer}
+.links a:hover,.links button:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.links svg{width:15px;height:15px;flex-shrink:0}
+.copied{font-size:12px;color:var(--accent-2)}
+.hero .coords{position:absolute;right:16px;bottom:12px;font-size:11px;color:var(--faint);letter-spacing:.04em}
+.hero-in > *{animation:heroIn .8s cubic-bezier(.2,.7,.2,1) both}
+.hero-in > *:nth-child(2){animation-delay:.12s}
+@keyframes heroIn{from{opacity:.001;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-main{min-width:0;padding:40px clamp(16px,5vw,64px) 80px;max-width:900px;width:100%}
-.tabs{display:flex;gap:4px;border-bottom:1px solid var(--rule);margin-bottom:36px;overflow-x:auto;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tabs button{background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;padding:10px 14px;
-  font:500 15px/1 "IBM Plex Sans",sans-serif;color:var(--muted);cursor:pointer;white-space:nowrap}
-.tabs button:hover{color:var(--ink)}
-.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
-.subtabs{display:inline-flex;gap:2px;padding:3px;border:1px solid var(--rule);border-radius:10px;background:var(--panel);margin-bottom:8px;max-width:100%;overflow-x:auto}
-.subtabs button{border:0;background:none;border-radius:7px;padding:7px 14px;font:500 14px/1 "IBM Plex Sans",sans-serif;color:var(--muted);cursor:pointer;white-space:nowrap}
-.subtabs button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
-.subtabs .short{display:none}
-.panel{animation:rise .35s ease both}
-@keyframes rise{from{opacity:.001;transform:translateY(6px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){.panel{animation:none}}
-
-h2{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:30px;line-height:1.15;margin:0 0 18px;text-wrap:balance}
-h3.label{font:500 12px/1 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:44px 0 14px;display:flex;align-items:center;gap:12px}
-h3.label.first{margin-top:24px}
-h3.label::after{content:"";flex:1;height:1px;background:var(--rule)}
-.lede{font-size:18px;max-width:62ch;margin:0 0 14px}
+/* ---------- content ---------- */
+main{max-width:860px;margin:0 auto;padding:24px 16px 120px}
+section.block{padding-top:72px;scroll-margin-top:24px}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin:0 0 26px}
+.sec-head h2{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:44px;line-height:1;margin:0}
+.sec-head .k{font:500 12px "IBM Plex Mono",monospace;color:var(--faint);letter-spacing:.1em;text-transform:uppercase}
+.sec-head::after{content:"";flex:1;height:1px;background:var(--rule);align-self:center}
+h3.sub{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:28px;margin:48px 0 12px;scroll-margin-top:24px;display:flex;align-items:center;gap:12px}
+h3.sub:first-of-type{margin-top:8px}
+h4.label{font:500 12px/1 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:36px 0 12px;display:flex;align-items:center;gap:12px}
+h4.label::after{content:"";flex:1;height:1px;background:var(--rule)}
+.lede{font-size:19px;max-width:62ch;margin:0 0 16px}
 .lede em{font-family:"Instrument Serif",Georgia,serif;font-size:1.25em;font-style:italic;color:var(--accent)}
 p.body{max-width:65ch;margin:0 0 12px}
 .note{font-size:14px;color:var(--muted);margin:0 0 6px}
+
+/* reveal on scroll */
+.reveal{transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1)}
+.js .reveal.pending{opacity:0;transform:translateY(22px)}
+@media (prefers-reduced-motion:reduce){.js .reveal.pending{opacity:1;transform:none}.reveal{transition:none}.hero-in > *{animation:none}}
 
 /* rows */
 .rows{display:flex;flex-direction:column}
@@ -93,23 +94,21 @@ p.body{max-width:65ch;margin:0 0 12px}
 .tag.award{color:var(--accent-2);border-color:var(--accent-2)}
 .star{color:var(--accent-2)}
 
-/* interests */
 .themes{display:grid;gap:14px}
-.theme{display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;background:var(--panel);border:1px solid var(--rule);border-radius:14px;padding:20px}
+.theme{display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;background:var(--panel);border:1px solid var(--rule);border-radius:14px;padding:20px;transition:transform .25s ease,border-color .25s ease}
+.theme:hover{transform:translateY(-2px);border-color:var(--accent)}
 .theme svg{width:64px;height:64px}
-.theme h4{margin:0 0 4px;font-size:16.5px;font-weight:600}
+.theme h5{margin:0 0 4px;font-size:16.5px;font-weight:600}
 .theme p{margin:0 0 10px;color:var(--muted);font-size:15px}
 .kw{display:flex;flex-wrap:wrap;gap:6px}
 .kw span{font:12px/1.7 "IBM Plex Mono",monospace;background:var(--accent-wash);color:var(--accent);padding:0 8px;border-radius:4px}
 
-/* degrees */
 .degree{display:grid;grid-template-columns:120px minmax(0,1fr);gap:4px 20px;padding:18px 0;border-top:1px solid var(--rule)}
-.degree:first-of-type{border-top:0}
-.degree .t{font-family:"Instrument Serif",Georgia,serif;font-size:24px;line-height:1.2}
+.degree:first-child{border-top:0}
+.degree .t{font-family:"Instrument Serif",Georgia,serif;font-size:25px;line-height:1.2}
 .degree .s{color:var(--muted);font-size:15px;margin-top:2px}
 .degree .gpa{display:inline-block;margin-top:6px;font:13px "IBM Plex Mono",monospace;color:var(--accent)}
 
-/* publications */
 .paper{padding:16px 0;border-top:1px solid var(--rule)}
 .paper:first-child{border-top:0}
 .paper .t{font-weight:600;font-size:16.5px;line-height:1.45}
@@ -121,16 +120,17 @@ p.body{max-width:65ch;margin:0 0 12px}
 .filters button{border:1px solid var(--rule);background:var(--panel);color:var(--muted);border-radius:999px;padding:4px 12px;font:500 13px/1.4 "IBM Plex Sans",sans-serif;cursor:pointer}
 .filters button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--accent-wash)}
 .count{font:12px "IBM Plex Mono",monospace;color:var(--faint);margin-left:4px}
+#talks .row{animation:fadeRow .35s ease both}
+@keyframes fadeRow{from{opacity:.001;transform:translateY(4px)}to{opacity:1;transform:none}}
 
-/* skills */
 .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 .skill{border:1px solid var(--rule);border-radius:12px;padding:14px 16px;background:var(--panel)}
 .skill .k{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .skill .v{margin-top:4px;font-size:15px}
 
-/* beyond */
 .figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--rule);background:var(--panel)}
-.figure img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;object-position:center 55%}
+.figure img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;object-position:center 55%;transition:transform 1.2s ease}
+.figure:hover img{transform:scale(1.03)}
 .figure figcaption{padding:10px 16px;font-size:13.5px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .places{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
 .place{border:1px solid var(--rule);border-radius:12px;padding:14px 16px;background:var(--panel)}
@@ -138,158 +138,180 @@ p.body{max-width:65ch;margin:0 0 12px}
 .place .n{font-weight:600;margin:2px 0}
 .place .d{font-size:14px;color:var(--muted)}
 
-footer{margin-top:64px;font-size:13px;color:var(--faint)}
+footer{max-width:860px;margin:0 auto;padding:0 16px 48px;font-size:13px;color:var(--faint)}
 
-@media (max-width:860px){
-  .shell{grid-template-columns:minmax(0,1fr)}
-  .side{position:relative;height:auto;padding:28px 16px 20px;border-right:0;border-bottom:1px solid var(--rule)}
-  .photo{width:96px;height:96px}
-  .name{font-size:36px;margin-top:14px}
-  .side-foot{margin-top:18px}
-  main{padding-top:20px}
-  .tabs{position:sticky;top:0;background:var(--paper);z-index:5;margin-inline:-16px;padding-inline:8px}
+/* ---------- right-side navigator ---------- */
+.toc{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.toc-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--rule);background:var(--glass);backdrop-filter:blur(8px);
+  color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:border-color .2s}
+.toc-btn:hover{border-color:var(--accent)}
+.toc-btn svg{width:18px;height:18px;transition:transform .3s ease}
+.toc nav{box-shadow:0 10px 30px rgba(0,0,0,.08);background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--rule);border-radius:14px;padding:10px 6px;
+  min-width:190px;transform-origin:100% 0;transition:opacity .25s ease,transform .25s ease}
+.toc:not(.open) nav{opacity:0;transform:translateX(8px) scale(.97);pointer-events:none;visibility:hidden}
+.toc a{display:flex;align-items:center;gap:10px;padding:6px 12px;border-radius:8px;color:var(--muted);font-size:14px;white-space:nowrap}
+.toc a:hover{color:var(--ink);background:var(--accent-wash);text-decoration:none}
+.toc a .dot{width:7px;height:7px;border-radius:50%;background:var(--rule);flex-shrink:0;transition:background .2s,transform .2s}
+.toc a.child{padding-left:30px;font-size:13px}
+.toc a.child .dot{width:5px;height:5px}
+.toc a.active{color:var(--ink);font-weight:500}
+.toc a.active .dot{background:var(--accent);transform:scale(1.35)}
+.toc .theme-row{border-top:1px solid var(--rule);margin-top:6px;padding:8px 12px 2px;display:flex;align-items:center;justify-content:space-between;font-size:13px;color:var(--muted)}
+.toc .theme-row button{border:1px solid var(--rule);background:var(--panel);color:var(--ink);border-radius:999px;padding:3px 10px;font:500 12px "IBM Plex Sans",sans-serif;cursor:pointer}
+.to-top{width:40px;height:40px;border-radius:50%;border:1px solid var(--rule);background:var(--glass);backdrop-filter:blur(8px);color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:opacity .25s}
+.to-top[hidden]{display:none}
+
+@media (max-width:1180px){ .toc{top:auto;bottom:20px;transform:none;flex-direction:column-reverse} .toc nav{transform-origin:100% 100%} }
+@media (max-width:640px){
+  .hero-inner{padding:48px 16px 40px;gap:20px}
+  .photo{width:112px;height:112px}
+  .sec-head h2{font-size:36px}
+  section.block{padding-top:56px}
   .row,.degree{grid-template-columns:minmax(0,1fr);gap:0}
-  .subtabs{display:flex}
-  .subtabs button{flex:1;padding:7px 8px;font-size:13px}
-  .subtabs .long{display:none}
-  .subtabs .short{display:inline}
+  .toc{right:12px;bottom:12px}
 }
 </style>
 </head>
 <body>
-<div class="shell">
+<div class="progress" id="progress"></div>
 
-<aside class="side">
+<header class="hero" id="top">
   <svg class="iso" id="iso" aria-hidden="true"></svg>
-  <img class="photo" src="assets/profile.jpg" alt="Eunyeong Kim">
-  <h1 class="name">Eunyeong Kim</h1>
-  <p class="role"><b>Atmospheric scientist</b><br>Research Intern, Climate Policy Division<br>Korea Meteorological Administration</p>
-  <div class="contact">
-    <button type="button" id="copyMail" title="Copy email address">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-      <span>eykim129@gmail.com</span><span class="copied" id="copied" hidden></span>
-    </button>
-    <a href="https://scholar.google.com/citations?user=5iAaY5YAAAAJ" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9.5l4 2.4V17c0 .6.3 1.1.8 1.4C7.6 19.4 9.7 20 12 20s4.4-.6 6.2-1.6c.5-.3.8-.8.8-1.4v-5.1l2-1.2V16h2V9.5z"/></svg>
-      Google Scholar
-    </a>
-    <a href="https://github.com/eykim129" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg>
-      GitHub
-    </a>
-    <!-- Add later, e.g.:
-    <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener">ORCID</a>
-    <a href="assets/cv.pdf" target="_blank">CV (PDF)</a>
-    -->
+  <div class="hero-inner hero-in">
+    <img class="photo" src="assets/profile.jpg" alt="Eunyeong Kim">
+    <div class="who">
+      <h1 class="name">Eunyeong Kim</h1>
+      <p class="role"><b>Atmospheric scientist</b> · Research Intern, Climate Policy Division, Korea Meteorological Administration</p>
+      <div class="links">
+        <button type="button" id="copyMail" title="Copy email address">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          eykim129@gmail.com <span class="copied" id="copied" hidden></span>
+        </button>
+        <a href="https://scholar.google.com/citations?user=5iAaY5YAAAAJ" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9.5l4 2.4V17c0 .6.3 1.1.8 1.4C7.6 19.4 9.7 20 12 20s4.4-.6 6.2-1.6c.5-.3.8-.8.8-1.4v-5.1l2-1.2V16h2V9.5z"/></svg>
+          Google Scholar
+        </a>
+        <a href="https://github.com/eykim129" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg>
+          GitHub
+        </a>
+        <!-- Add later, e.g.:
+        <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener">ORCID</a>
+        <a href="assets/cv.pdf" target="_blank">CV (PDF)</a>
+        -->
+      </div>
+    </div>
   </div>
-  <div class="side-foot">
-    <button class="toggle" id="themeBtn" type="button" aria-label="Toggle dark mode"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
-    <span class="coords mono">36.35°N 127.38°E · Daejeon</span>
-  </div>
-</aside>
+  <span class="coords mono">36.35°N 127.38°E · Daejeon</span>
+</header>
 
 <main>
-  <nav class="tabs" role="tablist" id="tabs">
-    <button role="tab" data-tab="about">About</button>
-    <button role="tab" data-tab="education">Education</button>
-    <button role="tab" data-tab="research">Research</button>
-    <button role="tab" data-tab="beyond">Beyond</button>
-  </nav>
-
   <!-- ===== ABOUT ===== -->
-  <section class="panel" id="p-about" role="tabpanel">
-    <p class="lede">Hi, I'm Eunyeong. I study how a changing climate reshapes <em>weather and climate extremes</em> — and how well we can see them coming.</p>
-    <p class="body">I hold an M.S. in Atmospheric Sciences from Chungnam National University, where I built sunshine-duration and solar-radiation models for solar power assessment. I am currently a research intern at the Korea Meteorological Administration, verifying GloSea6 subseasonal forecasts of surface solar radiation and analyzing Climate Impact Drivers under CMIP6 projections. Before atmospheric science I trained in physics, and I have worked in the field calibrating satellite sensors on the Mongolian steppe.</p>
+  <section class="block" id="about">
+    <div class="sec-head reveal"><h2>About</h2></div>
+    <p class="lede reveal">Hi, I'm Eunyeong. I study how a changing climate reshapes <em>weather and climate extremes</em> — and how well we can see them coming.</p>
+    <p class="body reveal">I hold an M.S. in Atmospheric Sciences from Chungnam National University, where I built sunshine-duration and solar-radiation models for solar power assessment. I am currently a research intern at the Korea Meteorological Administration, verifying GloSea6 subseasonal forecasts of surface solar radiation and analyzing Climate Impact Drivers under CMIP6 projections. Before atmospheric science I trained in physics, and I have worked in the field calibrating satellite sensors on the Mongolian steppe.</p>
 
-    <h3 class="label">What I'm thinking about lately</h3>
+    <h4 class="label reveal">What I'm thinking about lately</h4>
     <div class="themes">
-      <article class="theme">
+      <article class="theme reveal">
         <svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="16" fill="none" stroke="var(--accent-2)" stroke-width="2.5"/><g stroke="var(--accent-2)" stroke-width="2.5" stroke-linecap="round"><path d="M44 12v10M44 66v10M12 44h10M66 44h10M21 21l7 7M60 60l7 7M21 67l7-7M60 28l7-7"/></g></svg>
         <div>
-          <h4>How far ahead can we forecast sunlight?</h4>
+          <h5>How far ahead can we forecast sunlight?</h5>
           <p>Lead-time-dependent subseasonal forecast skill and seasonal variability of surface downward shortwave radiation, using GloSea6 hindcasts, reanalysis, and observation-based datasets.</p>
           <div class="kw"><span>GloSea6</span><span>hindcast</span><span>SW↓</span><span>S2S</span></div>
         </div>
       </article>
-      <article class="theme">
+      <article class="theme reveal">
         <svg viewBox="0 0 88 88" aria-hidden="true"><path d="M44 10a8 8 0 0 0-8 8v34a14 14 0 1 0 16 0V18a8 8 0 0 0-8-8z" fill="none" stroke="var(--accent)" stroke-width="2.5"/><circle cx="44" cy="64" r="8" fill="var(--accent-2)"/><path d="M44 58V30" stroke="var(--accent-2)" stroke-width="4" stroke-linecap="round"/><path d="M58 24h10M58 34h7M58 44h10" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/></svg>
         <div>
-          <h4>What does extreme heat look like in a warmer future?</h4>
+          <h5>What does extreme heat look like in a warmer future?</h5>
           <p>Future changes in extreme-heat-related Climate Impact Drivers (CIDs) and cooling degree days (CDDs) under CMIP6 climate projections.</p>
           <div class="kw"><span>CMIP6</span><span>CIDs</span><span>CDD</span><span>climate risk</span></div>
         </div>
       </article>
-      <article class="theme">
+      <article class="theme reveal">
         <svg viewBox="0 0 88 88" aria-hidden="true"><path d="M10 70 Q26 20 44 44 T78 24" fill="none" stroke="var(--accent)" stroke-width="2.5"/><g fill="var(--accent-2)"><circle cx="16" cy="60" r="3.5"/><circle cx="28" cy="40" r="3.5"/><circle cx="40" cy="44" r="3.5"/><circle cx="52" cy="46" r="3.5"/><circle cx="64" cy="32" r="3.5"/><circle cx="74" cy="28" r="3.5"/></g><path d="M8 80h72M8 80V8" stroke="var(--rule)" stroke-width="2.5"/></svg>
         <div>
-          <h4>What drives extremes, and can we predict them?</h4>
+          <h5>What drives extremes, and can we predict them?</h5>
           <p>The physical mechanisms and predictability of weather and climate extremes in a changing climate — the question I want to pursue next.</p>
           <div class="kw"><span>climate variability</span><span>extremes</span><span>predictability</span></div>
         </div>
       </article>
     </div>
 
-    <h3 class="label">Recently</h3>
-    <div class="rows" id="news"></div>
+    <h4 class="label reveal">Recently</h4>
+    <div class="rows reveal" id="news"></div>
   </section>
 
   <!-- ===== EDUCATION ===== -->
-  <section class="panel" id="p-education" role="tabpanel" hidden>
-    <div id="edu"></div>
-    <h3 class="label">Skills &amp; languages</h3>
-    <div class="skills" id="skills"></div>
+  <section class="block" id="education">
+    <div class="sec-head reveal"><h2>Education</h2></div>
+    <div id="edu" class="reveal"></div>
+    <h4 class="label reveal">Skills &amp; languages</h4>
+    <div class="skills reveal" id="skills"></div>
   </section>
 
   <!-- ===== RESEARCH ===== -->
-  <section class="panel" id="p-research" role="tabpanel" hidden>
-    <div class="subtabs" role="tablist" id="subtabs">
-      <button role="tab" data-sub="publications">Publications</button>
-      <button role="tab" data-sub="presentations"><span class="long">Presentations &amp; Awards</span><span class="short">Talks &amp; Awards</span></button>
-      <button role="tab" data-sub="experience">Experience</button>
-    </div>
+  <section class="block" id="research">
+    <div class="sec-head reveal"><h2>Research</h2></div>
 
-    <div id="s-publications">
-      <h3 class="label first">Journal &amp; proceedings papers</h3>
-      <div id="papers"></div>
-    </div>
+    <h3 class="sub reveal" id="publications">Publications</h3>
+    <div id="papers" class="reveal"></div>
 
-    <div id="s-presentations" hidden>
-      <h3 class="label first">Conference presentations</h3>
-      <div class="filters" id="talkFilters">
-        <button type="button" data-f="all" aria-pressed="true">All</button>
-        <button type="button" data-f="oral" aria-pressed="false">Oral</button>
-        <button type="button" data-f="poster" aria-pressed="false">Poster</button>
-        <button type="button" data-f="intl" aria-pressed="false">International</button>
-        <button type="button" data-f="award" aria-pressed="false">Awarded</button>
-      </div>
-      <div class="rows" id="talks"></div>
-      <h3 class="label">Awards</h3>
-      <div class="rows" id="awards"></div>
+    <h3 class="sub reveal" id="presentations">Presentations &amp; Awards</h3>
+    <div class="filters reveal" id="talkFilters">
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="oral" aria-pressed="false">Oral</button>
+      <button type="button" data-f="poster" aria-pressed="false">Poster</button>
+      <button type="button" data-f="intl" aria-pressed="false">International</button>
+      <button type="button" data-f="award" aria-pressed="false">Awarded</button>
     </div>
+    <div class="rows reveal" id="talks"></div>
+    <h4 class="label reveal">Awards</h4>
+    <div class="rows reveal" id="awards"></div>
 
-    <div id="s-experience" hidden>
-      <h3 class="label first">Research experience</h3>
-      <div class="rows" id="exp"></div>
-      <h3 class="label">Research projects</h3>
-      <p class="note"><span class="star">★</span> key contribution</p>
-      <div class="rows" id="projects"></div>
-      <h3 class="label">Other experience</h3>
-      <div class="rows" id="other"></div>
-    </div>
+    <h3 class="sub reveal" id="experience">Experience</h3>
+    <div class="rows reveal" id="exp"></div>
+    <h4 class="label reveal">Research projects</h4>
+    <p class="note reveal"><span class="star">★</span> key contribution</p>
+    <div class="rows reveal" id="projects"></div>
+    <h4 class="label reveal">Other experience</h4>
+    <div class="rows reveal" id="other"></div>
   </section>
 
   <!-- ===== BEYOND ===== -->
-  <section class="panel" id="p-beyond" role="tabpanel" hidden>
-    <figure class="figure">
+  <section class="block" id="beyond">
+    <div class="sec-head reveal"><h2>Beyond the Lab</h2></div>
+    <figure class="figure reveal">
       <img src="assets/banner.jpg" alt="Grand Canyon from the South Rim">
       <figcaption><span>Grand Canyon, Arizona — a good place to think about deep time and clear skies.</span><span class="mono">36.06°N 112.14°W</span></figcaption>
     </figure>
-    <h3 class="label">Places research has taken me</h3>
-    <div class="places" id="places"></div>
+    <h4 class="label reveal">Places research has taken me</h4>
+    <div class="places reveal" id="places"></div>
   </section>
-
-  <footer>© <span id="yr">2026</span> Eunyeong Kim · Last updated September 2026</footer>
 </main>
+
+<footer>© <span id="yr">2026</span> Eunyeong Kim · Last updated September 2026</footer>
+
+<!-- right-side navigator -->
+<div class="toc open" id="toc">
+  <button class="toc-btn" id="tocBtn" type="button" aria-expanded="true" aria-controls="tocNav" aria-label="Toggle section menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="tocNav" aria-label="Sections">
+    <a href="#about" data-sec="about"><span class="dot"></span>About</a>
+    <a href="#education" data-sec="education"><span class="dot"></span>Education</a>
+    <a href="#research" data-sec="research"><span class="dot"></span>Research</a>
+    <a href="#publications" data-sec="publications" class="child"><span class="dot"></span>Publications</a>
+    <a href="#presentations" data-sec="presentations" class="child"><span class="dot"></span>Presentations &amp; Awards</a>
+    <a href="#experience" data-sec="experience" class="child"><span class="dot"></span>Experience</a>
+    <a href="#beyond" data-sec="beyond"><span class="dot"></span>Beyond the Lab</a>
+    <div class="theme-row"><span>Theme</span><button type="button" id="themeBtn">Light / Dark</button></div>
+  </nav>
+  <button class="to-top" id="toTop" type="button" aria-label="Back to top" hidden>
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
@@ -393,6 +415,7 @@ const PLACES = [
 ];
 /* ===================== end of content ===================== */
 
+document.documentElement.classList.add('js');
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const row = (when, inner) => `<div class="row"><div class="when">${when}</div><div class="what">${inner}</div></div>`;
@@ -421,24 +444,39 @@ $$('#talkFilters button').forEach(b => {
 });
 renderTalks('all');
 
-/* tabs: #about #education #research #beyond, and #publications #presentations #experience for Research sub-tabs */
-const TABS=['about','education','research','beyond'], SUBS=['publications','presentations','experience'];
-function showSub(sub){
-  $$('#subtabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.sub===sub));
-  SUBS.forEach(s => $('#s-'+s).hidden = s!==sub);
-}
-function route(key, write){
-  let tab = key, sub = null;
-  if(SUBS.includes(key)){ tab='research'; sub=key; }
-  if(!TABS.includes(tab)) tab='about';
-  $$('#tabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.tab===tab));
-  TABS.forEach(t => $('#p-'+t).hidden = t!==tab);
-  if(tab==='research') showSub(sub || $('#subtabs [aria-selected="true"]')?.dataset.sub || 'publications');
-  if(write){ try{ history.replaceState(null,'','#'+(sub||tab)); }catch(e){} }
-}
-$$('#tabs button').forEach(b => b.onclick = () => route(b.dataset.tab, true));
-$$('#subtabs button').forEach(b => b.onclick = () => route(b.dataset.sub, true));
-route(location.hash.slice(1));
+/* reveal on scroll — only things below the fold wait; everything above is shown at once */
+(function(){
+  const els=$$('.reveal');
+  if(!('IntersectionObserver' in window)) return;
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.remove('pending'); io.unobserve(e.target);} }),{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(el=>{ if(el.getBoundingClientRect().top > innerHeight*0.95){ el.classList.add('pending'); io.observe(el);} });
+})();
+
+/* right-side navigator: scrollspy, toggle, back-to-top, progress */
+(function(){
+  const links=$$('#toc nav a'), toc=$('#toc'), btn=$('#tocBtn');
+  const secs=links.map(a=>document.getElementById(a.dataset.sec));
+  const small=()=>innerWidth<=1180;
+  if(innerWidth<=1320){ toc.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+  if(small()){ toc.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+  btn.onclick=()=>{ const o=toc.classList.toggle('open'); btn.setAttribute('aria-expanded',o); };
+  links.forEach(a=>a.addEventListener('click',()=>{ if(small()){ toc.classList.remove('open'); btn.setAttribute('aria-expanded','false'); } }));
+  document.addEventListener('click',e=>{ if(small() && toc.classList.contains('open') && !toc.contains(e.target)){ toc.classList.remove('open'); btn.setAttribute('aria-expanded','false'); } });
+  $('#toTop').onclick=()=>scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});
+  function onScroll(){
+    const y=scrollY, max=document.documentElement.scrollHeight-innerHeight;
+    $('#progress').style.transform=`scaleX(${max>0?y/max:0})`;
+    $('#toTop').hidden = y < innerHeight*0.6;
+    let cur=null;
+    secs.forEach((s,i)=>{ if(s && s.getBoundingClientRect().top <= innerHeight*0.35) cur=i; });
+    // a parent stays lit while one of its children is active
+    links.forEach((a,i)=>{
+      const on = i===cur || (a.dataset.sec==='research' && cur!==null && links[cur].classList.contains('child'));
+      a.classList.toggle('active', on);
+    });
+  }
+  addEventListener('scroll',onScroll,{passive:true}); addEventListener('resize',onScroll); onScroll();
+})();
 
 /* theme + email */
 const root=document.documentElement;
@@ -455,14 +493,14 @@ $('#copyMail').onclick = () => {
 };
 $('#yr').textContent = new Date().getFullYear();
 
-/* isobars: a synthetic pressure field drawn as contours (decorative) */
+/* isobars behind the header: a synthetic pressure field drawn as contours (decorative) */
 (function(){
   if(!window.d3) return;
-  const svg=d3.select('#iso'), W=120, H=200;
-  const centers=[[20,40,14,22],[95,70,-12,26],[40,140,10,30],[105,165,-9,20],[70,110,5,18]];
+  const svg=d3.select('#iso'), W=240, H=80;
+  const centers=[[30,20,12,16],[95,55,-11,18],[160,25,10,20],[215,60,-8,14],[130,70,5,12]];
   const vals=new Float64Array(W*H);
   for(let j=0;j<H;j++) for(let i=0;i<W;i++){
-    let v=1012+(j/H)*3;
+    let v=1012+(i/W)*3;
     for(const [cx,cy,a,s] of centers) v += a*Math.exp(-((i-cx)**2+(j-cy)**2)/(2*s*s));
     vals[j*W+i]=v;
   }
@@ -470,9 +508,9 @@ $('#yr').textContent = new Date().getFullYear();
   svg.attr('viewBox',`0 0 ${W} ${H}`).attr('preserveAspectRatio','xMidYMid slice');
   svg.selectAll('path').data(paths).join('path').attr('d',d3.geoPath())
     .attr('fill','none').attr('stroke','var(--iso)').attr('stroke-width',d=>d.value%8===0?1.1:.7)
-    .attr('stroke-opacity',d=>d.value%8===0?.32:.18).attr('vector-effect','non-scaling-stroke');
-  svg.selectAll('text').data(centers.filter(c=>c[0]>30&&c[0]<100)).join('text').attr('x',d=>d[0]).attr('y',d=>d[1]+2)
-    .attr('text-anchor','middle').attr('font-size',6).attr('font-family','IBM Plex Mono, monospace')
+    .attr('stroke-opacity',d=>d.value%8===0?.3:.16).attr('vector-effect','non-scaling-stroke');
+  svg.selectAll('text').data(centers.filter(c=>c[0]>60&&c[0]<230)).join('text').attr('x',d=>d[0]).attr('y',d=>d[1]+1.5)
+    .attr('text-anchor','middle').attr('font-size',4).attr('font-family','IBM Plex Mono, monospace')
     .attr('fill',d=>d[2]>0?'var(--accent)':'var(--accent-2)').attr('opacity',.35).text(d=>d[2]>0?'H':'L');
 })();
 </script>
