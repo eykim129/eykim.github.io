@@ -127,12 +127,10 @@ footer{font-size:12px;color:var(--faint);padding-top:8px}
 .dots a{position:relative;display:flex;align-items:center;justify-content:flex-end;gap:10px;height:14px;color:var(--accent);font-size:11px;text-decoration:none}
 .dots a .lb{opacity:0;transform:translateX(6px);transition:opacity .25s,transform .25s;white-space:nowrap;pointer-events:none}
 .dots a .dt{width:7px;height:7px;border-radius:50%;background:var(--faint);opacity:.55;transition:all .25s ease}
-.dots a:hover .lb,.dots a.active .lb{opacity:1;transform:none}
+.dots a:hover .lb,.dots a:focus-visible .lb{opacity:1;transform:none}
 .dots a:hover .dt{opacity:1}
 .dots a.active .dt{width:11px;height:11px;background:var(--accent);opacity:1}
-.dots a.child .dt{width:5px;height:5px}
-.dots a.child.active .dt{width:8px;height:8px}
-.dots a.parent-on:not(.active) .dt{background:var(--accent);opacity:.6}
+
 
 /* ---------- small screens ---------- */
 @media (max-width:900px){
@@ -233,11 +231,7 @@ footer{font-size:12px;color:var(--faint);padding-top:8px}
   <a href="#about" data-sec="about"><span class="lb">About</span><span class="dt"></span></a>
   <a href="#education" data-sec="education"><span class="lb">Education</span><span class="dt"></span></a>
   <a href="#research" data-sec="research"><span class="lb">Research</span><span class="dt"></span></a>
-  <a href="#publications" data-sec="publications" data-parent="research" class="child"><span class="lb">Publications</span><span class="dt"></span></a>
-  <a href="#presentations" data-sec="presentations" data-parent="research" class="child"><span class="lb">Presentations &amp; Awards</span><span class="dt"></span></a>
   <a href="#experience" data-sec="experience"><span class="lb">Experience</span><span class="dt"></span></a>
-  <a href="#projects-sec" data-sec="projects-sec" data-parent="experience" class="child"><span class="lb">Projects</span><span class="dt"></span></a>
-  <a href="#other-sec" data-sec="other-sec" data-parent="experience" class="child"><span class="lb">Other Experience</span><span class="dt"></span></a>
   <a href="#beyond" data-sec="beyond"><span class="lb">Beyond the Lab</span><span class="dt"></span></a>
 </nav>
 
@@ -388,8 +382,6 @@ renderTalks('all');
     secs.forEach((s,i)=>{ if(s.getBoundingClientRect().top<=innerHeight*0.4) cur=i; });
     if(innerHeight+scrollY>=document.documentElement.scrollHeight-4) cur=secs.length-1;
     links.forEach((a,i)=>a.classList.toggle('active',i===cur));
-    const par=links[cur].dataset.parent;
-    links.forEach(a=>a.classList.toggle('parent-on', !!par && a.dataset.sec===par));
   }
   addEventListener('scroll',spy,{passive:true}); addEventListener('resize',spy); spy();
 })();
