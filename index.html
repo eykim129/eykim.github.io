@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌎</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f6f6f3; --side:#f6f6f3; --card:#ffffff; --ink:#1b1f23; --text:#3b4046; --muted:#6b7178; --faint:#9aa0a6;
@@ -30,7 +30,7 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--bg);color:var(--text);font:14px/1.7 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.7 Inter,"Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
@@ -43,12 +43,14 @@ a:hover{text-decoration:underline}
 .side .inner{position:relative;max-width:640px;margin:0 auto;padding:30px 16px 24px;display:flex;align-items:center;gap:24px;
   transition:padding .35s ease,gap .35s ease}
 .side.compact .inner{padding:10px 16px;gap:14px}
-.switch{position:absolute;left:14px;top:14px;z-index:2;width:36px;height:20px;border-radius:999px;border:0;padding:0;cursor:pointer;background:var(--accent);transition:top .35s ease}
-.side.compact .switch{top:50%;margin-top:-10px}
-.switch::after{content:"";position:absolute;top:2px;left:18px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .25s ease}
-:root[data-theme="dark"] .switch::after{left:2px}
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .switch::after{left:2px} }
-.switch .sun{position:absolute;left:5px;top:5px;width:10px;height:10px;border-radius:50%;background:#f3c14b}
+/* ENG / KOR language switch */
+.switch{position:absolute;left:14px;top:14px;z-index:2;display:flex;padding:2px;border-radius:999px;background:var(--card);border:1px solid var(--accent-line);transition:top .35s ease}
+.side.compact .switch{top:50%;transform:translateY(-50%)}
+.switch button{border:0;background:none;border-radius:999px;padding:2px 9px;font:700 10.5px/1.5 Inter,sans-serif;letter-spacing:.04em;color:var(--muted);cursor:pointer;transition:background .2s,color .2s}
+.switch button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+/* show only the active language */
+html[lang="en"] [lang="ko"], html[lang="ko"] [lang="en"]{display:none!important}
+html[lang="ko"] body{word-break:keep-all}
 .photo{width:120px;height:120px;flex-shrink:0;border-radius:50%;object-fit:cover;border:1.5px solid var(--accent);padding:3px;background:var(--side);
   transition:width .35s ease,height .35s ease,padding .35s ease}
 .side.compact .photo{width:40px;height:40px;padding:1.5px}
@@ -60,7 +62,7 @@ a:hover{text-decoration:underline}
 .side.compact .more{max-height:0;opacity:0}
 .pills{display:flex;flex-direction:column;align-items:flex-start;gap:5px;margin-top:10px}
 .pills > div{display:flex;flex-wrap:wrap;gap:5px}
-.pills span{border:1px solid var(--accent-line);background:var(--accent-soft);color:var(--ink);border-radius:999px;padding:2px 9px;font-size:11.5px;white-space:nowrap}
+.pills > div > span{border:1px solid var(--accent-line);background:var(--accent-soft);color:var(--ink);border-radius:999px;padding:2px 9px;font-size:11.5px;white-space:nowrap}
 .aff{margin:10px 0 2px;font-size:12px;color:var(--text)}
 .tagline{margin:0;font-size:12px;color:var(--muted);line-height:1.55}
 .icons{display:flex;gap:14px;margin-left:auto}
@@ -184,18 +186,21 @@ footer{font-size:12px;color:var(--faint);padding-top:8px}
 
 <header class="side" id="head">
   <svg class="iso" id="iso" aria-hidden="true"></svg>
-  <button class="switch" id="themeBtn" type="button" aria-label="Toggle dark mode"><span class="sun"></span></button>
+  <div class="switch" id="langSwitch" role="group" aria-label="Language">
+    <button type="button" data-lang="en" aria-pressed="true">ENG</button>
+    <button type="button" data-lang="ko" aria-pressed="false">KOR</button>
+  </div>
   <div class="inner">
   <img class="photo" src="assets/profile.jpg" alt="Eunyeong Kim">
   <div class="who">
   <div class="top">
-  <div class="name">Eunyeong Kim</div>
+  <div class="name"><span lang="en">Eunyeong Kim</span><span lang="ko">김은영</span></div>
   <div class="icons">
     <button type="button" id="copyMail" title="Copy email address">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4 7v1.8l8 5.2 8-5.2V7z"/></svg>Email
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4 7v1.8l8 5.2 8-5.2V7z"/></svg><span lang="en">Email</span><span lang="ko">이메일</span>
     </button>
     <a href="https://scholar.google.com/citations?user=5iAaY5YAAAAJ" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9.5l4 2.4V17c0 .6.3 1.1.8 1.4C7.6 19.4 9.7 20 12 20s4.4-.6 6.2-1.6c.5-.3.8-.8.8-1.4v-5.1l2-1.2V16h2V9.5z"/></svg>Scholar
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9.5l4 2.4V17c0 .6.3 1.1.8 1.4C7.6 19.4 9.7 20 12 20s4.4-.6 6.2-1.6c.5-.3.8-.8.8-1.4v-5.1l2-1.2V16h2V9.5z"/></svg><span lang="en">Scholar</span><span lang="ko">스칼라</span>
     </a>
     <!-- Add later: <a href="assets/cv.pdf" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 2h8l6 6v14H6z"/></svg>CV</a> -->
   </div>
@@ -203,16 +208,16 @@ footer{font-size:12px;color:var(--faint);padding-top:8px}
   <div class="more">
   <div class="pills">
   <div>
-    <span>Atmospheric Science</span>
-    <span>Climate Change</span>
+    <span><span lang="en">Atmospheric Science</span><span lang="ko">대기과학</span></span>
+    <span><span lang="en">Climate Change</span><span lang="ko">기후변화</span></span>
   </div>
   <div>
-    <span>Climate Impacts</span>
-    <span>Renewable Energy</span>
+    <span><span lang="en">Climate Impacts</span><span lang="ko">기후 영향</span></span>
+    <span><span lang="en">Renewable Energy</span><span lang="ko">재생에너지</span></span>
   </div>
 </div>
-  <p class="aff">Daejeon, South Korea</p>
-  <p class="tagline">My research interests focus on understanding the impacts of climate change on human and natural systems.</p>
+  <p class="aff"><span lang="en">Daejeon, South Korea</span><span lang="ko">대한민국 대전</span></p>
+  <p class="tagline"><span lang="en">My research interests focus on understanding the impacts of climate change on human and natural systems.</span><span lang="ko">기후변화가 인간과 자연 시스템에 미치는 영향을 이해하는 데 관심을 두고 연구하고 있습니다.</span></p>
   </div>
   </div>
   </div>
@@ -223,70 +228,70 @@ footer{font-size:12px;color:var(--faint);padding-top:8px}
 <main>
   <!-- ABOUT -->
   <section class="card reveal" id="about">
-    <h2>About</h2>
+    <h2><span lang="en">About</span><span lang="ko">소개</span></h2>
     <p></p>
-    <h3>What I'm thinking about lately</h3>
+    <h3><span lang="en">What I'm thinking about lately</span><span lang="ko">요즘 고민하는 질문</span></h3>
     <div class="interests" id="interests"></div>
-    <h3>Recently</h3>
+    <h3><span lang="en">Recently</span><span lang="ko">최근 소식</span></h3>
     <ul class="news" id="news"></ul>
   </section>
 
   <!-- EDUCATION -->
   <section class="card reveal" id="education">
-    <h2>Education</h2>
+    <h2><span lang="en">Education</span><span lang="ko">학력</span></h2>
     <div class="items" id="edu"></div>
   </section>
 
   <!-- RESEARCH: Publications + Presentations & Awards -->
   <section class="card reveal" id="research">
-    <h2>Research</h2>
+    <h2><span lang="en">Research</span><span lang="ko">연구</span></h2>
 
-    <h3 class="sub" id="publications">Publications</h3>
+    <h3 class="sub" id="publications"><span lang="en">Publications</span><span lang="ko">논문</span></h3>
     <ol class="refs" id="papers"></ol>
 
-    <h3 class="sub" id="presentations">Presentations &amp; Awards</h3>
+    <h3 class="sub" id="presentations"><span lang="en">Presentations &amp; Awards</span><span lang="ko">학회 발표 및 수상</span></h3>
     <div class="filters" id="talkFilters">
-      <button type="button" data-f="all" aria-pressed="true">All</button>
-      <button type="button" data-f="domestic" aria-pressed="false">Domestic</button>
-      <button type="button" data-f="international" aria-pressed="false">International</button>
+      <button type="button" data-f="all" aria-pressed="true"><span lang="en">All</span><span lang="ko">전체</span></button>
+      <button type="button" data-f="domestic" aria-pressed="false"><span lang="en">Domestic</span><span lang="ko">국내</span></button>
+      <button type="button" data-f="international" aria-pressed="false"><span lang="en">International</span><span lang="ko">국제</span></button>
     </div>
     <ol class="refs" id="talks"></ol>
-    <h3>Awards</h3>
+    <h3><span lang="en">Awards</span><span lang="ko">수상</span></h3>
     <div class="items" id="awards"></div>
   </section>
 
   <!-- EXPERIENCE: main list + Projects + Other experience -->
   <section class="card reveal" id="experience">
-    <h2>Experience</h2>
+    <h2><span lang="en">Experience</span><span lang="ko">경력</span></h2>
     <div class="items" id="exp"></div>
 
-    <h3 class="sub" id="projects-sec">Projects <span class="muted" style="font-size:13px;font-weight:500">— <span class="star">★</span> key contribution</span></h3>
+    <h3 class="sub" id="projects-sec"><span lang="en">Projects</span><span lang="ko">연구 과제</span> <span class="muted" style="font-size:13px;font-weight:500">— <span class="star">★</span> <span lang="en">key contribution</span><span lang="ko">주요 기여</span></span></h3>
     <div class="items" id="projects"></div>
 
-    <h3 class="sub" id="skills-sec">Skills</h3>
+    <h3 class="sub" id="skills-sec"><span lang="en">Skills</span><span lang="ko">기술</span></h3>
     <dl class="skills" id="skills"></dl>
 
-    <h3 class="sub" id="other-sec">Other Experience</h3>
+    <h3 class="sub" id="other-sec"><span lang="en">Other Experience</span><span lang="ko">기타 경력</span></h3>
     <div class="items" id="other"></div>
   </section>
 
   <!-- BEYOND -->
   <section class="card reveal" id="beyond">
-    <h2>Beyond the Lab</h2>
+    <h2><span lang="en">Beyond the Lab</span><span lang="ko">연구실 밖</span></h2>
     <div id="gallery"></div>
   </section>
 
-  <footer>© <span id="yr">2026</span> Eunyeong Kim · Last updated September 2026</footer>
+  <footer>© <span id="yr">2026</span> <span lang="en">Eunyeong Kim · Last updated September 2026</span><span lang="ko">김은영 · 최종 업데이트 2026년 9월</span></footer>
 </main>
 
 <div class="lightbox" id="lightbox" hidden><img alt=""><p></p></div>
 
 <nav class="dots" id="dots" aria-label="Sections">
-  <a href="#about" data-sec="about"><span class="lb">About</span><span class="dt"></span></a>
-  <a href="#education" data-sec="education"><span class="lb">Education</span><span class="dt"></span></a>
-  <a href="#research" data-sec="research"><span class="lb">Research</span><span class="dt"></span></a>
-  <a href="#experience" data-sec="experience"><span class="lb">Experience</span><span class="dt"></span></a>
-  <a href="#beyond" data-sec="beyond"><span class="lb">Beyond the Lab</span><span class="dt"></span></a>
+  <a href="#about" data-sec="about"><span class="lb"><span lang="en">About</span><span lang="ko">소개</span></span><span class="dt"></span></a>
+  <a href="#education" data-sec="education"><span class="lb"><span lang="en">Education</span><span lang="ko">학력</span></span><span class="dt"></span></a>
+  <a href="#research" data-sec="research"><span class="lb"><span lang="en">Research</span><span lang="ko">연구</span></span><span class="dt"></span></a>
+  <a href="#experience" data-sec="experience"><span class="lb"><span lang="en">Experience</span><span lang="ko">경력</span></span><span class="dt"></span></a>
+  <a href="#beyond" data-sec="beyond"><span class="lb"><span lang="en">Beyond the Lab</span><span lang="ko">연구실 밖</span></span><span class="dt"></span></a>
 </nav>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
@@ -371,10 +376,10 @@ const EXP = [
 const PROJECTS = [
   ["★ Improving tailored weather-information production technology for the energy sector","2025","Korea Meteorological Administration"],
   ["★ Space system integration and effect-analysis technology development","2025","Korea Astronomy and Space Science Institute"],
-  ["Meteorological satellite convergence application technology development","2025","Korea Meteorological Institute of Technology & Industry"],
   ["★ Development of energy-tailored weather-information production technology","2024","Korea Meteorological Institute of Technology & Industry"],
   ["Field campaign for advancing quality validation of optical medium-resolution satellite imagery","2024","Korea Aerospace Research Institute"],
   ["Environmental-satellite-based application products and data production (II)","2024","National Institute of Environmental Research"],
+  ["Meteorological satellite convergence application technology development","2025","Korea Meteorological Institute of Technology & Industry"],
 ];
 
 // Other experience   [role, dates, organization, [bullet points]]
@@ -384,7 +389,8 @@ const OTHER = [
   ["Research Intern, KIGAM","2022.05 – 10","Mineral Exploration and Mining Research Center · Daejeon",["Underground resource exploration device using Arduino and Raspberry Pi."]],
 ];
 
-// Beyond the Lab > photo gallery, grouped by year (3 per row)   [year, photo file, event, place · date]
+// Beyond the Lab > photo gallery, grouped by year (3 per row)   [year, photo file, event, place · date, event (KOR), place · date (KOR)]
+// The two Korean captions at the end are optional; without them the English caption is shown in KOR mode too.
 // Put photos in the assets/gallery/ folder and write the file name here, e.g. "assets/gallery/agu2025.jpg".
 // Leave the file name as "" to show an empty "photo coming soon" box. Leave event/place "" to show no caption.
 // To add a slot, copy a line and change the year. Years are shown in the order of GALLERY_YEARS.
@@ -397,19 +403,89 @@ const GALLERY = [
   ["2026", "", "", ""],
   ["2026", "", "", ""],
   // 2025
-  ["2025", "assets/banner.jpg", "Grand Canyon", "Arizona, USA"],
-  ["2025", "", "AGU Annual Meeting 2025", "New Orleans, LA, USA · 2025.12"],
-  ["2025", "", "AFORE 2025", "Jeju, South Korea · 2025.11"],
-  ["2025", "", "Deep Learning & Applications Workshop", "Chapman University, CA, USA · 2025.01"],
+  ["2025", "assets/banner.jpg", "Grand Canyon", "Arizona, USA", "그랜드캐니언", "미국 애리조나"],
+  ["2025", "", "AGU Annual Meeting 2025", "New Orleans, LA, USA · 2025.12", "AGU 연례학회 2025", "미국 뉴올리언스 · 2025.12"],
+  ["2025", "", "AFORE 2025", "Jeju, South Korea · 2025.11", "AFORE 2025", "제주 · 2025.11"],
+  ["2025", "", "Deep Learning & Applications Workshop", "Chapman University, CA, USA · 2025.01", "딥러닝 및 응용 워크숍", "미국 채프먼대학교 · 2025.01"],
   ["2025", "", "", ""],
   ["2025", "", "", ""],
   // 2024
-  ["2024", "", "Field Measurement Campaign", "Zuunmod, Mongolia · 2024.06"],
-  ["2024", "", "AFORE 2024", "Jeju, South Korea · 2024.11"],
+  ["2024", "", "Field Measurement Campaign", "Zuunmod, Mongolia · 2024.06", "현장관측 캠페인", "몽골 준모드 · 2024.06"],
+  ["2024", "", "AFORE 2024", "Jeju, South Korea · 2024.11", "AFORE 2024", "제주 · 2024.11"],
   ["2024", "", "", ""],
   ["2024", "", "", ""],
   ["2024", "", "", ""],
 ];
+
+/* =====================================================================
+   CONTENT (KOREAN) — shown when KOR is selected. Same order and format as the
+   English lists above. Anything missing here falls back to the English version.
+   ===================================================================== */
+const KO = {
+  INTERESTS: [
+    ["극한 현상은 무엇이 일으키고, 예측할 수 있을까?", "극한 기상·기후 현상의 물리적 메커니즘과 예측 가능성."],
+    ["더 따뜻해진 미래의 극한 고온은 어떤 모습일까?", "극한 고온 관련 기후영향인자(CIDs)."],
+    ["기후 예측을 에너지 발전량 예측에 활용할 수 있을까?", "GloSea6 지표 하향단파복사를 이용한 분석."],
+  ],
+  NEWS: [
+    ["2026.06", "기상청 기후과학국에서 인턴을 시작했습니다."],
+    ["2026.02", "충남대학교 대기과학 석사 학위를 취득했습니다."],
+    ["2025.12", "미국 뉴올리언스 AGU25에서 포스터 발표를 했습니다."],
+    ["2025.11", "AFORE 2025(제주)에서 구두 발표를 했습니다."],
+    ["2025.08", "BK21 대학원 연구의 날에서 우수발표상을 받았습니다."],
+  ],
+  EDU: [
+    ["대기과학 석사", "2024.03 – 2026.02", "충남대학교 지구환경우주과학과", "지도교수: 이윤곤 교수 · 평점 4.22/4.5"],
+    ["물리학 학사", "2021.03 – 2024.02", "충남대학교 물리학과", ""],
+    ["물리학과 학부 과정", "2019.03 – 2021.02", "전북대학교 물리학과", "충남대학교 편입 전 학부 과정 이수"],
+  ],
+  SKILLS: [
+    ["프로그래밍", "Python (중급) · Linux (중급) · NCL (기초)"],
+    ["도구·장비", "LabVIEW · Origin · FieldSpec III · Microtops"],
+    ["언어", "한국어 (모국어) · 영어 (중급)"],
+  ],
+  // Publications: citations stay in English (no PAPERS here). Add PAPERS: [...] to override.
+  // [date, title, "oral"/"poster", venue & place, language, award (or ""), "domestic"/"international"]
+  // Titles are kept in English — replace with the Korean titles you actually presented.
+  TALKS: [
+    ["2025년 12월","Accuracy evaluation of sunshine duration estimation using the clearness index.","poster","AGU 연례학회 2025, 미국 뉴올리언스","영어","","international"],
+    ["2025년 11월","Development and evaluation of sunshine duration estimation model for solar power potential assessment in South Korea.","oral","아시아·태평양 재생에너지 포럼(AFORE) 2025, 제주","영어","","international"],
+    ["2025년 8월","Development of sunshine duration estimation model using the clearness index for solar power generation.","oral","BK21 대학원 연구의 날, 충남대학교, 곤지암","영어","우수발표상","domestic"],
+    ["2025년 5월","Evaluating the prediction of solar power generation from global, diffuse, direct radiation and meteorological factors.","poster","한국신재생에너지학회 춘계학술대회, 부산","한국어","","domestic"],
+    ["2025년 4월","Development and evaluation of empirical and DNN models for estimating sunshine hours based on the clearness index in South Korea.","poster","한국태양에너지학회 춘계학술대회, 보령","한국어","우수포스터발표상","domestic"],
+    ["2024년 11월","The estimation of surface solar irradiance based on GK-2A satellite data and the analysis of the relationship between solar photovoltaic power generation and meteorological factors.","poster","아시아·태평양 재생에너지 포럼(AFORE) 2024, 제주","한국어","","international"],
+    ["2024년 10월","Quantitative analysis of the relationship between solar power generation, solar irradiance, and meteorological factors.","poster","한국기상학회 가을학술대회, 대구","한국어","우수포스터발표상","domestic"],
+  ],
+  AWARDS: [
+    ["우수발표상","2025.08","BK21 대학원 연구의 날, 충남대학교"],
+    ["우수포스터발표상 — 재생에너지 자원 세션","2025.04","한국태양에너지학회 춘계학술대회"],
+    ["우수포스터발표상 — 대기물리 세션","2024.10","한국기상학회 가을학술대회"],
+    ["우수발표상","2021.07","한국정보과학회 한국컴퓨터종합학술대회(KCC2021)"],
+  ],
+  EXP: [
+    ["인턴, 기상청","2026.06 – 현재","기후과학국 · 대전",
+      ["GloSea6 과거재현자료를 이용한 선행시간별 지표 하향단파복사 예측성 평가.","기후영향인자(CIDs) 분석."]],
+    ["딥러닝 및 응용 워크숍","2025.01 – 02","채프먼대학교 ECHO 연구소 · 미국 캘리포니아",
+      ["대기과학·딥러닝 세미나 및 국제 연구 교류."]],
+    ["국제 현장관측 캠페인","2024.06","몽골 준모드 · 한국항공우주연구원(KARI), 몽골 기상수문환경정보연구소(IRIMHE)와 공동 수행",
+      ["위성 원격탐사를 위한 지표 반사도 측정 및 복사 검·보정."]],
+    ["학생연구원, 한국과학기술정보연구원(KISTI)","2020 – 2022","AI·데이터본부 · 대전 (하계·동계)",
+      ["머신러닝 데이터셋 구축, 대전 하천 수위 측정 과제 참여(측정·네트워크 장비 개발 포함)."]],
+  ],
+  PROJECTS: [
+    ["★ 에너지기상 맞춤형 기상정보 생산기술 개선","2025","기상청"],
+    ["★ 대우주 시스템 통합 및 효과 분석 기술 개발","2025","한국천문연구원"],
+    ["★ 에너지 맞춤형 기상정보 생산 기술개발","2024","한국기상산업기술원"],
+    ["광학 중해상도 위성영상 품질검증 체계 수립 고도화를 위한 필드캠페인","2024","한국항공우주연구원"],
+    ["환경위성 기반 활용산출물 개발 및 자료 생산(II)","2024","한국환경과학원"],
+    ["기상위성 융합 활용 기술개발 사업","2025","한국기상산업기술원"],
+  ],
+  OTHER: [
+    ["학부연구생, 대기과학 연구실","2023.08 – 2024.02","충남대학교 · 지도교수: 이윤곤 교수",["NCL 교육, 산불·화산 폭발의 대기 영향 연구."]],
+    ["학부연구생, 양자기능소재 및 소자 연구실","2023.02 – 07","충남대학교 물리학과 · 지도교수: 김문덕 교수",["유해가스 검출용 반도체 센서 개발."]],
+    ["연구 인턴, 한국지질자원연구원(KIGAM)","2022.05 – 10","광물자원탐사개발연구센터 · 대전",["아두이노·라즈베리파이 기반 지하자원 탐사 장치 개발."]],
+  ],
+};
 /* ===================== end of content ===================== */
 
 document.documentElement.classList.add('js');
@@ -418,41 +494,59 @@ const me = s => s.replace(/<b>(.*?)<\/b>/g,'<span class="me">$1</span>');
 const star = s => s.replace('★','<span class="star">★</span>');
 const item = (t,d,s,b) => `<div class="item"><div class="t">${t}</div><div class="d">${d||''}</div>${s?`<div class="s">${s}</div>`:''}${b&&b.length?`<ul>${b.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}</div>`;
 
-$('#interests').innerHTML = INTERESTS.map(i=>`<div class="interest"><div class="t">${i[0]}</div><div class="s">${i[1]}</div></div>`).join('');
-$('#news').innerHTML = NEWS.map(n=>`<li><span class="d">${n[0]}</span><span>${n[1]}</span></li>`).join('');
-$('#edu').innerHTML = EDU.map(e=>item(e[0],e[1],e[2]+(e[3]?`<br>${e[3]}`:''))).join('');
-$('#skills').innerHTML = SKILLS.map(s=>`<dt>${s[0]}</dt><dd>${s[1]}</dd>`).join('');
-$('#papers').innerHTML = PAPERS.map(p=>`<li>${me(p.au)} (${p.y}). <span class="ttl">${p.t}</span> ${p.v}
-  ${p.doi?`<a class="doi" href="https://doi.org/${p.doi}" target="_blank" rel="noopener">https://doi.org/${p.doi}</a>`:''}${p.note?` <span class="award">${p.note}</span>`:''}</li>`).join('');
-$('#awards').innerHTML = AWARDS.map(a=>item(a[0],a[1],a[2])).join('');
-$('#exp').innerHTML = EXP.map(e=>item(e[0],e[1],e[2],e[3])).join('');
-$('#projects').innerHTML = PROJECTS.map(p=>item(star(p[0]),p[1],p[2])).join('');
-$('#other').innerHTML = OTHER.map(e=>item(e[0],e[1],e[2],e[3])).join('');
-const EMPTY = `<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Photo coming soon</div>`;
-const shot = (g,i) => `<figure class="shot">
-  ${g[1] ? `<button type="button" class="frame" data-i="${i}" aria-label="Enlarge photo: ${g[2]}"><img src="${g[1]}" alt="${g[2]}" loading="lazy"></button>` : `<div class="frame" style="cursor:default;border:0;background:none">${EMPTY}</div>`}
-  ${g[2]||g[3] ? `<figcaption><div class="n">${g[2]}</div><div class="x">${g[3]}</div></figcaption>` : ''}</figure>`;
-const years = GALLERY_YEARS.concat([...new Set(GALLERY.map(g=>g[0]))].filter(y=>!GALLERY_YEARS.includes(y)));
-$('#gallery').innerHTML = years.map(y => {
-  const items = GALLERY.map((g,i)=>[g,i]).filter(([g])=>g[0]===y);
-  const photos = items.filter(([g])=>g[1]).length;
-  return items.length ? `<details class="yr" open><summary><span>${y}</span><span class="cnt">${photos} photo${photos===1?'':'s'}</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><div class="gallery">${items.map(([g,i])=>shot(g,i)).join('')}</div></details>` : '';
-}).join('');
-$$('#gallery details.yr').forEach(d=>{ if(GALLERY_CLOSED.includes(d.querySelector('summary span').textContent)) d.open=false; });
-$$('#gallery img').forEach(img=>img.onerror=()=>{ const f=img.closest('.frame'); f.outerHTML=`<div class="frame" style="cursor:default;border:0;background:none">${EMPTY}</div>`; });
+const EN = {INTERESTS, NEWS, EDU, SKILLS, PAPERS, TALKS, AWARDS, EXP, PROJECTS, OTHER};
+const UI = {
+  en:{soon:'Photo coming soon', photos:n=>`${n} photo${n===1?'':'s'}`, oral:'Oral presentation.', poster:'Poster presentation.', inLang:l=>`in ${l}`, copied:'eykim129@gmail.com copied', enlarge:'Enlarge photo'},
+  ko:{soon:'사진 준비 중', photos:n=>`사진 ${n}장`, oral:'구두 발표.', poster:'포스터 발표.', inLang:l=>`${l} 발표`, copied:'eykim129@gmail.com 복사됨', enlarge:'사진 크게 보기'},
+};
+let LANG='en', talkFilter='all';
+const D = k => (LANG==='ko' && KO[k]) ? KO[k] : EN[k];
+const emptyBox = () => `<div class="frame" style="cursor:default;border:0;background:none"><div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>${UI[LANG].soon}</div></div>`;
+const cap = g => LANG==='ko' && (g[4]||g[5]) ? [g[4]||g[2], g[5]||g[3]] : [g[2], g[3]];
+const shot = (g,i) => { const [n,x]=cap(g); return `<figure class="shot">
+  ${g[1] ? `<button type="button" class="frame" data-i="${i}" aria-label="${UI[LANG].enlarge}: ${n}"><img src="${g[1]}" alt="${n}" loading="lazy"></button>` : emptyBox()}
+  ${n||x ? `<figcaption><div class="n">${n}</div><div class="x">${x}</div></figcaption>` : ''}</figure>`; };
 const lb=$('#lightbox');
-$$('#gallery button.frame').forEach(b=>b.onclick=()=>{ const g=GALLERY[b.dataset.i]; lb.querySelector('img').src=g[1]; lb.querySelector('img').alt=g[2]; lb.querySelector('p').textContent=[g[2],g[3]].filter(Boolean).join(' — '); lb.hidden=false; });
-lb.onclick=()=>lb.hidden=true;
-addEventListener('keydown',e=>{ if(e.key==='Escape') lb.hidden=true; });
 
 function renderTalks(f){
-  const list = TALKS.filter(t=>f==='all'||t[6]===f);
-  const ol=$("#talks");
-  ol.innerHTML = list.map(t=>`<li>(${t[0]}). ${t[1]} <span class="kind">${t[2]==='oral'?'Oral':'Poster'} presentation.</span>
-    ${t[5]?`<span class="award">${t[5]}</span>`:''}<span class="venue">${t[3]} · in ${t[4]}</span></li>`).join('');
+  talkFilter=f;
+  const list = D('TALKS').filter(t=>f==='all'||t[6]===f);
+  $("#talks").innerHTML = list.map(t=>`<li>(${t[0]}). ${t[1]} <span class="kind">${t[2]==='oral'?UI[LANG].oral:UI[LANG].poster}</span>
+    ${t[5]?`<span class="award">${t[5]}</span>`:''}<span class="venue">${t[3]} · ${UI[LANG].inLang(t[4])}</span></li>`).join('');
 }
 $$('#talkFilters button').forEach(b=>b.onclick=()=>{ $$('#talkFilters button').forEach(x=>x.setAttribute('aria-pressed',x===b)); renderTalks(b.dataset.f); });
-renderTalks('all');
+
+function renderAll(){
+  $('#interests').innerHTML = D('INTERESTS').map(i=>`<div class="interest"><div class="t">${i[0]}</div><div class="s">${i[1]}</div></div>`).join('');
+  $('#news').innerHTML = D('NEWS').map(n=>`<li><span class="d">${n[0]}</span><span>${n[1]}</span></li>`).join('');
+  $('#edu').innerHTML = D('EDU').map(e=>item(e[0],e[1],e[2]+(e[3]?`<br>${e[3]}`:''))).join('');
+  $('#skills').innerHTML = D('SKILLS').map(s=>`<dt>${s[0]}</dt><dd>${s[1]}</dd>`).join('');
+  $('#papers').innerHTML = D('PAPERS').map(p=>`<li>${me(p.au)} (${p.y}). <span class="ttl">${p.t}</span> ${p.v}
+    ${p.doi?`<a class="doi" href="https://doi.org/${p.doi}" target="_blank" rel="noopener">https://doi.org/${p.doi}</a>`:''}${p.note?` <span class="award">${p.note}</span>`:''}</li>`).join('');
+  $('#awards').innerHTML = D('AWARDS').map(a=>item(a[0],a[1],a[2])).join('');
+  $('#exp').innerHTML = D('EXP').map(e=>item(e[0],e[1],e[2],e[3])).join('');
+  $('#projects').innerHTML = D('PROJECTS').map(p=>item(star(p[0]),p[1],p[2])).join('');
+  $('#other').innerHTML = D('OTHER').map(e=>item(e[0],e[1],e[2],e[3])).join('');
+  renderTalks(talkFilter);
+
+  // gallery (keeps each year's open/closed state across language changes)
+  const openState = {}; $$('#gallery details.yr').forEach(d=>openState[d.dataset.y]=d.open);
+  const years = GALLERY_YEARS.concat([...new Set(GALLERY.map(g=>g[0]))].filter(y=>!GALLERY_YEARS.includes(y)));
+  $('#gallery').innerHTML = years.map(y => {
+    const items = GALLERY.map((g,i)=>[g,i]).filter(([g])=>g[0]===y);
+    const photos = items.filter(([g])=>g[1]).length;
+    const open = y in openState ? openState[y] : !GALLERY_CLOSED.includes(y);
+    return items.length ? `<details class="yr" data-y="${y}"${open?' open':''}><summary><span>${y}</span><span class="cnt">${UI[LANG].photos(photos)}</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><div class="gallery">${items.map(([g,i])=>shot(g,i)).join('')}</div></details>` : '';
+  }).join('');
+  $$('#gallery img').forEach(img=>img.onerror=()=>{ img.closest('.frame').outerHTML=emptyBox(); });
+  $$('#gallery button.frame').forEach(b=>b.onclick=()=>{ const g=GALLERY[b.dataset.i], [n,x]=cap(g); lb.querySelector('img').src=g[1]; lb.querySelector('img').alt=n; lb.querySelector('p').textContent=[n,x].filter(Boolean).join(' — '); lb.hidden=false; });
+}
+lb.onclick=()=>lb.hidden=true;
+addEventListener('keydown',e=>{ if(e.key==='Escape') lb.hidden=true; });
+// first paint in the saved language, before the scroll effects measure the page
+try{ LANG = localStorage.getItem('lang')==='ko' ? 'ko' : 'en'; }catch(e){}
+document.documentElement.lang = LANG;
+renderAll();
 
 /* cards rise in as they scroll into view (cards already on screen show at once) */
 (function(){
@@ -473,18 +567,23 @@ renderTalks('all');
   addEventListener('scroll',spy,{passive:true}); addEventListener('resize',spy); spy();
 })();
 
-/* theme switch + email copy */
+/* ENG / KOR switch (remembers the visitor's choice) + email copy */
 const root=document.documentElement;
 const store={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}}, set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
-const saved=store.get('theme'); if(saved) root.dataset.theme=saved;
-$('#themeBtn').onclick=()=>{
-  const dark=root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
-  root.dataset.theme=dark?'light':'dark'; store.set('theme',root.dataset.theme);
-};
+function setLang(l){
+  LANG = l==='ko' ? 'ko' : 'en';
+  root.lang = LANG;
+  $$('#langSwitch button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.lang===LANG));
+  document.title = LANG==='ko' ? '김은영 | Eunyeong Kim' : 'Eunyeong Kim';
+  renderAll();
+  store.set('lang', LANG);
+}
+$$('#langSwitch button').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
+setLang(store.get('lang') || 'en');
 $('#copyMail').onclick=()=>{
   const t=$('#toast');
   (navigator.clipboard?navigator.clipboard.writeText('eykim129@gmail.com'):Promise.reject())
-    .then(()=>{ t.textContent='eykim129@gmail.com copied'; t.hidden=false; setTimeout(()=>t.hidden=true,1800); })
+    .then(()=>{ t.textContent=UI[LANG].copied; t.hidden=false; setTimeout(()=>t.hidden=true,1800); })
     .catch(()=>{ location.href='mailto:eykim129@gmail.com'; });
 };
 $('#yr').textContent=new Date().getFullYear();
