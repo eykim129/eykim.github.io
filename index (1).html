@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Eunyeong Kim</title>
+<meta name="description" content="Eunyeong Kim — atmospheric scientist studying climate variability, weather & climate extremes, and climate impact drivers.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌎</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f6f3; --side:#f6f6f3; --card:#ffffff; --ink:#1b1f23; --text:#3b4046; --muted:#6b7178; --faint:#9aa0a6;
+  --line:#e6e6e1; --accent:#2c5f8d; --accent-ink:#ffffff; --accent-soft:#e8eff6; --accent-line:#b9cde0; --gold:#b86a3c;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 4px 14px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121518; --side:#121518; --card:#1a1e22; --ink:#eceef0; --text:#c9ced3; --muted:#9aa1a8; --faint:#6e757c;
+    --line:#2a2f35; --accent:#8bbbe6; --accent-ink:#0f1a24; --accent-soft:#1e2b38; --accent-line:#34506b; --gold:#e39a6c;
+    --shadow:0 1px 2px rgba(0,0,0,.3); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121518; --side:#121518; --card:#1a1e22; --ink:#eceef0; --text:#c9ced3; --muted:#9aa1a8; --faint:#6e757c;
+  --line:#2a2f35; --accent:#8bbbe6; --accent-ink:#0f1a24; --accent-soft:#1e2b38; --accent-line:#34506b; --gold:#e39a6c;
+  --shadow:0 1px 2px rgba(0,0,0,.3); color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.7 Inter,"Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+/* ---------- top profile header (fixed; shrinks to a slim bar on scroll) ---------- */
+.side{position:fixed;left:0;right:0;top:0;z-index:20;background:var(--side);border-bottom:1px solid var(--line);overflow:hidden;
+  transition:box-shadow .3s ease}
+.side.compact{box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.side svg.iso{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.side .inner{position:relative;max-width:640px;margin:0 auto;padding:30px 16px 24px;display:flex;align-items:center;gap:24px;
+  transition:padding .35s ease,gap .35s ease}
+.side.compact .inner{padding:10px 16px;gap:14px}
+/* ENG / KOR language switch */
+.switch{position:absolute;left:14px;top:14px;z-index:2;display:flex;padding:2px;border-radius:999px;background:var(--card);border:1px solid var(--accent-line);transition:top .35s ease}
+.side.compact .switch{top:50%;transform:translateY(-50%)}
+.switch button{border:0;background:none;border-radius:999px;padding:2px 9px;font:700 10.5px/1.5 Inter,sans-serif;letter-spacing:.04em;color:var(--muted);cursor:pointer;transition:background .2s,color .2s}
+.switch button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+/* show only the active language */
+html[lang="en"] [lang="ko"], html[lang="ko"] [lang="en"]{display:none!important}
+html[lang="ko"] body{word-break:keep-all}
+.photo{width:120px;height:120px;flex-shrink:0;border-radius:50%;object-fit:cover;border:1.5px solid var(--accent);padding:3px;background:var(--side);
+  transition:width .35s ease,height .35s ease,padding .35s ease}
+.side.compact .photo{width:40px;height:40px;padding:1.5px}
+.who{flex:1;min-width:0}
+.who .top{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.name{font-size:24px;font-weight:800;color:var(--ink);margin:0;letter-spacing:-.02em;transition:font-size .35s ease}
+.side.compact .name{font-size:16px;font-weight:700}
+.more{max-height:220px;opacity:1;overflow:hidden;transition:max-height .4s ease,opacity .25s ease}
+.side.compact .more{max-height:0;opacity:0}
+.pills{display:flex;flex-direction:column;align-items:flex-start;gap:5px;margin-top:10px}
+.pills > div{display:flex;flex-wrap:wrap;gap:5px}
+.pills > div > span{border:1px solid var(--accent-line);background:var(--accent-soft);color:var(--ink);border-radius:999px;padding:2px 9px;font-size:11.5px;white-space:nowrap}
+.aff{margin:10px 0 2px;font-size:12px;color:var(--text)}
+.tagline{margin:0;font-size:12px;color:var(--muted);line-height:1.55}
+.icons{display:flex;gap:14px;margin-left:auto}
+.icons a,.icons button{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font:500 10.5px/1.2 Inter,sans-serif;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.icons a:hover,.icons button:hover{color:var(--accent)}
+.icons svg{width:15px;height:15px}
+.toast{position:absolute;right:16px;bottom:6px;font-size:11px;color:var(--gold)}
+.spacer{height:var(--head,200px)}
+
+/* ---------- main column ---------- */
+main{padding:24px 56px 80px;display:flex;flex-direction:column;align-items:center;gap:20px}
+.card{width:100%;max-width:640px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
+  padding:30px 32px 26px;scroll-margin-top:100px}
+.card h2{font-size:26px;font-weight:800;color:var(--ink);margin:0 0 20px;letter-spacing:-.02em}
+.card h3{font-size:13px;font-weight:700;color:var(--ink);margin:26px 0 10px;text-transform:uppercase;letter-spacing:.06em}
+.card p{margin:0 0 10px}
+.card h3.sub{font-size:19px;font-weight:700;text-transform:none;letter-spacing:-.01em;margin:34px 0 14px;padding-top:24px;border-top:1px solid var(--line);scroll-margin-top:100px}
+.card h2 + h3.sub{margin-top:0;padding-top:0;border-top:0}
+.muted{color:var(--muted)}
+.reveal{transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.js .reveal.pending{opacity:0;transform:translateY(24px)}
+@media (prefers-reduced-motion:reduce){.js .reveal.pending{opacity:1;transform:none}.reveal{transition:none}}
+
+/* numbered reference lists */
+ol.refs{margin:0;padding-left:20px}
+ol.refs > li{margin:0 0 16px;padding-left:4px}
+ol.refs > li::marker{color:var(--muted);font-size:12.5px}
+.me{font-weight:700;text-decoration:underline;text-underline-offset:2px;color:var(--ink)}
+.ttl{color:var(--accent);font-weight:600}
+.venue{display:block;font-size:12px;color:var(--muted)}
+.kind{font-weight:400;color:var(--ink)}
+.award{font-style:italic;color:var(--gold);font-weight:500}
+.doi{font-size:12.5px;word-break:break-all}
+
+.filters{display:flex;gap:6px;margin:0 0 16px}
+.filters button{border:1px solid var(--accent-line);background:var(--accent-soft);color:var(--ink);border-radius:999px;padding:4px 13px;font:500 12px/1.5 Inter,sans-serif;cursor:pointer;transition:background .2s,color .2s}
+.filters button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+#talks li{animation:fadeIn .35s ease both}
+@keyframes fadeIn{from{opacity:.001;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* timeline items */
+.items{display:flex;flex-direction:column;gap:14px}
+.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 16px}
+.item .t{font-weight:600;color:var(--ink)}
+.item .d{font-size:12px;color:var(--muted);white-space:nowrap;padding-top:2px;font-variant-numeric:tabular-nums}
+.item .s{grid-column:1/-1;font-size:13px;color:var(--muted)}
+.item ul{grid-column:1/-1;margin:4px 0 0;padding-left:18px;font-size:13px}
+.star{color:var(--gold)}
+
+.interests{display:grid;gap:10px}
+.interest{border-left:3px solid var(--accent-line);padding:4px 0 4px 14px}
+.interest .t{font-weight:600;color:var(--ink)}
+.interest .s{font-size:13px;color:var(--muted)}
+
+.news{list-style:none;margin:0;padding:0}
+.news li{display:grid;grid-template-columns:62px minmax(0,1fr);gap:10px;padding:6px 0;border-top:1px dashed var(--line)}
+.news li:first-child{border-top:0}
+.news .d{font-size:12px;color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums;padding-top:1px}
+
+.skills{display:grid;grid-template-columns:120px minmax(0,1fr);gap:6px 14px;font-size:13px}
+.skills dt{color:var(--muted)}
+.skills dd{margin:0;color:var(--ink)}
+
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.yr{margin-top:22px}
+.yr:first-child{margin-top:0}
+.yr > summary{list-style:none;display:flex;align-items:center;gap:10px;padding:6px 0;cursor:pointer;user-select:none;
+  font-size:15px;font-weight:800;color:var(--ink);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.yr > summary::-webkit-details-marker{display:none}
+.yr > summary::after{content:"";flex:1;height:1px;background:var(--line);order:2}
+.yr > summary .chev{order:3;width:16px;height:16px;color:var(--muted);transition:transform .25s ease}
+.yr:not([open]) > summary .chev{transform:rotate(-90deg)}
+.yr > summary .cnt{order:1;font-size:11.5px;font-weight:500;color:var(--faint)}
+.yr > summary:hover{color:var(--accent)}
+.yr > summary:hover .chev{color:var(--accent)}
+.yr > .gallery{padding-top:10px;animation:fadeIn .3s ease both}
+/* Record > Thoughts (notes) */
+.yr.notes > summary .lbl{display:inline-flex;align-items:center;gap:7px}
+.yr.notes > summary .lbl svg{width:15px;height:15px;color:var(--accent)}
+.notes-list{padding-top:6px;animation:fadeIn .3s ease both}
+.note{padding:14px 0;border-top:1px dashed var(--line)}
+.note:first-child{border-top:0}
+.note .nd{font-size:11.5px;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums}
+.note .nt{font-weight:700;color:var(--ink);font-size:14.5px;margin:2px 0 4px}
+.note p{margin:0 0 8px;font-size:13.5px;line-height:1.75;color:var(--text)}
+.note p:last-child{margin-bottom:0}
+.notes-empty{margin-top:6px;padding:22px 16px;border:1.5px dashed var(--accent-line);border-radius:10px;text-align:center;color:var(--faint);font-size:12px}
+.shot{margin:0;min-width:0}
+.shot .frame{display:block;width:100%;aspect-ratio:4/3;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--accent-soft);padding:0;cursor:zoom-in}
+.shot img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.shot .frame:hover img{transform:scale(1.04)}
+.shot .empty{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--faint);font-size:11px;border:1.5px dashed var(--accent-line);border-radius:10px;cursor:default}
+.shot .empty svg{width:22px;height:22px}
+.shot figcaption{padding-top:7px}
+.shot .n{font-weight:600;color:var(--ink);font-size:13px;line-height:1.4}
+.shot .x{font-size:11.5px;color:var(--muted);line-height:1.45}
+.lightbox{position:fixed;inset:0;z-index:50;background:rgba(10,12,14,.86);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;cursor:zoom-out}
+.lightbox[hidden]{display:none}
+.lightbox img{max-width:100%;max-height:82vh;border-radius:8px}
+.lightbox p{color:#e8eaec;font-size:13px;margin:0;text-align:center}
+@media (max-width:560px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+footer{font-size:12px;color:var(--faint);padding-top:8px}
+
+/* ---------- right dot navigator ---------- */
+.dots{position:fixed;right:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;z-index:10}
+.dots a{position:relative;display:flex;align-items:center;justify-content:flex-end;gap:10px;height:14px;color:var(--accent);font-size:11px;text-decoration:none}
+.dots a .lb{opacity:0;transform:translateX(6px);transition:opacity .25s,transform .25s;white-space:nowrap;pointer-events:none}
+.dots a .dt{width:7px;height:7px;border-radius:50%;background:var(--faint);opacity:.55;transition:all .25s ease}
+.dots a:hover .lb,.dots a:focus-visible .lb{opacity:1;transform:none}
+.dots a:hover .dt{opacity:1}
+.dots a.active .dt{width:11px;height:11px;background:var(--accent);opacity:1}
+
+
+/* ---------- small screens ---------- */
+@media (max-width:560px){
+  .side .inner{padding:44px 16px 18px;gap:16px;align-items:flex-start}
+  .photo{width:84px;height:84px}
+  .name{font-size:21px}
+  .icons{margin-left:0}
+  .switch{left:auto;right:14px}
+}
+@media (max-width:900px){
+  main{padding:20px 16px 64px}
+  .card{padding:24px 18px 20px}
+  .dots{right:6px}
+  .dots a .lb{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="side" id="head">
+  <svg class="iso" id="iso" aria-hidden="true"></svg>
+  <div class="switch" id="langSwitch" role="group" aria-label="Language">
+    <button type="button" data-lang="en" aria-pressed="true">ENG</button>
+    <button type="button" data-lang="ko" aria-pressed="false">KOR</button>
+  </div>
+  <div class="inner">
+  <img class="photo" src="assets/profile.jpg" alt="Eunyeong Kim">
+  <div class="who">
+  <div class="top">
+  <div class="name"><span lang="en">Eunyeong Kim</span><span lang="ko">김은영</span></div>
+  <div class="icons">
+    <button type="button" id="copyMail" title="Copy email address">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4 7v1.8l8 5.2 8-5.2V7z"/></svg><span lang="en">Email</span><span lang="ko">이메일</span>
+    </button>
+    <a href="https://scholar.google.com/citations?user=5iAaY5YAAAAJ" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9.5l4 2.4V17c0 .6.3 1.1.8 1.4C7.6 19.4 9.7 20 12 20s4.4-.6 6.2-1.6c.5-.3.8-.8.8-1.4v-5.1l2-1.2V16h2V9.5z"/></svg><span lang="en">Scholar</span><span lang="ko">구글 스칼라</span>
+    </a>
+    <!-- Add later: <a href="assets/cv.pdf" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 2h8l6 6v14H6z"/></svg>CV</a> -->
+  </div>
+  </div>
+  <div class="more">
+  <div class="pills">
+  <div>
+    <span><span lang="en">Atmospheric Science</span><span lang="ko">대기과학</span></span>
+    <span><span lang="en">Climate Change</span><span lang="ko">기후변화</span></span>
+  </div>
+  <div>
+    <span><span lang="en">Climate Impacts</span><span lang="ko">기후 영향</span></span>
+    <span><span lang="en">Renewable Energy</span><span lang="ko">재생에너지</span></span>
+  </div>
+</div>
+  <p class="aff"><span lang="en">Daejeon, South Korea</span><span lang="ko">대한민국 대전</span></p>
+  <p class="tagline"><span lang="en">My research interests focus on understanding the impacts of climate change on human and natural systems.</span><span lang="ko">기후변화가 인간과 자연 시스템에 미치는 영향을 이해하는데 관심을 두고 연구하고 있습니다.</span></p>
+  </div>
+  </div>
+  </div>
+  <span class="toast" id="toast" hidden>Email copied</span>
+</header>
+<div class="spacer" aria-hidden="true"></div>
+
+<main>
+  <!-- ABOUT -->
+  <section class="card reveal" id="about">
+    <h2><span lang="en">About</span><span lang="ko">소 개</span></h2>
+    <p></p>
+    <h3><span lang="en">What I'm thinking about lately</span><span lang="ko">요즘 고민하는 질문</span></h3>
+    <div class="interests" id="interests"></div>
+    <h3><span lang="en">Recently</span><span lang="ko">최근 소식</span></h3>
+    <ul class="news" id="news"></ul>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="card reveal" id="education">
+    <h2><span lang="en">Education</span><span lang="ko">학 력</span></h2>
+    <div class="items" id="edu"></div>
+  </section>
+
+  <!-- RESEARCH: Publications + Presentations & Awards -->
+  <section class="card reveal" id="research">
+    <h2><span lang="en">Research</span><span lang="ko">연 구</span></h2>
+
+    <h3 class="sub" id="publications"><span lang="en">Publications</span><span lang="ko">논 문</span></h3>
+    <ol class="refs" id="papers"></ol>
+
+    <h3 class="sub" id="presentations"><span lang="en">Presentations &amp; Awards</span><span lang="ko">학회 발표 및 수상</span></h3>
+    <div class="filters" id="talkFilters">
+      <button type="button" data-f="all" aria-pressed="true"><span lang="en">All</span><span lang="ko">전체</span></button>
+      <button type="button" data-f="domestic" aria-pressed="false"><span lang="en">Domestic</span><span lang="ko">국내</span></button>
+      <button type="button" data-f="international" aria-pressed="false"><span lang="en">International</span><span lang="ko">국제</span></button>
+    </div>
+    <ol class="refs" id="talks"></ol>
+    <h3><span lang="en">Awards</span><span lang="ko">수상</span></h3>
+    <div class="items" id="awards"></div>
+  </section>
+
+  <!-- EXPERIENCE: main list + Projects + Other experience -->
+  <section class="card reveal" id="experience">
+    <h2><span lang="en">Experience</span><span lang="ko">경 력</span></h2>
+    <div class="items" id="exp"></div>
+
+    <h3 class="sub" id="projects-sec"><span lang="en">Projects</span><span lang="ko">참여 과제</span> <span class="muted" style="font-size:13px;font-weight:500">— <span class="star">★</span> <span lang="en">key contribution</span><span lang="ko">주요 기여</span></span></h3>
+    <div class="items" id="projects"></div>
+
+    <h3 class="sub" id="skills-sec"><span lang="en">Skills</span><span lang="ko">기 술</span></h3>
+    <dl class="skills" id="skills"></dl>
+
+    <h3 class="sub" id="other-sec"><span lang="en">Other Experience</span><span lang="ko">기타 경력</span></h3>
+    <div class="items" id="other"></div>
+  </section>
+
+  <!-- BEYOND -->
+  <section class="card reveal" id="beyond">
+    <h2><span lang="en">Record</span><span lang="ko">기 록</span></h2>
+    <div id="gallery"></div>
+  </section>
+
+  <footer>© <span id="yr">2026</span> <span lang="en">Eunyeong Kim · Last updated September 2026</span><span lang="ko">김은영 · 최종 업데이트 2026년 9월</span></footer>
+</main>
+
+<div class="lightbox" id="lightbox" hidden><img alt=""><p></p></div>
+
+<nav class="dots" id="dots" aria-label="Sections">
+  <a href="#about" data-sec="about"><span class="lb"><span lang="en">About</span><span lang="ko">소개</span></span><span class="dt"></span></a>
+  <a href="#education" data-sec="education"><span class="lb"><span lang="en">Education</span><span lang="ko">학력</span></span><span class="dt"></span></a>
+  <a href="#research" data-sec="research"><span class="lb"><span lang="en">Research</span><span lang="ko">연구</span></span><span class="dt"></span></a>
+  <a href="#experience" data-sec="experience"><span class="lb"><span lang="en">Experience</span><span lang="ko">경력</span></span><span class="dt"></span></a>
+  <a href="#beyond" data-sec="beyond"><span class="lb"><span lang="en">Record</span><span lang="ko">기록</span></span><span class="dt"></span></a>
+</nav>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+/* =====================================================================
+   CONTENT — edit here. One line = one item. Keep the quotes and commas.
+   Wrap your own name as <b>Kim, E.</b> so it is bold + underlined.
+   ===================================================================== */
+
+// About > What I'm thinking about lately   [title, description]
+const INTERESTS = [
+  ["What drives extremes, and how will they change in a warmer future?", "Physical mechanisms, predictability, and climate-change impacts of weather and climate extremes."],
+  ["Can we monitor extremes and disasters from space?", "Remote sensing of extreme weather, climate hazards, and natural disasters using satellite observations."],
+  ["Can climate forecasts be used to predict energy generation?", "An analysis based on GloSea6 surface downward shortwave radiation."],
+];
+
+// About > Recently   [date, text]
+const NEWS = [
+  ["2026.06", "Started a internship at the Korea Meteorological Administration (Climate Science Bureau)."],
+  ["2026.02", "Completed my M.S. in Atmospheric Sciences at Chungnam National University."],
+  ["2025.12", "Presented a poster at AGU25 in New Orleans."],
+  ["2025.11", "Gave an oral talk at AFORE 2025, Jeju."],
+  ["2025.08", "Best Presentation Award at BK21 Graduate Research Day."],
+];
+
+// Education   [degree, dates, school, extra]
+const EDU = [
+  ["M.S. in Atmospheric Sciences", "2024.03 – 2026.02", "Dept. of Earth, Environmental & Space Sciences, Chungnam National University", "Advisor: Prof. Yun Gon Lee · GPA 4.22/4.5"],
+  ["B.S. in Physics", "2021.03 – 2024.02", "Dept. of Physics, Chungnam National University", ""],
+  ["Undergraduate coursework in Physics", "2019.03 – 2021.02", "Dept. of Physics, Jeonbuk National University", "Completed coursework prior to transferring to Chungnam National University"],
+];
+
+// Experience > Skills   [category, items]
+const SKILLS = [
+  ["Programming", "Python (intermediate) · Linux (intermediate) · NCL (Basic)"],
+  ["Tools", "LabVIEW · Origin · ASD FieldSpec III, IV · Microtops"],
+  ["Languages", "Korean(Mother tongue) · English(intermediate)"],
+];
+
+// Publications   {authors, year, title, venue, doi, note}
+const PAPERS = [
+  {au:"Choi, K.-B., Jin, K.-W., Cha, D.-H., Choi, J.-H., Jo, Y.-H., Kim, K.-N., Kang, G.-B., Shin, H.-Y., Lee, J.-Y., <b>Kim, E.</b>, & Lee, Y. G.", y:"2026",
+   t:"Absolute radiometric calibration of CAS500-1/AEISS-C: Reflectance-based vicarious calibration and cross-calibration with Sentinel-2/MSI.", v:"<i>Remote Sensing</i>, <i>18</i>(1), 177.", doi:"10.3390/rs18010177"},
+  {au:"Choi, J.-H., Jin, K.-W., Cha, D.-H., Choi, K.-B., Jo, Y.-H., Kim, K.-N., Kang, G.-B., Shin, H.-Y., Lee, J.-Y., <b>Kim, E.</b>, Chang, H., & Lee, Y. G.", y:"2025",
+   t:"Radiometric cross-calibration and validation of KOMPSAT-3/AEISS using Sentinel-2A/MSI.", v:"<i>Remote Sensing</i>, <i>17</i>, 3280.", doi:"10.3390/rs17193280"},
+  {au:"Shin, J., <b>Kim, E.</b>, Seol, S., Kwon, J., Kim, Y., & Gang, J.-Y.", y:"2021",
+   t:"Automatic classification of questions on constructing machine learning data sets with Bi-LSTM.", v:"<i>Korea Computer Congress (KCC) 2021</i>, KIISE."},
+];
+
+// Presentations   [date, title, "oral"/"poster", venue & place, language, award (or ""), "domestic"/"international"]
+const TALKS = [
+  ["2025, December","Accuracy evaluation of sunshine duration estimation using the clearness index.","poster","AGU Annual Meeting 2025, New Orleans, LA, USA","English","","international"],
+  ["2025, November","Development and evaluation of sunshine duration estimation model for solar power potential assessment in South Korea.","oral","Asia-Pacific Forum on Renewable Energy (AFORE) 2025, Jeju, South Korea","English","","international"],
+  ["2025, August","Development of sunshine duration estimation model using the clearness index for solar power generation.","oral","BK21 Graduate Research Day, Chungnam National University, Konjiam, South Korea","English","Best Presentation Award","domestic"],
+  ["2025, May","Evaluating the prediction of solar power generation from global, diffuse, direct radiation and meteorological factors.","poster","Spring Conference, The Korean Society for New and Renewable Energy, Busan, South Korea","Korean","","domestic"],
+  ["2025, April","Development and evaluation of empirical and DNN models for estimating sunshine hours based on the clearness index in South Korea.","poster","Spring Conference, Korean Solar Energy Society, Boryeong, South Korea","Korean","Best Poster Presentation Award","domestic"],
+  ["2024, November","The estimation of surface solar irradiance based on GK-2A satellite data and the analysis of the relationship between solar photovoltaic power generation and meteorological factors.","poster","Asia-Pacific Forum on Renewable Energy (AFORE) 2024, Jeju, South Korea","Korean","","international"],
+  ["2024, October","Quantitative analysis of the relationship between solar power generation, solar irradiance, and meteorological factors.","poster","Autumn Conference, Korean Meteorological Society, Daegu, South Korea","Korean","Best Poster Presentation Award","domestic"],
+];
+
+// Awards   [award, date, where]
+const AWARDS = [
+  ["Best Presentation Award","2025.08","BK21 Graduate Research Day, Chungnam National University"],
+  ["Best Poster Presentation Award — Renewable Energy Resources","2025.04","Spring Conference, Korean Solar Energy Society"],
+  ["Best Poster Presentation Award — Atmospheric Physics","2024.10","Autumn Conference, Korean Meteorological Society"],
+  ["Best Presentation Award","2021.07","Korea Computer Congress 2021 (KCC2021), KIISE"],
+];
+
+// Experience   [role, dates, organization, [bullet points]]
+const EXP = [
+  ["Intern, Korea Meteorological Administration","2026.06 – now","Climate Science Bureau · Daejeon, South Korea",
+    ["Lead-time-dependent GloSea6 forecast skill and Climate Impact Drivers (CIDs) analysis."]],
+  ["Deep Learning & Applications Workshop","2025.01 – 02","ECHO Institute, Chapman University · CA, USA",
+    ["Atmospheric science and deep learning seminars; international research exchange."]],
+  ["International Field Measurement Campaign","2024.06","Zuunmod, Mongolia · with KARI (Korea Aerospace Research Institute, South Korea) and IRIMHE (Information and research institute of meteorology, hydrology and environment, Mongolia)",
+    ["Surface reflectance measurements and radiometric calibration/validation for satellite remote sensing."]],
+  ["Student Intern, KISTI","2020 – 2022","Division of AI·Data · Daejeon (summer & winter terms)",
+    ["Machine-learning dataset construction; stream water-level measurement project in Daejeon, incl. measurement & networking equipment."]],
+];
+
+// Projects   [title (★ = key contribution), year, agency]
+const PROJECTS = [
+  ["★ Improving tailored weather-information production technology for the energy sector","2025","Korea Meteorological Administration"],
+  ["★ Space system integration and effect-analysis technology development","2025","Korea Astronomy and Space Science Institute"],
+  ["Meteorological satellite convergence application technology development","2025","Korea Meteorological Institute of Technology & Industry"],
+  ["★ Development of energy-tailored weather-information production technology","2024","Korea Meteorological Institute of Technology & Industry"],
+  ["Field campaign for advancing quality validation of optical medium-resolution satellite imagery","2024","Korea Aerospace Research Institute"],
+  ["Environmental-satellite-based application products and data production (II)","2024","National Institute of Environmental Research"],
+];
+
+// Other experience   [role, dates, organization, [bullet points]]
+const OTHER = [
+  ["Undergraduate Intern, Atmospheric Sciences Lab","2023.08 – 2024.02","Chungnam National University · Advisor: Prof. Yun Gon Lee",["NCL training; atmospheric impacts of wildfires and volcanic eruptions."]],
+  ["Undergraduate Intern, Quantum Functional Material & Devices Lab","2023.02 – 07","Dept. of Physics, Chungnam National University · Advisor: Prof. Moon Deock Kim",["Semiconductor sensor for detecting toxic gases."]],
+  ["Research Intern, KIGAM","2022.05 – 10","Mineral Exploration and Mining Research Center · Daejeon",["Underground resource exploration device using Arduino and Raspberry Pi."]],
+];
+
+// Record > photo gallery, grouped by year (3 per row)   [year, photo file, event, place · date, event (KOR), place · date (KOR)]
+// The two Korean captions at the end are optional; without them the English caption is shown in KOR mode too.
+// Put photos in the assets/gallery/ folder and write the file name here, e.g. "assets/gallery/agu2025.jpg".
+// Leave the file name as "" to show an empty "photo coming soon" box. Leave event/place "" to show no caption.
+// To add a slot, copy a line and change the year. Years are shown in the order of GALLERY_YEARS.
+// Click a year on the page to fold/unfold it. Years listed in GALLERY_CLOSED start folded, e.g. ["2024"].
+// Record > Thoughts — notes on what I've been thinking about outside research, newest first.   [date, title, text]
+// In the text, put a blank line ("\n\n") between paragraphs. Leave the list empty [] to show a "coming soon" box.
+//   e.g.  ["2026.10", "On choosing a PhD program", "First paragraph...\n\nSecond paragraph..."],
+const NOTES = [
+];
+const NOTES_CLOSED = true;   // true = folded when the page opens, false = unfolded
+
+const GALLERY_CLOSED = ["2026", "2025", "2024"];
+const GALLERY_YEARS = ["2026", "2025", "2024"];
+const GALLERY = [
+  // 2026
+  ["2026", "", "", ""],
+  ["2026", "", "", ""],
+  ["2026", "", "", ""],
+  // 2025
+  ["2025", "assets/banner.jpg", "Grand Canyon", "Arizona, USA", "그랜드캐니언", "미국 애리조나"],
+  ["2025", "", "AGU Annual Meeting 2025", "New Orleans, LA, USA · 2025.12", "AGU 2025", "미국 뉴올리언스 · 2025.12"],
+  ["2025", "", "AFORE 2025", "Jeju, South Korea · 2025.11", "AFORE 2025", "제주 · 2025.11"],
+  ["2025", "", "Deep Learning & Applications Workshop", "Chapman University, CA, USA · 2025.01", "딥러닝 및 응용 워크숍", "미국 채프먼대학교 · 2025.01"],
+  ["2025", "", "", ""],
+  ["2025", "", "", ""],
+  // 2024
+  ["2024", "", "Field Measurement Campaign", "Zuunmod, Mongolia · 2024.06", "현장관측 캠페인", "몽골 준모드 · 2024.06"],
+  ["2024", "", "AFORE 2024", "Jeju, South Korea · 2024.11", "AFORE 2024", "제주 · 2024.11"],
+  ["2024", "", "", ""],
+  ["2024", "", "", ""],
+  ["2024", "", "", ""],
+];
+
+/* =====================================================================
+   CONTENT (KOREAN) — shown when KOR is selected. Same order and format as the
+   English lists above. Anything missing here falls back to the English version.
+   ===================================================================== */
+const KO = {
+  INTERESTS: [
+    ["극한 현상은 무엇이 일으키고, 더 따뜻해진 미래에는 어떻게 변할까?", "극한 기상·기후 현상의 물리적 메커니즘과 예측 가능성, 그리고 기후 변화 영향"],
+    ["우주에서 극한 기상과 재난을 감시·예측할 수 있을까?", "위성 관측을 활용한 극한 기상, 기후 위험 및 자연재해의 원격 탐사"],
+    ["기후 예측 자료를 에너지 발전량 예측에 활용할 수 있을까?", "GloSea6 지표 하향단파복사를 이용한 분석"],
+  ],
+  NEWS: [
+    ["2026.06", "기상청 기후과학국 인턴 시작"],
+    ["2026.02", "충남대학교 대기과학 석사 학위 취득"],
+    ["2025.12", "미국 뉴올리언스 AGU25 포스터 발표"],
+    ["2025.11", "AFORE 2025 구두 발표"],
+    ["2025.08", "BK21 대학원 연구의 날 우수발표상 수상"],
+  ],
+  EDU: [
+    ["대기과학 석사", "2024.03 – 2026.02", "충남대학교 지구환경우주과학과", "지도교수: 이윤곤 교수 · 평점 4.22/4.5"],
+    ["물리학 학사", "2021.03 – 2024.02", "충남대학교 물리학과", ""],
+    ["물리학과 학부 과정", "2019.03 – 2021.02", "전북대학교 물리학과", "충남대학교 편입 전 학부 과정 이수"],
+  ],
+  SKILLS: [
+    ["프로그래밍", "Python (중급) · Linux (중급) · NCL (기초)"],
+    ["도구·장비", "LabVIEW · Origin · FieldSpec III · Microtops"],
+    ["언어", "한국어 (모국어) · 영어 (중급)"],
+  ],
+  // Publications: citations stay in English (no PAPERS here). Add PAPERS: [...] to override.
+  // [date, title, "oral"/"poster", venue & place, language, award (or ""), "domestic"/"international"]
+  // Titles are kept in English — replace with the Korean titles you actually presented.
+  TALKS: [
+    ["2025년 12월","Accuracy evaluation of sunshine duration estimation using the clearness index.","poster","AGU 2025, 미국 뉴올리언스","영어","","international"],
+    ["2025년 11월","Development and evaluation of sunshine duration estimation model for solar power potential assessment in South Korea.","oral","아시아·태평양 재생에너지 포럼(AFORE) 2025, 제주","영어","","international"],
+    ["2025년 8월","Development of sunshine duration estimation model using the clearness index for solar power generation.","oral","BK21 대학원 연구의 날, 충남대학교, 곤지암","영어","우수발표상","domestic"],
+    ["2025년 5월","Evaluating the prediction of solar power generation from global, diffuse, direct radiation and meteorological factors.","poster","한국신재생에너지학회 춘계학술대회, 부산","한국어","","domestic"],
+    ["2025년 4월","Development and evaluation of empirical and DNN models for estimating sunshine hours based on the clearness index in South Korea.","poster","한국태양에너지학회 춘계학술대회, 보령","한국어","우수포스터발표상","domestic"],
+    ["2024년 11월","The estimation of surface solar irradiance based on GK-2A satellite data and the analysis of the relationship between solar photovoltaic power generation and meteorological factors.","poster","아시아·태평양 재생에너지 포럼(AFORE) 2024, 제주","한국어","","international"],
+    ["2024년 10월","Quantitative analysis of the relationship between solar power generation, solar irradiance, and meteorological factors.","poster","한국기상학회 가을학술대회, 대구","한국어","우수포스터발표상","domestic"],
+  ],
+  AWARDS: [
+    ["우수발표상","2025.08","BK21 대학원 연구의 날, 충남대학교"],
+    ["우수포스터발표상 — 재생에너지 자원 세션","2025.04","한국태양에너지학회 춘계학술대회"],
+    ["우수포스터발표상 — 대기물리 세션","2024.10","한국기상학회 가을학술대회"],
+    ["우수발표상","2021.07","한국정보과학회 한국컴퓨터종합학술대회(KCC2021)"],
+  ],
+  EXP: [
+    ["인턴, 기상청","2026.06 – 현재","기후과학국 · 대전",
+      ["GloSea6 과거재현자료를 이용한 지표 하향단파복사 예측성 평가","기후영향인자(CIDs) 분석"]],
+    ["딥러닝 및 응용 워크숍","2025.01 – 02","채프먼대학교 ECHO 연구소 · 미국 캘리포니아",
+      ["대기과학·딥러닝 세미나 및 국제 연구 교류"]],
+    ["국제 현장관측 캠페인","2024.06","몽골 준모드 · 한국항공우주연구원(KARI), 몽골 기상수문환경정보연구소(IRIMHE)와 공동 수행",
+      ["위성 원격탐사를 위한 지표 반사도 측정 및 복사 검·보정"]],
+    ["학생 인턴, 한국과학기술정보연구원(KISTI)","2020 – 2022","AI·데이터본부 · 대전 (하계·동계 방학)",
+      ["머신러닝 데이터셋 구축, 대전 하천 수위 측정 과제 참여(측정·네트워크 장비 개발)"]],
+  ],
+  PROJECTS: [
+    ["★ 에너지기상 맞춤형 기상정보 생산기술 개선","2025","기상청"],
+    ["★ 대우주 시스템 통합 및 효과 분석 기술 개발","2025","한국천문연구원"],
+    ["기상위성 융합 활용 기술개발 사업","2025","한국기상산업기술원"],
+    ["★ 에너지 맞춤형 기상정보 생산 기술개발","2024","한국기상산업기술원"],
+    ["광학 중해상도 위성영상 품질검증 체계 수립 고도화를 위한 필드캠페인","2024","한국항공우주연구원"],
+    ["환경위성 기반 활용산출물 개발 및 자료 생산(II)","2024","한국환경과학원"],
+  ],
+  // Record > 요즘 생각   [날짜, 제목, 내용] — 비워 두면 영어 NOTES가 보입니다.
+  NOTES: [
+  ],
+  OTHER: [
+    ["학부연구생, 대기과학 연구실","2023.08 – 2024.02","충남대학교 · 지도교수: 이윤곤 교수",["NCL 기초, 산불·화산 폭발의 대기 영향 연구"]],
+    ["학부연구생, 양자기능물질 및 소자 연구실","2023.02 – 07","충남대학교 물리학과 · 지도교수: 김문덕 교수",["유해가스 검출용 반도체 센서 개발"]],
+    ["연구 인턴, 한국지질자원연구원(KIGAM)","2022.05 – 10","광물자원탐사개발연구센터 · 대전",["아두이노·라즈베리파이 기반 지하자원 탐사 장비 개발"]],
+  ],
+};
+/* ===================== end of content ===================== */
+
+document.documentElement.classList.add('js');
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const me = s => s.replace(/<b>(.*?)<\/b>/g,'<span class="me">$1</span>');
+const star = s => s.replace('★','<span class="star">★</span>');
+const item = (t,d,s,b) => `<div class="item"><div class="t">${t}</div><div class="d">${d||''}</div>${s?`<div class="s">${s}</div>`:''}${b&&b.length?`<ul>${b.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}</div>`;
+
+const EN = {INTERESTS, NEWS, EDU, SKILLS, PAPERS, TALKS, AWARDS, EXP, PROJECTS, OTHER, NOTES};
+const UI = {
+  en:{soon:'Photo coming soon', photos:n=>`${n} photo${n===1?'':'s'}`, oral:'(Oral)', poster:'(Poster)', inLang:l=>`in ${l}`, copied:'eykim129@gmail.com copied', enlarge:'Enlarge photo', notes:'Thoughts', notesCnt:n=>`${n} note${n===1?'':'s'}`, notesSoon:'Thoughts coming soon'},
+  ko:{soon:'사진 준비 중', photos:n=>`사진 ${n}장`, oral:'구두 발표.', poster:'포스터 발표.', inLang:l=>`${l} 발표`, copied:'eykim129@gmail.com 복사됨', enlarge:'사진 크게 보기', notes:'요즘 생각', notesCnt:n=>`글 ${n}개`, notesSoon:'곧 채워질 예정입니다'},
+};
+let LANG='en', talkFilter='all';
+const D = k => (LANG==='ko' && KO[k] && KO[k].length) ? KO[k] : EN[k];
+const emptyBox = () => `<div class="frame" style="cursor:default;border:0;background:none"><div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>${UI[LANG].soon}</div></div>`;
+const cap = g => LANG==='ko' && (g[4]||g[5]) ? [g[4]||g[2], g[5]||g[3]] : [g[2], g[3]];
+const shot = (g,i) => { const [n,x]=cap(g); return `<figure class="shot">
+  ${g[1] ? `<button type="button" class="frame" data-i="${i}" aria-label="${UI[LANG].enlarge}: ${n}"><img src="${g[1]}" alt="${n}" loading="lazy"></button>` : emptyBox()}
+  ${n||x ? `<figcaption><div class="n">${n}</div><div class="x">${x}</div></figcaption>` : ''}</figure>`; };
+const lb=$('#lightbox');
+
+function renderTalks(f){
+  talkFilter=f;
+  const list = D('TALKS').filter(t=>f==='all'||t[6]===f);
+  $("#talks").innerHTML = list.map(t=>`<li>(${t[0]}). ${t[1]} <span class="kind">${t[2]==='oral'?UI[LANG].oral:UI[LANG].poster}</span>
+    ${t[5]?`<span class="award">${t[5]}</span>`:''}<span class="venue">${t[3]} · ${UI[LANG].inLang(t[4])}</span></li>`).join('');
+}
+$$('#talkFilters button').forEach(b=>b.onclick=()=>{ $$('#talkFilters button').forEach(x=>x.setAttribute('aria-pressed',x===b)); renderTalks(b.dataset.f); });
+
+function renderAll(){
+  $('#interests').innerHTML = D('INTERESTS').map(i=>`<div class="interest"><div class="t">${i[0]}</div><div class="s">${i[1]}</div></div>`).join('');
+  $('#news').innerHTML = D('NEWS').map(n=>`<li><span class="d">${n[0]}</span><span>${n[1]}</span></li>`).join('');
+  $('#edu').innerHTML = D('EDU').map(e=>item(e[0],e[1],e[2]+(e[3]?`<br>${e[3]}`:''))).join('');
+  $('#skills').innerHTML = D('SKILLS').map(s=>`<dt>${s[0]}</dt><dd>${s[1]}</dd>`).join('');
+  $('#papers').innerHTML = D('PAPERS').map(p=>`<li>${me(p.au)} (${p.y}). <span class="ttl">${p.t}</span> ${p.v}
+    ${p.doi?`<a class="doi" href="https://doi.org/${p.doi}" target="_blank" rel="noopener">https://doi.org/${p.doi}</a>`:''}${p.note?` <span class="award">${p.note}</span>`:''}</li>`).join('');
+  $('#awards').innerHTML = D('AWARDS').map(a=>item(a[0],a[1],a[2])).join('');
+  $('#exp').innerHTML = D('EXP').map(e=>item(e[0],e[1],e[2],e[3])).join('');
+  $('#projects').innerHTML = D('PROJECTS').map(p=>item(star(p[0]),p[1],p[2])).join('');
+  $('#other').innerHTML = D('OTHER').map(e=>item(e[0],e[1],e[2],e[3])).join('');
+  renderTalks(talkFilter);
+
+  // gallery (keeps each year's open/closed state across language changes)
+  const openState = {}; $$('#gallery details.yr').forEach(d=>openState[d.dataset.y]=d.open);
+  const years = GALLERY_YEARS.concat([...new Set(GALLERY.map(g=>g[0]))].filter(y=>!GALLERY_YEARS.includes(y)));
+  const notes = D('NOTES');
+  const notesOpen = 'notes' in openState ? openState.notes : !NOTES_CLOSED;
+  const notesHTML = `<details class="yr notes" data-y="notes"${notesOpen?' open':''}><summary><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>${UI[LANG].notes}</span><span class="cnt">${UI[LANG].notesCnt(notes.length)}</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+    ${notes.length ? `<div class="notes-list">${notes.map(n=>`<article class="note"><div class="nd">${n[0]}</div>${n[1]?`<div class="nt">${n[1]}</div>`:''}${String(n[2]||'').split(/\n\s*\n/).map(t=>`<p>${t}</p>`).join('')}</article>`).join('')}</div>`
+                   : `<div class="notes-empty">${UI[LANG].notesSoon}</div>`}</details>`;
+  $('#gallery').innerHTML = notesHTML + years.map(y => {
+    const items = GALLERY.map((g,i)=>[g,i]).filter(([g])=>g[0]===y);
+    const photos = items.filter(([g])=>g[1]).length;
+    const open = y in openState ? openState[y] : !GALLERY_CLOSED.includes(y);
+    return items.length ? `<details class="yr" data-y="${y}"${open?' open':''}><summary><span>${y}</span><span class="cnt">${UI[LANG].photos(photos)}</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><div class="gallery">${items.map(([g,i])=>shot(g,i)).join('')}</div></details>` : '';
+  }).join('');
+  $$('#gallery img').forEach(img=>img.onerror=()=>{ img.closest('.frame').outerHTML=emptyBox(); });
+  $$('#gallery button.frame').forEach(b=>b.onclick=()=>{ const g=GALLERY[b.dataset.i], [n,x]=cap(g); lb.querySelector('img').src=g[1]; lb.querySelector('img').alt=n; lb.querySelector('p').textContent=[n,x].filter(Boolean).join(' — '); lb.hidden=false; });
+}
+lb.onclick=()=>lb.hidden=true;
+addEventListener('keydown',e=>{ if(e.key==='Escape') lb.hidden=true; });
+// first paint in the saved language, before the scroll effects measure the page
+try{ LANG = localStorage.getItem('lang')==='ko' ? 'ko' : 'en'; }catch(e){}
+document.documentElement.lang = LANG;
+renderAll();
+
+/* cards rise in as they scroll into view (cards already on screen show at once) */
+(function(){
+  if(!('IntersectionObserver' in window)) return;
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.remove('pending'); io.unobserve(e.target);} }),{rootMargin:'0px 0px -6% 0px'});
+  $$('.reveal').forEach(el=>{ if(el.getBoundingClientRect().top>innerHeight*0.92){ el.classList.add('pending'); io.observe(el);} });
+})();
+
+/* right dot navigator: highlight the section in view */
+(function(){
+  const links=$$('#dots a'), secs=links.map(a=>document.getElementById(a.dataset.sec));
+  function spy(){
+    let cur=0;
+    secs.forEach((s,i)=>{ if(s.getBoundingClientRect().top<=innerHeight*0.4) cur=i; });
+    if(innerHeight+scrollY>=document.documentElement.scrollHeight-4) cur=secs.length-1;
+    links.forEach((a,i)=>a.classList.toggle('active',i===cur));
+  }
+  addEventListener('scroll',spy,{passive:true}); addEventListener('resize',spy); spy();
+})();
+
+/* ENG / KOR switch (remembers the visitor's choice) + email copy */
+const root=document.documentElement;
+const store={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}}, set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+function setLang(l){
+  LANG = l==='ko' ? 'ko' : 'en';
+  root.lang = LANG;
+  $$('#langSwitch button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.lang===LANG));
+  document.title = LANG==='ko' ? '김은영 | Eunyeong Kim' : 'Eunyeong Kim';
+  renderAll();
+  store.set('lang', LANG);
+}
+$$('#langSwitch button').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
+setLang(store.get('lang') || 'en');
+$('#copyMail').onclick=()=>{
+  const t=$('#toast');
+  (navigator.clipboard?navigator.clipboard.writeText('eykim129@gmail.com'):Promise.reject())
+    .then(()=>{ t.textContent=UI[LANG].copied; t.hidden=false; setTimeout(()=>t.hidden=true,1800); })
+    .catch(()=>{ location.href='mailto:eykim129@gmail.com'; });
+};
+$('#yr').textContent=new Date().getFullYear();
+
+/* top header: reserve its full height, then shrink it to a slim bar once the page scrolls */
+(function(){
+  const head=$('#head');
+  function measure(){ const c=head.classList.contains('compact'); head.classList.remove('compact'); document.documentElement.style.setProperty('--head', head.offsetHeight+'px'); head.classList.toggle('compact',c); }
+  function onScroll(){ const y=scrollY; if(y>60) head.classList.add('compact'); else if(y<20) head.classList.remove('compact'); }
+  measure(); addEventListener('resize',measure); addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  if(document.fonts) document.fonts.ready.then(measure);
+})();
+
+/* faint isobars behind the header (decorative, synthetic field) */
+(function(){
+  if(!window.d3) return;
+  const svg=d3.select('#iso'), W=200, H=60;
+  const C=[[20,15,12,16],[80,50,-10,18],[140,10,9,20],[185,45,-8,14]];
+  const v=new Float64Array(W*H);
+  for(let j=0;j<H;j++) for(let i=0;i<W;i++){ let x=1012+(j/H)*2; for(const [cx,cy,a,s] of C) x+=a*Math.exp(-((i-cx)**2+(j-cy)**2)/(2*s*s)); v[j*W+i]=x; }
+  svg.attr('viewBox',`0 0 ${W} ${H}`).attr('preserveAspectRatio','xMidYMid slice');
+  svg.selectAll('path').data(d3.contours().size([W,H]).thresholds(d3.range(996,1030,2))(v)).join('path')
+    .attr('d',d3.geoPath()).attr('fill','none').attr('stroke','var(--accent)').attr('stroke-width',.8)
+    .attr('stroke-opacity',.1).attr('vector-effect','non-scaling-stroke');
+})();
+</script>
+</body>
+</html>
