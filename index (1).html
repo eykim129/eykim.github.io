@@ -796,6 +796,21 @@ $('#yr').textContent=new Date().getFullYear();
   if(document.fonts) document.fonts.ready.then(measure);
 })();
 
+미국 박사과정 목록
+  * 기준
+    1. Atmospheric sciences 학부/대학원 분야 존재 여부
+    2. 학사/석사 학위 필요 여부(석사 학위 이상인 곳 우대)
+    3. 학사/석사 학점(GPA) 커트라인 존재 여부(존재한다면 몇 이상인지, 석사 학점 우대)
+    4. 국제학생 영어 점수 커트라인 존재 여부(듀오링고 테스트 존재 여부, 존재한다면 몇 이상인지)
+    5. 박사과정 학생 funding 지원 여부(TA, RA 등)
+    6. GRE 미요구 학교만 고려.
+
+  * 학교
+    1. Colorado State University(석사 누적 GPA 3.0 이상, DET 120)
+    2. University of Illinois Urbana-Champaign(최근 60학점 GPA 누적, DET 135)
+    3. 
+  
+
 /* faint isobars behind the header (decorative, synthetic field) */
 (function(){
   if(!window.d3) return;
