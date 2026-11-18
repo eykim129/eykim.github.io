@@ -1,0 +1,68 @@
+Get-ChildItem -File | Where-Object { $_.Name -notlike '*.txt' } | Rename-Item -NewName { $_.Name + '.txt' }
+Get-ChildItem -File | Where-Object { $_.Name -like '*.txt' } | Rename-Item -NewName { $_.Name -replace '\.nc$', '' }
+
+$ErrorActionPreference = "Stop"
+$folder = (Get-Location).Path
+$archive = Join-Path $folder "SHARE_WIND_DSWRF.tar.gz"
+
+# 328개 파일 누락 확인
+$parts = @(0..327 | ForEach-Object {
+    $p = Join-Path $folder ("SHARE_WIND_DSWRF.tar.gz.part_{0:D4}" -f $_)
+    if (-not (Test-Path -LiteralPath $p -PathType Leaf)) {
+        throw "분할파일 누락: $p"
+    }
+    Get-Item -LiteralPath $p
+})
+
+if (Test-Path -LiteralPath $archive) {
+    throw "합친 파일이 이미 있습니다: $archive"
+}
+
+# 바이너리로 순서대로 합치기
+$expected = ($parts | Measure-Object Length -Sum).Sum
+$out = [System.IO.File]::Open(
+    $archive,
+    [System.IO.FileMode]::CreateNew,
+    [System.IO.FileAccess]::Write
+)
+
+try {
+    for ($i = 0; $i -lt $parts.Count; $i++) {
+        Write-Progress -Activity "분할파일 합치는 중" `
+            -Status "$($i + 1) / 328" `
+            -PercentComplete (($i + 1) / 328 * 100)
+
+        $inputStream = $parts[$i].OpenRead()
+        try {
+            $inputStream.CopyTo($out)
+        }
+        finally {
+            $inputStream.Dispose()
+        }
+    }
+}
+finally {
+    $out.Dispose()
+    Write-Progress -Activity "분할파일 합치는 중" -Completed
+}
+
+if ((Get-Item -LiteralPath $archive).Length -ne $expected) {
+    throw "합친 파일의 크기가 일치하지 않습니다."
+}
+
+# 압축검사
+tar -tzf "$archive" > $null
+if ($LASTEXITCODE -ne 0) {
+    throw "압축검사 실패: 분할파일 손상 여부를 확인하세요."
+}
+
+# 별도 폴더에 압축 해제
+$destination = Join-Path $folder "SHARE_WIND_DSWRF_extracted"
+New-Item -ItemType Directory -Path $destination -Force | Out-Null
+
+tar -xzf "$archive" -C "$destination"
+if ($LASTEXITCODE -ne 0) {
+    throw "압축 해제 실패"
+}
+
+Write-Host "완료: $destination"
